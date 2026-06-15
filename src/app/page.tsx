@@ -205,22 +205,32 @@ export default function Home() {
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-[3rem]">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight">Get a Professional Assessment <br/>of Your Recovery Case</h2>
-            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-              Stop guessing and start following a forensic path. Our specialists will review your situation and provide clear, evidence-based guidance.
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight">Start Your Recovery Journey Today</h2>
+            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+              Whether you've been affected by a forex scam, investment fraud, romance scam, fake job offer, loan scam, wallet access issue, or another asset recovery challenge, our specialists are ready to review your case.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-               <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-bold">
-                 Start My Free Case Review
-                 <ArrowRight className="ml-2 w-6 h-6" />
+               <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-bold group">
+                 Get My Free Case Assessment
+                 <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                </Button>
                <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5">
-                 Request Specialist Callback
+                 Speak With a Recovery Expert
                </Button>
             </div>
-            <p className="text-sm italic text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              "Every recovery case is unique. Our mission is to provide you with a factual foundation before you commit to any recovery pathway."
-            </p>
+            
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 pt-8 border-t border-white/5">
+               {[
+                 { text: "Confidential Review" },
+                 { text: "Secure Submission" },
+                 { text: "No Obligation Consultation" }
+               ].map((note, idx) => (
+                 <div key={idx} className="flex items-center gap-2 text-sm font-medium text-foreground/80">
+                   <CheckCircle2 className="w-4 h-4 text-primary" />
+                   <span>{note.text}</span>
+                 </div>
+               ))}
+            </div>
           </div>
         </div>
       </section>

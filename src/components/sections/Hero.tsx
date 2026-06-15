@@ -17,7 +17,7 @@ export function Hero() {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-            Our investigators and recovery specialists help victims of forex scams, investment fraud, romance scams, fake job offers, and wallet access issues understand their recovery options through a confidential forensic assessment.
+            Our investigators and recovery specialists help victims of forex scams, investment fraud, romance scams, fake job offers, loan scams, and wallet access issues understand their recovery options through a confidential forensic assessment.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">

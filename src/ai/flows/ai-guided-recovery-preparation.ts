@@ -29,7 +29,16 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
     .number()
     .min(0)
     .max(100)
-    .describe('A percentage score (0-100) indicating the completeness of the evidence provided.'),
+    .describe('An overall percentage score (0-100) indicating the completeness of the evidence provided.'),
+  overallCaseStrength: z
+    .number()
+    .min(0)
+    .max(100)
+    .describe('A forensic calculation of the probability of successful recovery based on available data.'),
+  evidenceTracker: z.array(z.object({
+    label: z.string().describe('The forensic category (e.g., Transaction Records, Communication History).'),
+    score: z.number().min(0).max(100).describe('Completeness score for this specific category.'),
+  })).describe('Detailed completeness scores for key forensic categories.'),
   preliminaryCaseFindings: z.object({
     scamType: z.string().describe('The identified category of fraud or asset loss.'),
     estimatedLoss: z.string().describe('The estimated financial value of the loss.'),
@@ -96,18 +105,13 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
 
 Based on the provided case data, identify:
 1. **Risk Level**: Determine the risk based on time elapsed, scam complexity, and asset type.
-2. **Evidence Completeness**: Score the user on how much useful data (TX IDs, screenshots, names) they provided.
-3. **Preliminary Case Findings**: Provide structured data points:
-   - Identify the scam type clearly.
-   - Extract the estimated loss (with currency).
-   - Rate evidence strength based on detail provided.
-   - Note the status of transaction records.
-   - Determine technical complexity.
-   - Recommend a specific action type.
+2. **Evidence Scores**: 
+   - Assign an overall "Evidence Completeness Score".
+   - Assign an "Overall Case Strength" percentage.
+   - Provide a detailed "Evidence Tracker" with scores for: Transaction Records, Communication History, Screenshots, Identity Information, and Wallet Data.
+3. **Preliminary Case Findings**: Provide structured data points for quick scannability.
 4. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility.
-5. **Investigation Focus**: Use forensic/technical terms:
-   - For Scams: Identity Verification, Transaction Tracing, Fund Movement Analysis, Communication Evidence Review.
-   - For Wallet Access: Technical Credential Recovery, Device Forensic Analysis, Backup Verification, Software Version Compatibility.
+5. **Investigation Focus**: Use forensic/technical terms.
 6. **Scenario Summary**: A concise professional forensic summary.
 7. **Safety Protocols**: Critical security advice.
 

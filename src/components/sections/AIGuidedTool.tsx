@@ -35,7 +35,8 @@ import {
   Fingerprint,
   Info,
   Clock,
-  ClipboardList
+  ClipboardList,
+  Target
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -125,7 +126,7 @@ const CASE_TYPES: CaseType[] = [
     icon: Wallet,
     fields: [
       { key: 'walletType', label: 'Wallet Type', placeholder: 'Ledger, Metamask, Trust Wallet, etc.' },
-      { key: 'issueType', label: 'What is the Issue?', placeholder: 'Lost password, Lost seed, Damaged, etc.' },
+      { key: 'issueType', label: 'What is the Issue?', placeholder: 'Lost password, Lost seed phrase, etc.' },
       { key: 'walletValue', label: 'Estimated Wallet Value', placeholder: 'e.g. 0.5 BTC / $25,000', type: 'text' },
       { key: 'lastAccess', label: 'Last Successful Access', placeholder: 'e.g. 2023-12-01' },
     ]
@@ -478,11 +479,11 @@ ${description}
 
               <Card className="glass-card border-white/5 p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Recovery Path</span>
-                  <Activity className="text-secondary w-5 h-5" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Overall Case Strength</span>
+                  <Target className="text-secondary w-5 h-5" />
                 </div>
-                <div className="text-3xl font-headline font-bold mb-1">Evaluating</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">System is currently mapping forensic pathways to known assets.</p>
+                <div className="text-3xl font-headline font-bold mb-1">{result.overallCaseStrength}%</div>
+                <p className="text-xs text-muted-foreground leading-relaxed">Forensic calculation of successful recovery probability.</p>
               </Card>
             </div>
 
@@ -511,39 +512,70 @@ ${description}
               </div>
             </div>
 
-            {/* Probability Indicators */}
-            <div className="grid md:grid-cols-4 gap-4">
-              {result.recoveryIndicators.map((indicator, idx) => (
-                <Card key={idx} className={cn("border-none shadow-none", getStatusBg(indicator.status))}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      {getStatusIcon(indicator.status)}
-                      <span className="text-xs font-bold uppercase tracking-wider">{indicator.label}</span>
-                    </div>
-                    <p className="text-sm font-medium leading-snug">{indicator.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <Card className="border-primary/20 bg-primary/5 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-5">
-                <Activity className="w-32 h-32" />
-              </div>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-2xl font-headline">
-                  <div className="p-2 rounded-lg bg-primary/20">
-                    <Search className="w-6 h-6 text-primary" />
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Evidence Collection Tracker */}
+              <Card className="glass-card border-white/5 p-8 flex flex-col h-full">
+                <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-8">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Search className="w-5 h-5 text-primary" />
                   </div>
-                  Forensic Summary
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-lg leading-relaxed text-foreground/90 font-medium italic">
-                  "{result.recoveryScenarioSummary}"
-                </p>
-              </CardContent>
-            </Card>
+                  Evidence Collection Tracker
+                </h3>
+                <div className="space-y-8 flex-grow">
+                  {result.evidenceTracker.map((tracker, idx) => (
+                    <div key={idx} className="space-y-2">
+                      <div className="flex justify-between text-sm font-bold mb-1">
+                        <span className="text-foreground/80">{tracker.label}</span>
+                        <span className="text-primary">{tracker.score}%</span>
+                      </div>
+                      <Progress value={tracker.score} className="h-2 bg-white/5" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-10 pt-8 border-t border-white/5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-headline font-bold">Overall Case Strength</span>
+                    <span className="text-2xl font-black text-secondary">{result.overallCaseStrength}%</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">This score represents the forensic viability of your case based on current evidence.</p>
+                </div>
+              </Card>
+
+              {/* Recovery Scenario Summary */}
+              <Card className="border-primary/20 bg-primary/5 relative overflow-hidden flex flex-col h-full">
+                <div className="absolute top-0 right-0 p-4 opacity-5">
+                  <Activity className="w-32 h-32" />
+                </div>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-2xl font-headline">
+                    <div className="p-2 rounded-lg bg-primary/20">
+                      <Fingerprint className="w-6 h-6 text-primary" />
+                    </div>
+                    Forensic Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-lg leading-relaxed text-foreground/90 font-medium italic">
+                    "{result.recoveryScenarioSummary}"
+                  </p>
+                  
+                  <div className="mt-8 space-y-4">
+                    <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">Probability Indicators</p>
+                    <div className="grid grid-cols-1 gap-3">
+                      {result.recoveryIndicators.map((indicator, idx) => (
+                        <div key={idx} className={cn("p-4 rounded-xl border-none flex items-center gap-4", getStatusBg(indicator.status))}>
+                          {getStatusIcon(indicator.status)}
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-wider">{indicator.label}</p>
+                            <p className="text-xs font-medium leading-snug">{indicator.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-6">
@@ -610,7 +642,7 @@ ${description}
                         {result.nextStepsRecommendation}
                       </p>
                       <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
-                        <a href="#assessment-form">
+                        <a href="#contact">
                           {selectedType?.id === 'wallet' ? 'Initiate Full Technical Review' : 'Initiate Full Forensic Review'}
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>

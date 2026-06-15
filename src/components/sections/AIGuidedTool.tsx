@@ -632,7 +632,7 @@ ${description}
                 </div>
               </Card>
 
-              {/* Recovery Scenario Summary */}
+              {/* Automated Preliminary Findings Summary */}
               <Card className="border-primary/20 bg-primary/5 relative overflow-hidden flex flex-col h-full">
                 <div className="absolute top-0 right-0 p-4 opacity-5">
                   <Network className="w-32 h-32" />
@@ -642,7 +642,7 @@ ${description}
                     <div className="p-2 rounded-lg bg-primary/20">
                       <Search className="w-6 h-6 text-primary" />
                     </div>
-                    Investigation Summary
+                    Automated Preliminary Findings
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
@@ -650,7 +650,17 @@ ${description}
                     "{result.recoveryScenarioSummary}"
                   </p>
                   
-                  <div className="mt-8 space-y-4">
+                  <div className="mt-8 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-500/80 mb-6 italic">
+                    <div className="flex gap-2">
+                      <Info className="w-4 h-4 shrink-0" />
+                      <p>
+                        This assessment is generated automatically and is not a professional investigation. 
+                        Final recommendations require manual verification and review by a Lazoronix recovery specialist.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Forensic Probability Indicators</p>
                     <div className="grid grid-cols-1 gap-3">
                       {result.recoveryIndicators.map((indicator, idx) => (
@@ -769,16 +779,16 @@ ${description}
                           : "Preliminary Intake Complete"}
                       </h4>
                       <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium text-foreground/80">
-                        Our automated scan is complete. To proceed, a human specialist must now manually verify the digital trail and approve the formal investigation roadmap.
+                        Based on the information provided, our investigators recommend a detailed assessment of your case. Final recommendations require review by a Lazoronix recovery specialist.
                       </p>
                       
                       <div className="space-y-4 mb-10">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Specialist Verification Steps</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">What Happens Next?</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                           {[
-                            "Specialist Audit",
-                            "Evidence Chain Verification",
-                            "Feasibility Analysis",
+                            "Specialist Review",
+                            "Evidence Verification",
+                            "Recovery Feasibility Analysis",
                             "Investigation Roadmap"
                           ].map((item, i) => (
                             <div key={i} className="flex items-center gap-3 text-sm font-bold text-foreground/90">

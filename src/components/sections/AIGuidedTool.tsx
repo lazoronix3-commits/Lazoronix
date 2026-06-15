@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { aiGuidedRecoveryPreparation, type AIGuidedRecoveryPreparationOutput } from '@/ai/flows/ai-guided-recovery-preparation'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
 import { 
   Sparkles, 
   Loader2, 
@@ -30,7 +31,10 @@ import {
   AlertCircle,
   Activity,
   XCircle,
-  MinusCircle
+  MinusCircle,
+  Fingerprint,
+  Info,
+  Clock
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -147,6 +151,13 @@ export function AIGuidedTool() {
   const [hasAccess, setHasAccess] = useState(true)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
+  const [caseId, setCaseId] = useState('')
+
+  useEffect(() => {
+    if (step === 'result' && !caseId) {
+      setCaseId(`LRX-${Math.floor(10000 + Math.random() * 90000)}`)
+    }
+  }, [step, caseId])
 
   const handleSelectType = (type: CaseType) => {
     setSelectedType(type)
@@ -200,6 +211,15 @@ ${description}
       case 'positive': return 'bg-emerald-500/10 border-emerald-500/20'
       case 'negative': return 'bg-destructive/10 border-destructive/20'
       default: return 'bg-amber-500/10 border-amber-500/20'
+    }
+  }
+
+  const getRiskColor = (risk: string) => {
+    switch (risk) {
+      case 'Critical': return 'text-destructive'
+      case 'High': return 'text-orange-500'
+      case 'Moderate': return 'text-amber-500'
+      default: return 'text-emerald-500'
     }
   }
 
@@ -261,7 +281,11 @@ ${description}
             <Button 
               variant="ghost" 
               className="mb-8 hover:bg-white/5 text-muted-foreground hover:text-foreground"
-              onClick={() => setStep('type')}
+              onClick={() => {
+                setStep('type')
+                setFormValues({})
+                setDescription('')
+              }}
             >
               <ArrowLeft className="mr-2 w-4 h-4" /> Back to Case Types
             </Button>
@@ -331,7 +355,7 @@ ${description}
                         </>
                       ) : (
                         <>
-                          Generate Recovery Roadmap
+                          Initiate Technical Assessment
                           <Sparkles className="ml-2 h-6 w-6" />
                         </>
                       )}
@@ -389,14 +413,67 @@ ${description}
 
         {step === 'result' && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-               <div>
-                 <h2 className="text-3xl md:text-4xl font-headline font-bold">Forensic Case Assessment</h2>
-                 <p className="text-muted-foreground">Technical feasibility analysis based on digital intake.</p>
+            {/* Professional Assessment Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 p-8 glass-card rounded-[2rem] border-primary/20">
+               <div className="flex items-center gap-6">
+                 <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                   <Fingerprint className="w-8 h-8 text-white" />
+                 </div>
+                 <div>
+                   <div className="flex items-center gap-3 mb-1">
+                     <h2 className="text-2xl font-headline font-bold">Recovery Case Assessment</h2>
+                     <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Official Report</span>
+                   </div>
+                   <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                     <span className="text-muted-foreground flex items-center gap-1.5"><Info className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-mono font-bold">{caseId}</span></span>
+                     <span className="text-muted-foreground flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Initial Forensic Review</span></span>
+                     <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Generated: <span className="text-foreground font-bold">{new Date().toLocaleDateString()}</span></span>
+                   </div>
+                 </div>
                </div>
-               <Button variant="outline" onClick={() => setStep('type')} className="border-white/10 hover:bg-white/5 font-bold">
-                 Start New Assessment
-               </Button>
+               <div className="flex items-center gap-3">
+                 <Button variant="outline" onClick={() => {
+                   setStep('type')
+                   setCaseId('')
+                   setResult(null)
+                 }} className="border-white/10 hover:bg-white/5 font-bold">
+                   New Assessment
+                 </Button>
+                 <Button className="bg-primary hover:bg-primary/90 font-bold">
+                   Download Report PDF
+                 </Button>
+               </div>
+            </div>
+
+            {/* Assessment Dashboard Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="glass-card border-white/5 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Investigative Risk</span>
+                  <ShieldAlert className={cn("w-5 h-5", getRiskColor(result.riskLevel))} />
+                </div>
+                <div className="text-3xl font-headline font-bold mb-1">{result.riskLevel}</div>
+                <p className="text-xs text-muted-foreground leading-relaxed">Risk factor calculated based on time-lapse and scam complexity.</p>
+              </Card>
+
+              <Card className="glass-card border-white/5 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Evidence Completeness</span>
+                  <FileText className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-3xl font-headline font-bold mb-2">{result.evidenceCompletenessScore}%</div>
+                <Progress value={result.evidenceCompletenessScore} className="h-1.5 mb-2" />
+                <p className="text-xs text-muted-foreground leading-relaxed">Current score based on provided technical data and narrative.</p>
+              </Card>
+
+              <Card className="glass-card border-white/5 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Recovery Path</span>
+                  <Activity className="text-secondary w-5 h-5" />
+                </div>
+                <div className="text-3xl font-headline font-bold mb-1">Evaluating</div>
+                <p className="text-xs text-muted-foreground leading-relaxed">System is currently mapping forensic pathways to known assets.</p>
+              </Card>
             </div>
 
             {/* Probability Indicators */}
@@ -499,7 +576,7 @@ ${description}
                       </p>
                       <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
                         <a href="#assessment-form">
-                          {selectedType?.id === 'wallet' ? 'Initiate Technical Review' : 'Initiate Full Forensic Review'}
+                          {selectedType?.id === 'wallet' ? 'Initiate Full Technical Review' : 'Initiate Full Forensic Review'}
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>

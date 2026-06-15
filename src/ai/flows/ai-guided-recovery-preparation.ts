@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview An AI-powered tool that guides users through gathering critical information for digital asset recovery.
+ * @fileOverview An AI-powered forensic tool that conducts recovery case assessments for digital asset losses.
  *
- * - aiGuidedRecoveryPreparation - A function that handles the AI-guided recovery preparation process.
+ * - aiGuidedRecoveryPreparation - A function that handles the AI-guided recovery assessment process.
  * - AIGuidedRecoveryPreparationInput - The input type for the aiGuidedRecoveryPreparation function.
  * - AIGuidedRecoveryPreparationOutput - The return type for the aiGuidedRecoveryPreparation function.
  */
@@ -22,10 +22,18 @@ export type AIGuidedRecoveryPreparationInput = z.infer<
 >;
 
 const AIGuidedRecoveryPreparationOutputSchema = z.object({
+  riskLevel: z
+    .enum(['Low', 'Moderate', 'High', 'Critical'])
+    .describe('The investigative risk level associated with the recovery of assets.'),
+  evidenceCompletenessScore: z
+    .number()
+    .min(0)
+    .max(100)
+    .describe('A percentage score (0-100) indicating the completeness of the evidence provided.'),
   recoveryScenarioSummary: z
     .string()
     .describe(
-      "A summary of the user's recovery scenario based on their initial description."
+      "A professional forensic summary of the user's recovery scenario based on their description."
     ),
   recoveryIndicators: z
     .array(
@@ -60,12 +68,12 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
   importantConsiderations: z
     .array(z.string())
     .describe(
-      'A list of important considerations or warnings for the user during the information gathering process.'
+      'A list of critical safety considerations or warnings for the user during the recovery process.'
     ),
   nextStepsRecommendation: z
     .string()
     .describe(
-      'Overall advice for the user on how to proceed with preparing and submitting their case.'
+      'Overall authoritative advice for the user on how to proceed with their recovery roadmap.'
     ),
 });
 export type AIGuidedRecoveryPreparationOutput = z.infer<
@@ -76,21 +84,22 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
   name: 'aiGuidedRecoveryPreparationPrompt',
   input: {schema: AIGuidedRecoveryPreparationInputSchema},
   output: {schema: AIGuidedRecoveryPreparationOutputSchema},
-  prompt: `You are an expert digital asset recovery forensic specialist. Your goal is to analyze a user's recovery case and provide a structured "Forensic Assessment".
+  prompt: `You are an expert digital asset recovery forensic specialist conducting an initial "Recovery Case Assessment". 
 
 Based on the provided case data, identify:
-1. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility. Assign a status (positive/neutral/negative) for each.
-2. **Investigation Focus / Technical Path**: Instead of generic categories, use forensic and technical terms:
+1. **Risk Level**: Determine the risk based on time elapsed, scam complexity, and asset type.
+2. **Evidence Completeness**: Score the user on how much useful data (TX IDs, screenshots, names) they provided.
+3. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility.
+4. **Investigation Focus**: Use forensic/technical terms:
    - For Scams: Identity Verification, Transaction Tracing, Fund Movement Analysis, Communication Evidence Review.
    - For Wallet Access: Technical Credential Recovery, Device Forensic Analysis, Backup Verification, Software Version Compatibility.
-3. **Scenario Summary**: A professional, objective summary of what transpired.
-4. **Security Warnings**: Critical safety advice (e.g., "Do not share seed phrases with anyone claiming to be support").
-5. **Forensic Path**: Clear, authoritative next steps.
+5. **Scenario Summary**: A professional, objective forensic summary.
+6. **Safety Protocols**: Critical security advice.
 
 User's Case Data:
 {{{initialProblemDescription}}}
 
-Be precise, authoritative, and focused on technical feasibility. Avoid generic platitudes; focus on digital forensics, technical trail analysis, and cryptographical recovery constraints.`,
+Be precise, authoritative, and technical. Avoid empathy; focus on digital forensics, technical trail analysis, and cryptographical constraints.`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

@@ -17,7 +17,12 @@ import {
   Heart, 
   Briefcase, 
   Banknote, 
-  Wallet 
+  Wallet,
+  FileText,
+  MessageSquare,
+  Globe,
+  CreditCard,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function Home() {
@@ -109,6 +114,71 @@ export default function Home() {
       </section>
 
       <WhyChooseUs />
+
+      {/* Case Qualification Section */}
+      <section className="py-24 bg-primary/5">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto glass-card rounded-[2.5rem] overflow-hidden">
+            <div className="grid md:grid-cols-5 items-stretch">
+              <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
+                <h2 className="text-4xl font-headline font-bold mb-6">Not Sure If Recovery Is Possible?</h2>
+                <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
+                  Every case begins with a forensic review. We don't guess—we investigate the digital evidence to determine the viability of your claim.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                  {[
+                    { icon: FileText, text: "Transaction records" },
+                    { icon: Wallet, text: "Wallet information" },
+                    { icon: MessageSquare, text: "Broker communications" },
+                    { icon: Globe, text: "Platform details" },
+                    { icon: CreditCard, text: "Payment evidence" },
+                    { icon: TrendingUp, text: "Recovery possibilities" }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                        <item.icon className="w-4 h-4 text-primary" />
+                      </div>
+                      <span className="font-medium">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-10 leading-relaxed">
+                  You'll receive a professional assessment outlining potential next steps before any recovery work begins.
+                </p>
+                <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
+                  Check My Recovery Options
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+              <div className="md:col-span-2 p-8 md:p-16 bg-primary text-white flex flex-col justify-center">
+                <div className="space-y-8">
+                  <div className="flex items-start gap-4">
+                    <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">100% Confidential</h4>
+                      <p className="opacity-80">All information shared is protected under strict investigative privacy protocols.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">No Obligation</h4>
+                      <p className="opacity-80">Our feasibility assessment is designed to provide you with facts, not a sales pitch.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Evidence-Based</h4>
+                      <p className="opacity-80">We only proceed if the technical trail indicates a legitimate path for recovery.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <AIGuidedTool />
       

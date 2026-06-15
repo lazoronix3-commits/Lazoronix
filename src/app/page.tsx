@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
 import { ProblemSection } from '@/components/sections/ProblemSection';
+import { SignsSection } from '@/components/sections/SignsSection';
 import { WhyChooseUs } from '@/components/sections/WhyChooseUs';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { FAQSection } from '@/components/sections/FAQSection';
@@ -11,9 +12,6 @@ import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, 
   ShieldCheck, 
-  Lock, 
-  Eye, 
-  AlertCircle, 
   TrendingUp, 
   BarChart, 
   Heart, 
@@ -46,6 +44,8 @@ export default function Home() {
       </div>
 
       <ProblemSection />
+      
+      <SignsSection />
       
       {/* Services Highlight Section */}
       <section id="services" className="py-24">

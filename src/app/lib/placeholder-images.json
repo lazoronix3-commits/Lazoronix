@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract blockchain network data visualizations",
+      "imageUrl": "https://picsum.photos/seed/laz-1/1200/800",
+      "imageHint": "blockchain technology network"
+    },
+    {
+      "id": "forensics-lab",
+      "description": "High-tech digital forensics workstation",
+      "imageUrl": "https://picsum.photos/seed/laz-2/800/600",
+      "imageHint": "digital forensics workstation"
+    },
+    {
+      "id": "secure-vault",
+      "description": "Abstract representation of secure digital storage",
+      "imageUrl": "https://picsum.photos/seed/laz-3/800/600",
+      "imageHint": "secure server vault"
+    }
+  ]
+}

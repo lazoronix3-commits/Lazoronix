@@ -27,7 +27,10 @@ import {
   UploadCloud,
   FileText,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  Activity,
+  XCircle,
+  MinusCircle
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -55,6 +58,9 @@ const CASE_TYPES: CaseType[] = [
       { key: 'brokerName', label: 'Broker/Platform Name', placeholder: 'e.g. Global Trade FX' },
       { key: 'website', label: 'Website URL', placeholder: 'e.g. www.fakebroker.com' },
       { key: 'amount', label: 'Approximate Amount Lost', placeholder: 'e.g. 5,000', type: 'number' },
+      { key: 'withdrawalAttempts', label: 'Withdrawal Attempts', placeholder: 'e.g. 3 attempts denied' },
+      { key: 'paymentMethods', label: 'Payment Methods Used', placeholder: 'e.g. Bank transfer, USDT, Credit Card' },
+      { key: 'walletAddress', label: 'Crypto Wallet Used (if applicable)', placeholder: 'Your or their wallet address' },
     ]
   },
   { 
@@ -66,6 +72,8 @@ const CASE_TYPES: CaseType[] = [
       { key: 'platformName', label: 'Investment Platform', placeholder: 'e.g. CryptoGrowth Pro' },
       { key: 'website', label: 'Website URL', placeholder: 'e.g. www.cryptogrowth.io' },
       { key: 'amount', label: 'Amount Invested', placeholder: 'e.g. 10,000', type: 'number' },
+      { key: 'referralSource', label: 'Referral Source', placeholder: 'e.g. Telegram group, Facebook ad' },
+      { key: 'cryptoWallet', label: 'Destination Wallet Address', placeholder: 'Address you sent funds to' },
     ]
   },
   { 
@@ -77,6 +85,7 @@ const CASE_TYPES: CaseType[] = [
       { key: 'platformMet', label: 'Platform Where You Met', placeholder: 'e.g. Tinder, Hinge, Facebook' },
       { key: 'nameUsed', label: "Person's Name/Alias", placeholder: 'e.g. James Wilson' },
       { key: 'amount', label: 'Total Funds Sent', placeholder: 'e.g. 2,500', type: 'number' },
+      { key: 'transferMethod', label: 'Method of Transfer', placeholder: 'e.g. Bitcoin, Gift Cards, Wire Transfer' },
     ]
   },
   { 
@@ -88,6 +97,7 @@ const CASE_TYPES: CaseType[] = [
       { key: 'companyName', label: 'Company Name Used', placeholder: 'e.g. Remote Solutions Inc' },
       { key: 'jobTitle', label: 'Job Title Offered', placeholder: 'e.g. Data Entry Specialist' },
       { key: 'amount', label: 'Fees Paid', placeholder: 'e.g. 500', type: 'number' },
+      { key: 'contactPlatform', label: 'Contact Platform', placeholder: 'e.g. WhatsApp, LinkedIn, Indeed' },
     ]
   },
   { 
@@ -110,6 +120,7 @@ const CASE_TYPES: CaseType[] = [
       { key: 'walletType', label: 'Wallet Type', placeholder: 'e.g. Ledger, Metamask, Trust Wallet' },
       { key: 'assetType', label: 'Assets Held', placeholder: 'e.g. BTC, ETH, USDT' },
       { key: 'lastAccess', label: 'Last Date of Successful Access', placeholder: 'e.g. 2023-12-01' },
+      { key: 'issueType', label: 'Issue Category', placeholder: 'e.g. Lost seed phrase, Hacked, Technical error' },
     ]
   },
   { 
@@ -120,6 +131,7 @@ const CASE_TYPES: CaseType[] = [
     fields: [
       { key: 'subject', label: 'Case Subject', placeholder: 'Briefly name the entity involved' },
       { key: 'amount', label: 'Estimated Loss', placeholder: 'e.g. 3,000', type: 'number' },
+      { key: 'entityDetails', label: 'Entity Details', placeholder: 'Website, social media, or phone numbers' },
     ]
   },
 ]
@@ -153,13 +165,13 @@ export function AIGuidedTool() {
         .join('\n')
       
       const fullPrompt = `
-Case Category: ${selectedType.title}
-Structured Data:
+CASE CATEGORY: ${selectedType.title}
+STRUCTURED DATA:
 ${structuredDetails}
-Withdrawals Blocked: ${isBlocked ? 'YES' : 'NO'}
-Still Have Access: ${hasAccess ? 'YES' : 'NO'}
+WITHDRAWALS BLOCKED: ${isBlocked ? 'YES' : 'NO'}
+STILL HAVE ACCESS: ${hasAccess ? 'YES' : 'NO'}
 
-Detailed Narrative:
+DETAILED NARRATIVE:
 ${description}
       `.trim()
 
@@ -173,9 +185,24 @@ ${description}
     }
   }
 
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'positive': return <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+      case 'negative': return <XCircle className="w-5 h-5 text-destructive" />
+      default: return <MinusCircle className="w-5 h-5 text-amber-500" />
+    }
+  }
+
+  const getStatusBg = (status: string) => {
+    switch (status) {
+      case 'positive': return 'bg-emerald-500/10 border-emerald-500/20'
+      case 'negative': return 'bg-destructive/10 border-destructive/20'
+      default: return 'bg-amber-500/10 border-amber-500/20'
+    }
+  }
+
   return (
     <section id="ai-tool" className="py-24 bg-muted/30 relative overflow-hidden">
-      {/* Decorative gradient */}
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
       
       <div className="container mx-auto px-6 max-w-5xl">
@@ -298,7 +325,7 @@ ${description}
                       {loading ? (
                         <>
                           <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                          Analyzing Case Data...
+                          Analyzing Forensic Data...
                         </>
                       ) : (
                         <>
@@ -316,17 +343,17 @@ ${description}
                   <CardHeader className="pb-4">
                     <CardTitle className="text-lg font-headline flex items-center gap-2">
                       <UploadCloud className="w-5 h-5 text-primary" />
-                      Upload Evidence
+                      Evidence Intake
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer group bg-white/5">
                       <UploadCloud className="w-10 h-10 text-muted-foreground mx-auto mb-4 group-hover:text-primary transition-colors" />
                       <p className="text-sm font-bold mb-1">Drag & Drop Evidence</p>
-                      <p className="text-xs text-muted-foreground">Screenshots, PDFs, or TXT files</p>
+                      <p className="text-xs text-muted-foreground">Screenshots, Statements, or Logs</p>
                     </div>
                     <div className="space-y-3 pt-4">
-                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Recommended Items:</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Critical Assets:</p>
                       <ul className="space-y-2">
                         {[
                           "Transaction Receipts",
@@ -362,24 +389,39 @@ ${description}
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                <div>
-                 <h2 className="text-3xl md:text-4xl font-headline font-bold">Case Assessment Summary</h2>
-                 <p className="text-muted-foreground">Initial feasibility based on provided digital evidence.</p>
+                 <h2 className="text-3xl md:text-4xl font-headline font-bold">Forensic Case Assessment</h2>
+                 <p className="text-muted-foreground">Technical feasibility analysis based on digital intake.</p>
                </div>
                <Button variant="outline" onClick={() => setStep('type')} className="border-white/10 hover:bg-white/5 font-bold">
-                 Start New Case Review
+                 Start New Assessment
                </Button>
+            </div>
+
+            {/* Probability Indicators */}
+            <div className="grid md:grid-cols-4 gap-4">
+              {result.recoveryIndicators.map((indicator, idx) => (
+                <Card key={idx} className={cn("border-none shadow-none", getStatusBg(indicator.status))}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-2">
+                      {getStatusIcon(indicator.status)}
+                      <span className="text-xs font-bold uppercase tracking-wider">{indicator.label}</span>
+                    </div>
+                    <p className="text-sm font-medium leading-snug">{indicator.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
 
             <Card className="border-primary/20 bg-primary/5 relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-5">
-                <Search className="w-32 h-32" />
+                <Activity className="w-32 h-32" />
               </div>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl font-headline">
                   <div className="p-2 rounded-lg bg-primary/20">
                     <Search className="w-6 h-6 text-primary" />
                   </div>
-                  Forensic Scenario Summary
+                  Case Scenario Analysis
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -389,13 +431,13 @@ ${description}
               </CardContent>
             </Card>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                     <CheckCircle2 className="w-5 h-5 text-secondary" />
                   </div>
-                  Evidence Intake Checklist
+                  Evidence Requirements
                 </h3>
                 <Accordion type="single" collapsible className="w-full space-y-4">
                   {result.informationCategoriesToGather.map((cat, idx) => (
@@ -427,7 +469,7 @@ ${description}
                     <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
                       <ShieldAlert className="w-5 h-5 text-destructive" />
                     </div>
-                    Security Protocol & Warnings
+                    Critical Safety Protocols
                   </h3>
                   <Card className="border-destructive/20 bg-destructive/5 rounded-[2rem] overflow-hidden">
                     <CardContent className="p-8 space-y-5">
@@ -446,7 +488,7 @@ ${description}
                     <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                       <ArrowRightCircle className="w-5 h-5 text-primary" />
                     </div>
-                    Recommended Recovery Path
+                    Recommended Forensic Path
                   </h3>
                   <Card className="border-primary/20 bg-primary/10 rounded-[2rem] overflow-hidden">
                     <CardContent className="p-8">
@@ -455,7 +497,7 @@ ${description}
                       </p>
                       <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
                         <a href="#assessment-form">
-                          Submit Final Case for Forensic Review
+                          Initiate Full Forensic Review
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>

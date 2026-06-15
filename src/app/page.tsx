@@ -184,22 +184,17 @@ export default function Home() {
       
       <ProcessSection />
       
-      {/* Differentiation Section */}
+      {/* Our Commitment Section */}
       <section className="py-24 bg-primary text-white overflow-hidden relative">
          <div className="container mx-auto px-6 relative z-10 text-center">
-            <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8">A Different Approach to Recovery</h2>
+            <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8">Our Commitment</h2>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12">
-              We don't make empty promises. We provide an <br/>
-              <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">Evidence-Based Recovery Roadmap.</span>
+              We understand that financial losses caused by scams can be devastating. <br/>
+              <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">That's why every case is evaluated using evidence, technical analysis, and investigative methodologies.</span>
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-sm font-bold tracking-widest uppercase">
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Transaction Logs</div>
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Wallet Path</div>
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Exchange Leads</div>
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Asset Locations</div>
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Recovery Odds</div>
-              <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm">Legal Options</div>
-            </div>
+            <p className="max-w-2xl mx-auto text-lg opacity-80 leading-relaxed">
+              Our investigative protocols are designed to identify legitimate recovery opportunities while maintaining complete confidentiality.
+            </p>
          </div>
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] pointer-events-none" />
       </section>

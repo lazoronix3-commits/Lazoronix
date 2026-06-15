@@ -7,24 +7,24 @@ import {
 
 const faqs = [
   {
-    question: "Can every crypto asset be recovered?",
-    answer: "No. Recovery feasibility depends on multiple factors including wallet type, available data, technical circumstances, and blockchain activity. Every case requires assessment before conclusions can be made."
+    question: "Can money lost to a forex or investment scam really be recovered?",
+    answer: "In many cases, yes, though it depends on the digital trail. We use blockchain forensics to trace where your funds were sent. Once identified on an exchange or a known wallet, recovery pathways involving legal and technical measures can be explored."
   },
   {
-    question: "How does the assessment process work?",
-    answer: "Our specialists review the information you provide, analyze available evidence, and determine whether viable recovery pathways may exist. You'll receive a structured report of our findings."
+    question: "I forgot the password to my old crypto wallet. Can you help?",
+    answer: "Yes. Our wallet recovery specialists use forensic workstations and proprietary tools to help clients regain access to hardware wallets, software wallets, and older encrypted files where partial information is known."
   },
   {
-    question: "Is my information kept confidential?",
-    answer: "Yes. All case submissions are handled through secure, encrypted channels and reviewed under strict internal confidentiality procedures similar to legal or financial standards."
+    question: "Is there a fee for the initial assessment?",
+    answer: "Our initial case review and AI-guided tool are free. We believe in providing an honest feasibility assessment first, so you know exactly what the digital evidence shows before choosing to proceed with a full forensic investigation."
   },
   {
-    question: "How long does a case review take?",
-    answer: "Timeframes vary based on complexity and available information. Initial assessments are typically completed within 2-5 business days before any full recovery engagement begins."
+    question: "How do I know if I'm being scammed by a 'recovery company'?",
+    answer: "Legitimate recovery specialists like Lazoronix prioritize evidence over promises. If a company asks for an 'upfront tax' or claims they have a 'special backdoor' to the blockchain, be extremely cautious. We lead with forensic analysis and factual data."
   },
   {
-    question: "What information should I provide?",
-    answer: "Wallet details, transaction records, recovery information, account history, and any supporting documentation that may assist the investigation. The more detail you provide during intake, the more accurate the assessment."
+    question: "How long does the investigation process take?",
+    answer: "A preliminary review usually takes 2-5 business days. A full forensic investigation into a complex scam can take longer as we map out transaction paths across multiple layers of the blockchain."
   }
 ];
 
@@ -33,7 +33,7 @@ export function FAQSection() {
     <section id="faq" className="py-24 bg-background">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-headline font-bold">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-headline font-bold">Common Questions About Recovery</h2>
         </div>
         
         <Accordion type="single" collapsible className="w-full">

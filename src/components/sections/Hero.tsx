@@ -8,21 +8,21 @@ export function Hero() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-secondary text-sm font-medium mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
             <ShieldCheck className="w-4 h-4" />
-            Evidence-Driven. Secure. Confidential.
+            Specialized Forensic Recovery & Investigation
           </div>
           
           <h1 className="text-5xl md:text-7xl font-headline font-bold leading-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-            Lost Access to Crypto Assets? <br/>
-            <span className="gradient-text">Start With a Forensic Recovery Assessment.</span>
+            Lost Money to a Scam or <br/>
+            <span className="gradient-text">Locked Out of Your Crypto Wallet?</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-            When digital assets become inaccessible, every decision matters. Our blockchain investigators and forensic specialists conduct confidential reviews to map the safest path to recovery.
+            Our investigators and recovery specialists help victims of forex scams, investment fraud, romance scams, fake job offers, and wallet access issues understand their recovery options through a confidential forensic assessment.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
             <Button size="lg" className="h-16 px-8 text-lg bg-primary hover:bg-primary/90 font-bold w-full sm:w-auto">
-              Start Confidential Assessment
+              Get My Free Case Review
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button size="lg" variant="outline" className="h-16 px-8 text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full sm:w-auto">

@@ -2,13 +2,13 @@ import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const problems = [
-  "Lost wallet access",
-  "Forgotten recovery credentials",
-  "Wallet migration issues",
-  "Transaction tracing requirements",
-  "Ownership verification",
-  "Security incidents",
-  "Complex blockchain investigations"
+  "Forex Trading Scams",
+  "Investment Platform Fraud",
+  "Crypto Romance Scams",
+  "Fake Job Offer Scams",
+  "Loan & Grant Scams",
+  "Locked or Inaccessible Wallets",
+  "Unauthorized Account Withdrawals"
 ];
 
 export function ProblemSection() {
@@ -22,17 +22,17 @@ export function ProblemSection() {
                 <AlertCircle className="w-5 h-5" />
                 <span>CRITICAL WINDOW</span>
               </div>
-              <h2 className="text-4xl font-headline font-bold mb-6 leading-tight">When Access Is Lost, <br/>Time Matters</h2>
+              <h2 className="text-4xl font-headline font-bold mb-6 leading-tight">Can I Recover My <br/>Lost Assets?</h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Digital asset recovery cases can quickly become more complex when recovery attempts are made without proper forensic investigation.
+                Recovery feasibility depends on immediate action and proper documentation. Our specialists analyze the digital trail to determine if your assets can be pursued.
               </p>
               <Button size="lg" className="bg-primary hover:bg-primary/90 px-8">
-                Request Expert Case Review
+                Request Free Case Review
               </Button>
             </div>
             
             <div className="p-8 md:p-16 border-l border-white/5">
-              <h3 className="text-xl font-headline font-bold mb-8">Specialized Assistance For:</h3>
+              <h3 className="text-xl font-headline font-bold mb-8">We Specialize in Investigating:</h3>
               <ul className="space-y-4">
                 {problems.map((problem, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground/80">

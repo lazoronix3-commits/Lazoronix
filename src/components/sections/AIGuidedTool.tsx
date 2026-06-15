@@ -32,11 +32,11 @@ export function AIGuidedTool() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-widest mb-4">
             <Sparkles className="w-3 h-3" />
-            AI-Powered Preparation
+            AI Recovery Assistant
           </div>
-          <h2 className="text-4xl font-headline font-bold mb-4">Case Preparation Assistant</h2>
+          <h2 className="text-4xl font-headline font-bold mb-4">Start Your Investigation Preparation</h2>
           <p className="text-muted-foreground text-lg">
-            Describe your situation briefly, and our AI will identify exactly what evidence you need to gather for a professional forensic assessment.
+            Tell us briefly about the scam or access issue you experienced. Our AI will help you identify the critical evidence needed for a professional recovery assessment.
           </p>
         </div>
 
@@ -44,10 +44,10 @@ export function AIGuidedTool() {
           <CardContent className="p-8">
             <div className="space-y-4">
               <label className="text-sm font-medium text-foreground/80">
-                What happened? (e.g., "I lost access to my 2017 hardware wallet", "Suspected unauthorized transaction on my Metamask")
+                What happened? (e.g., "I lost money to a fake forex broker", "I can't access my 2017 hardware wallet")
               </label>
               <Textarea 
-                placeholder="Describe your digital asset issue in detail..."
+                placeholder="Briefly describe the scam or technical issue..."
                 className="min-h-[150px] bg-background/50 border-white/5 focus:border-primary/50 transition-colors text-lg"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -60,11 +60,11 @@ export function AIGuidedTool() {
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Analyzing Scenario...
+                    Analyzing Situation...
                   </>
                 ) : (
                   <>
-                    Generate My Preparation Guide
+                    Get My Evidence Checklist
                     <Sparkles className="ml-2 h-5 w-5" />
                   </>
                 )}
@@ -79,7 +79,7 @@ export function AIGuidedTool() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-2xl">
                   <Search className="w-6 h-6 text-primary" />
-                  Scenario Summary
+                  Situation Analysis
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -93,7 +93,7 @@ export function AIGuidedTool() {
               <div className="space-y-6">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-secondary" />
-                  Information to Gather
+                  Evidence to Collect
                 </h3>
                 <Accordion type="single" collapsible className="w-full space-y-3">
                   {result.informationCategoriesToGather.map((cat, idx) => (
@@ -120,7 +120,7 @@ export function AIGuidedTool() {
               <div className="space-y-6">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-2">
                   <ShieldAlert className="w-5 h-5 text-destructive" />
-                  Important Considerations
+                  Important Warnings
                 </h3>
                 <Card className="border-destructive/20 bg-destructive/5">
                   <CardContent className="p-6 space-y-4">
@@ -143,7 +143,7 @@ export function AIGuidedTool() {
                       {result.nextStepsRecommendation}
                     </p>
                     <Button className="w-full mt-6 bg-primary" asChild>
-                      <a href="#assessment-form">Proceed to Official Assessment</a>
+                      <a href="#assessment-form">Submit Formal Assessment</a>
                     </Button>
                   </CardContent>
                 </Card>

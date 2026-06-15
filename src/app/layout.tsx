@@ -3,8 +3,8 @@ import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Lazoronix | Professional Digital Asset & Crypto Recovery',
-  description: 'Evidence-driven, secure, and confidential digital asset recovery assessments led by blockchain forensics specialists.',
+  title: 'Lazoronix | Professional Digital Asset & Scam Recovery Specialists',
+  description: 'Specialized recovery assistance for victims of forex scams, investment fraud, romance scams, and locked crypto wallets. Get a confidential forensic assessment.',
 };
 
 export default function RootLayout({

@@ -17,17 +17,17 @@ export function Navbar() {
         
         <div className="hidden md:flex items-center gap-8">
           <Link href="#services" className="text-sm font-medium hover:text-primary transition-colors">Services</Link>
-          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
+          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">How it Works</Link>
           <Link href="#why-us" className="text-sm font-medium hover:text-primary transition-colors">Why Lazoronix</Link>
           <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
         </div>
 
         <div className="flex items-center gap-4">
           <Button variant="outline" className="hidden sm:inline-flex border-primary/20 hover:bg-primary/5">
-            Log In
+            Client Portal
           </Button>
           <Button className="bg-primary hover:bg-primary/90">
-            Start Assessment
+            Free Case Review
           </Button>
         </div>
       </div>

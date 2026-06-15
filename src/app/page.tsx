@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
 import { ProblemSection } from '@/components/sections/ProblemSection';
@@ -7,7 +8,19 @@ import { FAQSection } from '@/components/sections/FAQSection';
 import { Footer } from '@/components/layout/Footer';
 import { AIGuidedTool } from '@/components/sections/AIGuidedTool';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ShieldCheck, Lock, Eye, AlertCircle } from 'lucide-react';
+import { 
+  ArrowRight, 
+  ShieldCheck, 
+  Lock, 
+  Eye, 
+  AlertCircle, 
+  TrendingUp, 
+  BarChart, 
+  Heart, 
+  Briefcase, 
+  Banknote, 
+  Wallet 
+} from 'lucide-react';
 
 export default function Home() {
   return (
@@ -38,26 +51,57 @@ export default function Home() {
       <section id="services" className="py-24">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-headline font-bold mb-6">Expert Recovery Services</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">Focused on helping you regain control and pursue lost assets from fraudulent platforms and locked accounts.</p>
+            <h2 className="text-4xl font-headline font-bold mb-6">How Can We Help?</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Specialized recovery assistance tailored to the specific nature of your loss.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "Forex & Trading Scam Recovery", icon: AlertCircle, desc: "Investigating fraudulent brokers and fake trading platforms." },
-              { title: "Investment Fraud Analysis", icon: ShieldCheck, desc: "Tracing assets lost to Ponzi schemes and fake ICOs." },
-              { title: "Wallet & Seed Recovery", icon: Lock, desc: "Technical assistance for forgotten passwords or hardware wallet failures." },
-              { title: "Romance Scam Tracing", icon: Eye, desc: "Identifying the flow of funds in complex social engineering fraud." },
-              { title: "Asset Feasibility Assessment", icon: ShieldCheck, desc: "Evidence-based report on whether your assets can realistically be recovered." },
-              { title: "Blockchain Forensics", icon: FileSearch, desc: "Deep-layer transaction analysis to pinpoint asset locations." },
+              { 
+                title: "Forex Scam Recovery", 
+                icon: TrendingUp, 
+                desc: "Recover funds lost through fake brokers, trading platforms, withdrawal restrictions, account manipulation, and investment fraud schemes." 
+              },
+              { 
+                title: "Investment Scam Recovery", 
+                icon: BarChart, 
+                desc: "Assistance for victims of fraudulent investment opportunities, crypto investment schemes, and unauthorized fund transfers." 
+              },
+              { 
+                title: "Romance Scam Recovery", 
+                icon: Heart, 
+                desc: "Investigative support for individuals who transferred funds or digital assets to fraudulent online relationships." 
+              },
+              { 
+                title: "Job Scam Recovery", 
+                icon: Briefcase, 
+                desc: "Recovery assistance for victims targeted through fake employment offers, remote work scams, and recruitment fraud." 
+              },
+              { 
+                title: "Loan Scam Recovery", 
+                icon: Banknote, 
+                desc: "Investigation and recovery support related to advance-fee loan scams and fraudulent lending schemes." 
+              },
+              { 
+                title: "Wallet Recovery", 
+                icon: Wallet, 
+                desc: "Support for lost wallet access, missing credentials, inaccessible crypto holdings, and wallet-related technical issues." 
+              },
+              { 
+                title: "Asset Recovery Solutions", 
+                icon: ShieldCheck, 
+                desc: "Comprehensive investigation and recovery strategies for complex financial and digital asset losses." 
+              },
             ].map((service, idx) => (
-              <div key={idx} className="p-8 rounded-2xl bg-muted/20 border border-white/5 hover:bg-muted/30 transition-all flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <div key={idx} className="p-8 rounded-2xl bg-muted/20 border border-white/5 hover:border-primary/50 transition-all flex flex-col h-full group">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                   <service.icon className="w-6 h-6 text-primary" />
                 </div>
-                <div>
-                  <h4 className="text-lg font-headline font-bold mb-2">{service.title}</h4>
-                  <p className="text-muted-foreground text-sm">{service.desc}</p>
-                </div>
+                <h4 className="text-xl font-headline font-bold mb-3">{service.title}</h4>
+                <p className="text-muted-foreground text-sm flex-grow leading-relaxed mb-6">{service.desc}</p>
+                <Link href="#" className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors">
+                  Learn More
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </Link>
               </div>
             ))}
           </div>
@@ -119,26 +163,4 @@ export default function Home() {
       <Footer />
     </main>
   );
-}
-
-function FileSearch(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-      <polyline points="14 2 14 8 20 8" />
-      <circle cx="11" cy="14" r="3" />
-      <path d="m15 18-1.9-1.9" />
-    </svg>
-  )
 }

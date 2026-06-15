@@ -1,36 +1,36 @@
-import { Search, Shield, Eye, Database, Cpu, Lock } from 'lucide-react';
+import { Search, Shield, Eye, Database, Cpu, Lock, FileSearch } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const features = [
   {
     title: "Blockchain Intelligence",
-    description: "Advanced transaction tracing and blockchain analytics to identify asset movement patterns and leads.",
+    description: "Advanced tracing and transaction analysis using industry-leading forensic tools.",
     icon: Database
   },
   {
-    title: "Digital Forensics",
-    description: "Structured examination of wallet data, devices, backups, account records, and recovery evidence.",
+    title: "Financial Fraud Investigation",
+    description: "Rigorous evidence collection and professional scam assessment to build your case.",
+    icon: FileSearch
+  },
+  {
+    title: "Digital Asset Expertise",
+    description: "Specialized wallet, exchange, and blockchain investigations led by technical experts.",
     icon: Cpu
   },
   {
     title: "Confidential Process",
-    description: "Sensitive information is handled through secure channels with strict confidentiality standards.",
+    description: "Your sensitive information remains protected through encrypted communication and strict protocols.",
     icon: Lock
   },
   {
-    title: "Transparent Assessments",
-    description: "Clear explanations of recovery feasibility, risks, limitations, and potential next steps.",
+    title: "Transparent Guidance",
+    description: "No unrealistic promises. We provide evidence-based recommendations and clear recovery roadmaps.",
     icon: Eye
   },
   {
-    title: "Specialist-Led Reviews",
-    description: "Your case is evaluated by professionals experienced in digital assets and forensic investigation.",
+    title: "Specialist Support",
+    description: "Dedicated investigative experts assigned to evaluate every nuance of your specific situation.",
     icon: Search
-  },
-  {
-    title: "Security-First Methodology",
-    description: "Every engagement follows strict operational security procedures designed to protect client data.",
-    icon: Shield
   }
 ];
 
@@ -39,8 +39,8 @@ export function WhyChooseUs() {
     <section id="why-us" className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Technical Expertise</h2>
-          <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6">Investigative Precision</h3>
+          <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Authority & Expertise</h2>
+          <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6">Why Clients Choose Lazoronix</h3>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Unlike generic recovery services, every Lazoronix case begins with evidence collection, technical verification, and forensic analysis.
           </p>

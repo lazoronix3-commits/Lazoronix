@@ -83,9 +83,10 @@ const CASE_TYPES: CaseType[] = [
     icon: Heart,
     fields: [
       { key: 'platformMet', label: 'Platform Where You Met', placeholder: 'e.g. Tinder, Hinge, Facebook' },
-      { key: 'nameUsed', label: "Person's Name/Alias", placeholder: 'e.g. James Wilson' },
+      { key: 'communicationDuration', label: 'Duration of Communication', placeholder: 'e.g. 3 months' },
       { key: 'amount', label: 'Total Funds Sent', placeholder: 'e.g. 2,500', type: 'number' },
-      { key: 'transferMethod', label: 'Method of Transfer', placeholder: 'e.g. Bitcoin, Gift Cards, Wire Transfer' },
+      { key: 'transferMethod', label: 'Payment Method(s)', placeholder: 'e.g. Wire, USDT, Gift Cards' },
+      { key: 'cryptoInvolvement', label: 'Crypto Involved?', placeholder: 'Yes/No (which coins?)' },
     ]
   },
   { 
@@ -437,7 +438,7 @@ ${description}
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                     <CheckCircle2 className="w-5 h-5 text-secondary" />
                   </div>
-                  Evidence Requirements
+                  Forensic Investigation Focus
                 </h3>
                 <Accordion type="single" collapsible className="w-full space-y-4">
                   {result.informationCategoriesToGather.map((cat, idx) => (

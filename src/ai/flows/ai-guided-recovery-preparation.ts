@@ -30,7 +30,7 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
   recoveryIndicators: z
     .array(
       z.object({
-        label: z.string().describe('The name of the indicator (e.g., Evidence Available, Transaction Trail).'),
+        label: z.string().describe('The name of the indicator (e.g., Identity Verification, Transaction Trail).'),
         status: z.enum(['positive', 'neutral', 'negative']).describe('The status of this recovery factor.'),
         description: z.string().describe('Short explanation of why this status was assigned.'),
       })
@@ -41,21 +41,21 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
       z.object({
         categoryName: z
           .string()
-          .describe('The name of the information category (e.g., Wallet Details, Transaction History).'),
+          .describe('The name of the investigation focus (e.g., Identity Verification, Fund Movement Analysis).'),
         description: z
           .string()
           .describe(
-            'A detailed explanation of what kind of information falls under this category and why it is important.'
+            'A detailed explanation of why this focus area is critical for this specific case.'
           ),
         specificItemsToGather: z
           .array(z.string())
           .describe(
-            'A list of specific items the user should gather for this category.'
+            'A list of specific forensic items or evidence the user should gather for this focus area.'
           ),
       })
     )
     .describe(
-      'A structured list of categories of information the user needs to gather to prepare their case.'
+      'A structured list of forensic investigation focus areas the user needs to address.'
     ),
   importantConsiderations: z
     .array(z.string())
@@ -76,19 +76,23 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
   name: 'aiGuidedRecoveryPreparationPrompt',
   input: {schema: AIGuidedRecoveryPreparationInputSchema},
   output: {schema: AIGuidedRecoveryPreparationOutputSchema},
-  prompt: `You are an expert digital asset recovery forensic specialist. Your goal is to analyze a user's recovery case and provide a structured "Roadmap" and "Probability Indicators".
+  prompt: `You are an expert digital asset recovery forensic specialist. Your goal is to analyze a user's recovery case and provide a structured "Forensic Assessment".
 
 Based on the provided case data, identify:
 1. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and entity identification. Assign a status (positive/neutral/negative) for each.
-2. **Scenario Summary**: A professional summary of what happened.
-3. **Information Categories**: Specific data points the user MUST gather next.
+2. **Investigation Focus**: Instead of generic categories, use forensic terms such as:
+   - Identity Verification (especially for romance/job scams)
+   - Transaction Tracing (especially for crypto/broker scams)
+   - Fund Movement Analysis
+   - Communication Evidence Review
+3. **Scenario Summary**: A professional summary of what happened.
 4. **Security Warnings**: Critical safety advice.
-5. **Recovery Path**: Clear next steps.
+5. **Forensic Path**: Clear next steps.
 
 User's Case Data:
 {{{initialProblemDescription}}}
 
-Be precise, authoritative, and focused on technical feasibility. Avoid generic platitudes; focus on digital forensics.`,
+Be precise, authoritative, and focused on technical feasibility. Avoid generic platitudes; focus on digital forensics and technical trail analysis.`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

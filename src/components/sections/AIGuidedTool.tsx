@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from 'react'
@@ -167,6 +168,7 @@ export function AIGuidedTool() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
+  const [scanStatus, setScanStatus] = useState('Initializing...')
 
   useEffect(() => {
     if (step === 'result' && !caseId) {
@@ -187,6 +189,25 @@ export function AIGuidedTool() {
   const handleAssessment = async () => {
     if (!selectedType) return
     setLoading(true)
+    
+    // Simulate forensic scan steps for UI feel
+    const statuses = [
+      "Connecting to blockchain node...",
+      "Searching transaction registries...",
+      "Analyzing wallet cluster patterns...",
+      "Mapping fund movement paths...",
+      "Verifying platform credentials...",
+      "Compiling forensic report..."
+    ]
+    
+    let i = 0
+    const interval = setInterval(() => {
+      if (i < statuses.length) {
+        setScanStatus(statuses[i])
+        i++
+      }
+    }, 1500)
+
     try {
       const structuredDetails = Object.entries(formValues)
         .map(([k, v]) => `${k.replace(/([A-Z])/g, ' $1').toUpperCase()}: ${v}`)
@@ -205,9 +226,11 @@ ${description}
 
       const output = await aiGuidedRecoveryPreparation({ initialProblemDescription: fullPrompt })
       setResult(output)
+      clearInterval(interval)
       setStep('result')
     } catch (error) {
       console.error(error)
+      clearInterval(interval)
     } finally {
       setLoading(false)
     }
@@ -359,8 +382,9 @@ ${description}
 
                     <div className="space-y-3">
                       <Label className="text-sm font-bold text-foreground/80">Additional Narrative (What happened?)</Label>
+                      <p className="text-xs text-muted-foreground mb-2 italic">Provide as much detail as possible about the entities, communications, and wallet addresses involved.</p>
                       <Textarea 
-                        placeholder="Briefly describe the timeline of events, communications with 'managers', and any specific wallet addresses provided to you..."
+                        placeholder="e.g. I was contacted via Telegram by a 'Senior Manager' who directed me to deposit USDT into the following address..."
                         className="min-h-[160px] bg-background/50 border-white/10 focus:border-primary/50 text-base"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -375,7 +399,7 @@ ${description}
                       {loading ? (
                         <>
                           <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                          Analyzing Forensic Data...
+                          {scanStatus}
                         </>
                       ) : (
                         <>
@@ -447,7 +471,7 @@ ${description}
                    <div>
                      <div className="flex items-center gap-3 mb-1">
                        <h2 className="text-2xl font-headline font-bold tracking-tight">Investigation Dashboard</h2>
-                       <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Live Assessment</span>
+                       <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Automated Forensic Scan</span>
                      </div>
                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
                        <span className="text-muted-foreground flex items-center gap-1.5"><Info className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-mono font-bold">{caseId}</span></span>
@@ -465,7 +489,7 @@ ${description}
                      New Assessment
                    </Button>
                    <Button className="bg-primary hover:bg-primary/90 font-bold flex-grow md:flex-grow-0">
-                     Download PDF Report
+                     Download Forensic Report
                    </Button>
                  </div>
               </div>
@@ -474,7 +498,7 @@ ${description}
               <Card className="glass-card border-white/5 p-6 flex flex-row items-center gap-4 min-w-[300px]">
                 <Avatar className="h-16 w-16 border-2 border-primary/20">
                   <AvatarImage src={`https://picsum.photos/seed/${caseId}/100/100`} />
-                  <AvatarFallback className="bg-primary text-white font-bold">AN</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-white font-bold">SN</AvatarFallback>
                 </Avatar>
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
@@ -531,7 +555,7 @@ ${description}
                   <ShieldAlert className={cn("w-5 h-5", getRiskColor(result.riskLevel))} />
                 </div>
                 <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.riskLevel}</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">Risk factor calculated based on time-lapse and scam complexity.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">Risk level determined by time-lapse, complexity, and digital trail density.</p>
               </Card>
 
               <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
@@ -541,7 +565,7 @@ ${description}
                 </div>
                 <div className="text-3xl font-headline font-bold mb-2 tracking-tight">{result.evidenceCompletenessScore}%</div>
                 <Progress value={result.evidenceCompletenessScore} className="h-1.5 mb-2" />
-                <p className="text-xs text-muted-foreground leading-relaxed">Current score based on verified technical data and case logs.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">System-calculated completeness based on verified transaction data.</p>
               </Card>
 
               <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
@@ -550,7 +574,7 @@ ${description}
                   <Zap className="text-secondary w-5 h-5" />
                 </div>
                 <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.overallCaseStrength}%</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">Forensic calculation of successful asset retrieval probability.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">Preliminary probability of successful retrieval via formal investigation.</p>
               </Card>
             </div>
 
@@ -601,10 +625,10 @@ ${description}
                 </div>
                 <div className="mt-10 pt-8 border-t border-white/5">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-lg font-headline font-bold">Overall Case Strength</span>
+                    <span className="text-lg font-headline font-bold">Overall Case Integrity</span>
                     <span className="text-2xl font-black text-secondary">{result.overallCaseStrength}%</span>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">This score represents the forensic viability of your case based on current evidence density.</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">This metric represents the readiness of the digital trail for formal investigation.</p>
                 </div>
               </Card>
 
@@ -627,7 +651,7 @@ ${description}
                   </p>
                   
                   <div className="mt-8 space-y-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recovery Indicators</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Forensic Probability Indicators</p>
                     <div className="grid grid-cols-1 gap-3">
                       {result.recoveryIndicators.map((indicator, idx) => (
                         <div key={idx} className={cn("p-4 rounded-xl border-none flex items-center gap-4 transition-all hover:scale-[1.02]", getStatusBg(indicator.status))}>
@@ -681,7 +705,7 @@ ${description}
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                     <Database className="w-5 h-5 text-secondary" />
                   </div>
-                  {selectedType?.id === 'wallet' ? 'Technical Recovery Path' : 'Forensic Investigation Focus'}
+                  Forensic Investigation Roadmap
                 </h3>
                 <Accordion type="single" collapsible className="w-full space-y-4">
                   {result.informationCategoriesToGather.map((cat, idx) => (
@@ -732,7 +756,7 @@ ${description}
                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
                       <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                     </div>
-                    Case Eligibility Status
+                    Professional Eligibility Status
                   </h3>
                   <Card className="border-emerald-500/20 bg-emerald-500/5 rounded-[2rem] overflow-hidden relative">
                     <div className="absolute top-0 right-0 p-8 opacity-10">
@@ -741,15 +765,15 @@ ${description}
                     <CardContent className="p-8">
                       <h4 className="text-2xl font-headline font-bold mb-4 text-emerald-500 tracking-tight">
                         {result.overallCaseStrength > 40 
-                          ? "Case Eligible For Professional Review" 
-                          : "Preliminary Eligibility Assessment"}
+                          ? "Case Eligible For Specialist Review" 
+                          : "Preliminary Intake Complete"}
                       </h4>
                       <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium text-foreground/80">
-                        Based on the information provided, our senior investigators recommend a detailed assessment of your case to verify recovery paths and initiate the technical roadmap.
+                        Our automated scan is complete. To proceed, a human specialist must now manually verify the digital trail and approve the formal investigation roadmap.
                       </p>
                       
                       <div className="space-y-4 mb-10">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Professional Next Steps</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Specialist Verification Steps</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                           {[
                             "Specialist Audit",

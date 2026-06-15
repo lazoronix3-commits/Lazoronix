@@ -1,8 +1,9 @@
+
 'use server';
 /**
- * @fileOverview An AI-powered forensic tool that conducts recovery case assessments for digital asset losses.
+ * @fileOverview A clinical digital asset recovery intake engine that evaluates digital trails and evidence density.
  *
- * - aiGuidedRecoveryPreparation - A function that handles the AI-guided recovery assessment process.
+ * - aiGuidedRecoveryPreparation - A function that handles the automated forensic scan process.
  * - AIGuidedRecoveryPreparationInput - The input type for the aiGuidedRecoveryPreparation function.
  * - AIGuidedRecoveryPreparationOutput - The return type for the aiGuidedRecoveryPreparation function.
  */
@@ -14,7 +15,7 @@ const AIGuidedRecoveryPreparationInputSchema = z.object({
   initialProblemDescription: z
     .string()
     .describe(
-      'A detailed description of the user\'s digital asset recovery problem, including category-specific structured data and narrative.'
+      'A detailed description of the case, including structured category data and technical narrative.'
     ),
 });
 export type AIGuidedRecoveryPreparationInput = z.infer<
@@ -24,73 +25,73 @@ export type AIGuidedRecoveryPreparationInput = z.infer<
 const AIGuidedRecoveryPreparationOutputSchema = z.object({
   riskLevel: z
     .enum(['Low', 'Moderate', 'High', 'Critical'])
-    .describe('The investigative risk level associated with the recovery of assets.'),
+    .describe('The investigative risk level associated with asset movement and time lapse.'),
   evidenceCompletenessScore: z
     .number()
     .min(0)
     .max(100)
-    .describe('An overall percentage score (0-100) indicating the completeness of the evidence provided.'),
+    .describe('Automated score (0-100) for the density of technical evidence provided.'),
   overallCaseStrength: z
     .number()
     .min(0)
     .max(100)
-    .describe('A forensic calculation of the probability of successful recovery based on available data.'),
+    .describe('Forensic calculation of the probability of successful retrieval via formal investigation.'),
   evidenceTracker: z.array(z.object({
-    label: z.string().describe('The forensic category (e.g., Transaction Records, Communication History).'),
+    label: z.string().describe('The forensic category (e.g., Transaction Records, Communication Logs).'),
     score: z.number().min(0).max(100).describe('Completeness score for this specific category.'),
-  })).describe('Detailed completeness scores for key forensic categories.'),
+  })).describe('Category-specific completeness scores.'),
   preliminaryCaseFindings: z.object({
-    scamType: z.string().describe('The identified category of fraud or asset loss.'),
-    estimatedLoss: z.string().describe('The estimated financial value of the loss.'),
-    evidenceStrength: z.enum(['Low', 'Moderate', 'High']).describe('The forensic strength of the provided evidence.'),
-    transactionRecordsStatus: z.string().describe('The status or availability of transaction hashes/receipts.'),
-    recoveryComplexity: z.enum(['Low', 'Moderate', 'High', 'Extremely High']).describe('The technical difficulty of recovery.'),
-    recommendedAction: z.string().describe('The immediate next professional step (e.g., Formal Investigation, Technical Audit).'),
-  }).describe('Structured forensic findings for quick scannability.'),
+    scamType: z.string().describe('Identified fraud category.'),
+    estimatedLoss: z.string().describe('Total financial loss value.'),
+    evidenceStrength: z.enum(['Low', 'Moderate', 'High']).describe('Technical strength of evidence.'),
+    transactionRecordsStatus: z.string().describe('Current status of transaction hashes/logs.'),
+    recoveryComplexity: z.enum(['Low', 'Moderate', 'High', 'Extremely High']).describe('Technical difficulty level.'),
+    recommendedAction: z.string().describe('The definitive professional next step.'),
+  }).describe('Structured findings for quick dashboard scanning.'),
   recoveryScenarioSummary: z
     .string()
     .describe(
-      "A professional forensic summary of the user's recovery scenario based on their description."
+      "A clinical forensic summary of the case scenario."
     ),
   recoveryIndicators: z
     .array(
       z.object({
-        label: z.string().describe('The name of the indicator (e.g., Identity Verification, Transaction Trail).'),
-        status: z.enum(['positive', 'neutral', 'negative']).describe('The status of this recovery factor.'),
-        description: z.string().describe('Short explanation of why this status was assigned.'),
+        label: z.string().describe('Factor name (e.g., Identity Verification, Fund Traceability).'),
+        status: z.enum(['positive', 'neutral', 'negative']).describe('Status of the recovery factor.'),
+        description: z.string().describe('Technical explanation for the status.'),
       })
     )
-    .describe('Forensic indicators that determine the probability and difficulty of recovery.'),
+    .describe('Technical indicators determining feasibility.'),
   informationCategoriesToGather: z
     .array(
       z.object({
         categoryName: z
           .string()
-          .describe('The name of the investigation focus or technical recovery path (e.g., Fund Movement Analysis, Technical Credential Recovery).'),
+          .describe('Technical focus area (e.g., Fund Movement Analysis).'),
         description: z
           .string()
           .describe(
-            'A detailed explanation of why this focus area is critical for this specific case.'
+            'Technical reason why this area is critical.'
           ),
         specificItemsToGather: z
           .array(z.string())
           .describe(
-            'A list of specific forensic items, evidence, or technical requirements the user should address.'
+            'List of specific forensic items or technical requirements.'
           ),
       })
     )
     .describe(
-      'A structured list of forensic investigation focus areas or technical recovery steps the user needs to address.'
+      'Structured list of investigation focus areas.'
     ),
   importantConsiderations: z
     .array(z.string())
     .describe(
-      'A list of critical safety considerations or warnings for the user during the recovery process.'
+      'Critical safety and technical protocols for the user.'
     ),
   nextStepsRecommendation: z
     .string()
     .describe(
-      'Overall authoritative advice for the user on how to proceed with their recovery roadmap.'
+      'Authoritative advice on the human specialist review process.'
     ),
 });
 export type AIGuidedRecoveryPreparationOutput = z.infer<
@@ -101,24 +102,27 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
   name: 'aiGuidedRecoveryPreparationPrompt',
   input: {schema: AIGuidedRecoveryPreparationInputSchema},
   output: {schema: AIGuidedRecoveryPreparationOutputSchema},
-  prompt: `You are an expert digital asset recovery forensic specialist conducting an initial "Recovery Case Assessment". 
+  prompt: `You are an enterprise-grade digital forensic scanner for Lazoronix. 
 
-Based on the provided case data, identify:
-1. **Risk Level**: Determine the risk based on time elapsed, scam complexity, and asset type.
-2. **Evidence Scores**: 
-   - Assign an overall "Evidence Completeness Score".
-   - Assign an "Overall Case Strength" percentage.
-   - Provide a detailed "Evidence Tracker" with scores for: Transaction Records, Communication History, Screenshots, Identity Information, and Wallet Data.
-3. **Preliminary Case Findings**: Provide structured data points for quick scannability.
-4. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility.
-5. **Investigation Focus**: Use forensic/technical terms.
-6. **Scenario Summary**: A concise professional forensic summary.
-7. **Safety Protocols**: Critical security advice.
+Your task is to conduct an "Automated Case Intake Assessment" based on the user's data.
 
-User's Case Data:
+Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler or empathy. You are a forensic engine processing data.
+
+Analysis Goals:
+1. **Risk Analysis**: Evaluate based on time elapsed, scam complexity, and asset traceability.
+2. **Evidence Density**: 
+   - Assign "Evidence Completeness Score".
+   - Assign "Overall Case Strength" percentage.
+   - Provide "Evidence Tracker" scores for: Transaction Records, Communication Logs, Identity Verification, Wallet Data, and Platform Evidence.
+3. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Strength, etc.
+4. **Forensic Focus**: Detail the technical trail analysis needed.
+5. **Scenario Summary**: A one-sentence technical summary of the incident.
+6. **Next Steps**: Always point towards "Specialist Approval" and "Formal Investigation".
+
+Input Data:
 {{{initialProblemDescription}}}
 
-Be precise, authoritative, and technical. Avoid empathy; focus on digital forensics, technical trail analysis, and cryptographical constraints.`,
+Be Technical. Use terms like "Fund Obfuscation", "Blockchain Analysis", "Asset Tracing", and "Evidence Integrity".`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

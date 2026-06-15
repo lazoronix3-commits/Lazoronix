@@ -14,7 +14,6 @@ import {
   Loader2, 
   CheckCircle2, 
   ShieldAlert, 
-  ArrowRightCircle, 
   Search,
   TrendingUp,
   BarChart,
@@ -36,10 +35,15 @@ import {
   Info,
   Clock,
   ClipboardList,
-  Target
+  Target,
+  UserCheck,
+  Zap,
+  Network,
+  Database
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 type CaseType = {
   id: string;
@@ -144,6 +148,15 @@ const CASE_TYPES: CaseType[] = [
   },
 ]
 
+const TIMELINE_STEPS = [
+  { id: 'intake', label: 'Evidence Received', status: 'completed', icon: CheckCircle2 },
+  { id: 'review', label: 'Preliminary Review', status: 'current', icon: Clock },
+  { id: 'analysis', label: 'Forensic Analysis', status: 'pending', icon: Database },
+  { id: 'assignment', label: 'Investigator Assignment', status: 'pending', icon: UserCheck },
+  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Target },
+  { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
+]
+
 export function AIGuidedTool() {
   const [step, setStep] = useState<'type' | 'details' | 'result'>('type')
   const [selectedType, setSelectedType] = useState<CaseType | null>(null)
@@ -238,7 +251,7 @@ ${description}
     <section id="ai-tool" className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
       
-      <div className="container mx-auto px-6 max-w-5xl">
+      <div className="container mx-auto px-6 max-w-6xl">
         
         {/* Step Indicator */}
         <div className="flex justify-center mb-16">
@@ -288,7 +301,7 @@ ${description}
         )}
 
         {step === 'details' && selectedType && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-4xl mx-auto">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto">
             <Button 
               variant="ghost" 
               className="mb-8 hover:bg-white/5 text-muted-foreground hover:text-foreground"
@@ -398,7 +411,7 @@ ${description}
                           "Email Correspondence",
                           "Account Statements"
                         ].map((item, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs text-foreground/70">
+                          <li key={i} className="flex items-start gap-2 text-xs text-foreground/70">
                             <FileText className="w-3.5 h-3.5 text-primary" />
                             {item}
                           </li>
@@ -424,66 +437,120 @@ ${description}
 
         {step === 'result' && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Professional Assessment Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 p-8 glass-card rounded-[2rem] border-primary/20">
-               <div className="flex items-center gap-6">
-                 <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                   <Fingerprint className="w-8 h-8 text-white" />
-                 </div>
-                 <div>
-                   <div className="flex items-center gap-3 mb-1">
-                     <h2 className="text-2xl font-headline font-bold">Recovery Case Assessment</h2>
-                     <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Official Report</span>
+            {/* Investigation Dashboard Header */}
+            <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
+              <div className="flex-grow p-8 glass-card rounded-[2rem] border-primary/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                 <div className="flex items-center gap-6">
+                   <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                     <Activity className="w-8 h-8 text-white" />
                    </div>
-                   <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                     <span className="text-muted-foreground flex items-center gap-1.5"><Info className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-mono font-bold">{caseId}</span></span>
-                     <span className="text-muted-foreground flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Initial Forensic Review</span></span>
-                     <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Generated: <span className="text-foreground font-bold">{new Date().toLocaleDateString()}</span></span>
+                   <div>
+                     <div className="flex items-center gap-3 mb-1">
+                       <h2 className="text-2xl font-headline font-bold tracking-tight">Investigation Dashboard</h2>
+                       <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Live Assessment</span>
+                     </div>
+                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                       <span className="text-muted-foreground flex items-center gap-1.5"><Info className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-mono font-bold">{caseId}</span></span>
+                       <span className="text-muted-foreground flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Initial Review</span></span>
+                       <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Generated: <span className="text-foreground font-bold">{new Date().toLocaleDateString()}</span></span>
+                     </div>
                    </div>
                  </div>
-               </div>
-               <div className="flex items-center gap-3">
-                 <Button variant="outline" onClick={() => {
-                   setStep('type')
-                   setCaseId('')
-                   setResult(null)
-                 }} className="border-white/10 hover:bg-white/5 font-bold">
-                   New Assessment
-                 </Button>
-                 <Button className="bg-primary hover:bg-primary/90 font-bold">
-                   Download Report PDF
-                 </Button>
-               </div>
+                 <div className="flex items-center gap-3 w-full md:w-auto">
+                   <Button variant="outline" onClick={() => {
+                     setStep('type')
+                     setCaseId('')
+                     setResult(null)
+                   }} className="border-white/10 hover:bg-white/5 font-bold flex-grow md:flex-grow-0">
+                     New Assessment
+                   </Button>
+                   <Button className="bg-primary hover:bg-primary/90 font-bold flex-grow md:flex-grow-0">
+                     Download PDF Report
+                   </Button>
+                 </div>
+              </div>
+
+              {/* Specialist Card */}
+              <Card className="glass-card border-white/5 p-6 flex flex-row items-center gap-4 min-w-[300px]">
+                <Avatar className="h-16 w-16 border-2 border-primary/20">
+                  <AvatarImage src={`https://picsum.photos/seed/${caseId}/100/100`} />
+                  <AvatarFallback className="bg-primary text-white font-bold">AN</AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <p className="font-bold text-foreground">Senior Recovery Analyst</p>
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+                  <p className="text-xs text-muted-foreground font-medium mb-2">Financial Fraud Division</p>
+                  <div className="flex items-center gap-2 px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-primary w-fit">
+                    <UserCheck className="w-3 h-3" />
+                    Assigned to LRX-{caseId.split('-')[1]}
+                  </div>
+                </div>
+              </Card>
             </div>
+
+            {/* Investigation Timeline */}
+            <Card className="glass-card border-white/5 p-8">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
+                {TIMELINE_STEPS.map((step, idx) => (
+                  <div key={step.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
+                    <div className={cn(
+                      "w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all",
+                      step.status === 'completed' ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : 
+                      step.status === 'current' ? "bg-primary text-white shadow-lg shadow-primary/20 ring-4 ring-primary/10" : 
+                      "bg-muted text-muted-foreground border border-white/5"
+                    )}>
+                      <step.icon className="w-5 h-5" />
+                    </div>
+                    <div className="text-left md:text-center">
+                      <p className={cn(
+                        "text-[10px] font-black uppercase tracking-widest",
+                        step.status === 'completed' ? "text-emerald-500" : step.status === 'current' ? "text-primary" : "text-muted-foreground"
+                      )}>{step.status === 'completed' ? 'Verified' : step.status === 'current' ? 'Processing' : 'Pending'}</p>
+                      <p className="text-xs font-bold text-foreground whitespace-nowrap">{step.label}</p>
+                    </div>
+                    {idx < TIMELINE_STEPS.length - 1 && (
+                      <div className="hidden md:block absolute top-5 left-[calc(50%+24px)] w-[calc(100%-48px)] h-[1px] bg-white/5 -z-0">
+                        <div className={cn(
+                          "h-full transition-all duration-1000",
+                          step.status === 'completed' ? "bg-emerald-500 w-full" : "bg-transparent w-0"
+                        )} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
 
             {/* Assessment Dashboard Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="glass-card border-white/5 p-6">
+              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Investigative Risk</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Forensic Risk Factor</span>
                   <ShieldAlert className={cn("w-5 h-5", getRiskColor(result.riskLevel))} />
                 </div>
-                <div className="text-3xl font-headline font-bold mb-1">{result.riskLevel}</div>
+                <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.riskLevel}</div>
                 <p className="text-xs text-muted-foreground leading-relaxed">Risk factor calculated based on time-lapse and scam complexity.</p>
               </Card>
 
-              <Card className="glass-card border-white/5 p-6">
+              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Evidence Completeness</span>
-                  <FileText className="w-5 h-5 text-primary" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Evidence Integrity Score</span>
+                  <Database className="w-5 h-5 text-primary" />
                 </div>
-                <div className="text-3xl font-headline font-bold mb-2">{result.evidenceCompletenessScore}%</div>
+                <div className="text-3xl font-headline font-bold mb-2 tracking-tight">{result.evidenceCompletenessScore}%</div>
                 <Progress value={result.evidenceCompletenessScore} className="h-1.5 mb-2" />
-                <p className="text-xs text-muted-foreground leading-relaxed">Current score based on provided technical data and narrative.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">Current score based on verified technical data and case logs.</p>
               </Card>
 
-              <Card className="glass-card border-white/5 p-6">
+              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Overall Case Strength</span>
-                  <Target className="text-secondary w-5 h-5" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recovery Probability</span>
+                  <Zap className="text-secondary w-5 h-5" />
                 </div>
-                <div className="text-3xl font-headline font-bold mb-1">{result.overallCaseStrength}%</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">Forensic calculation of successful recovery probability.</p>
+                <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.overallCaseStrength}%</div>
+                <p className="text-xs text-muted-foreground leading-relaxed">Forensic calculation of successful asset retrieval probability.</p>
               </Card>
             </div>
 
@@ -493,20 +560,20 @@ ${description}
                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                   <ClipboardList className="w-5 h-5 text-primary" />
                 </div>
-                Preliminary Case Findings
+                Preliminary Forensic Findings
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {[
                   { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
                   { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
                   { label: "Evidence Strength", value: result.preliminaryCaseFindings.evidenceStrength, color: result.preliminaryCaseFindings.evidenceStrength === 'High' ? 'text-emerald-500' : result.preliminaryCaseFindings.evidenceStrength === 'Moderate' ? 'text-amber-500' : 'text-destructive' },
-                  { label: "Transaction Records", value: result.preliminaryCaseFindings.transactionRecordsStatus },
+                  { label: "Transaction Status", value: result.preliminaryCaseFindings.transactionRecordsStatus },
                   { label: "Recovery Complexity", value: result.preliminaryCaseFindings.recoveryComplexity, color: getComplexityColor(result.preliminaryCaseFindings.recoveryComplexity) },
                   { label: "Recommended Action", value: result.preliminaryCaseFindings.recommendedAction }
                 ].map((finding, idx) => (
-                  <Card key={idx} className="glass-card border-white/5 p-4 flex flex-col justify-center text-center">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">{finding.label}</span>
-                    <span className={cn("text-sm font-bold leading-tight", finding.color || "text-foreground")}>{finding.value}</span>
+                  <Card key={idx} className="glass-card border-white/5 p-4 flex flex-col justify-center text-center hover:bg-white/5 transition-colors">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-2">{finding.label}</span>
+                    <span className={cn("text-xs font-bold leading-tight", finding.color || "text-foreground")}>{finding.value}</span>
                   </Card>
                 ))}
               </div>
@@ -517,9 +584,9 @@ ${description}
               <Card className="glass-card border-white/5 p-8 flex flex-col h-full">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-8">
                   <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Search className="w-5 h-5 text-primary" />
+                    <Network className="w-5 h-5 text-primary" />
                   </div>
-                  Evidence Collection Tracker
+                  Evidence Collection Matrix
                 </h3>
                 <div className="space-y-8 flex-grow">
                   {result.evidenceTracker.map((tracker, idx) => (
@@ -537,36 +604,36 @@ ${description}
                     <span className="text-lg font-headline font-bold">Overall Case Strength</span>
                     <span className="text-2xl font-black text-secondary">{result.overallCaseStrength}%</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">This score represents the forensic viability of your case based on current evidence.</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">This score represents the forensic viability of your case based on current evidence density.</p>
                 </div>
               </Card>
 
               {/* Recovery Scenario Summary */}
               <Card className="border-primary/20 bg-primary/5 relative overflow-hidden flex flex-col h-full">
                 <div className="absolute top-0 right-0 p-4 opacity-5">
-                  <Activity className="w-32 h-32" />
+                  <Network className="w-32 h-32" />
                 </div>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-2xl font-headline">
+                  <CardTitle className="flex items-center gap-3 text-2xl font-headline tracking-tight">
                     <div className="p-2 rounded-lg bg-primary/20">
-                      <Fingerprint className="w-6 h-6 text-primary" />
+                      <Search className="w-6 h-6 text-primary" />
                     </div>
-                    Forensic Summary
+                    Investigation Summary
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  <p className="text-lg leading-relaxed text-foreground/90 font-medium italic">
+                  <p className="text-lg leading-relaxed text-foreground/90 font-medium italic border-l-2 border-primary/50 pl-6 py-2">
                     "{result.recoveryScenarioSummary}"
                   </p>
                   
                   <div className="mt-8 space-y-4">
-                    <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">Probability Indicators</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recovery Indicators</p>
                     <div className="grid grid-cols-1 gap-3">
                       {result.recoveryIndicators.map((indicator, idx) => (
-                        <div key={idx} className={cn("p-4 rounded-xl border-none flex items-center gap-4", getStatusBg(indicator.status))}>
+                        <div key={idx} className={cn("p-4 rounded-xl border-none flex items-center gap-4 transition-all hover:scale-[1.02]", getStatusBg(indicator.status))}>
                           {getStatusIcon(indicator.status)}
                           <div>
-                            <p className="text-xs font-bold uppercase tracking-wider">{indicator.label}</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest">{indicator.label}</p>
                             <p className="text-xs font-medium leading-snug">{indicator.description}</p>
                           </div>
                         </div>
@@ -587,20 +654,20 @@ ${description}
                      <ShieldAlert className="w-8 h-8 text-destructive" />
                    </div>
                    <div className="space-y-4">
-                     <h3 className="text-2xl font-headline font-bold text-destructive">Time-Sensitive Investigative Notice</h3>
+                     <h3 className="text-2xl font-headline font-bold text-destructive tracking-tight">Time-Sensitive Investigative Notice</h3>
                      <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                       Recovery opportunities can become more difficult as time passes due to the technical nature of digital asset movements. We recommend preserving evidence as soon as possible.
+                       Recovery opportunities can become more difficult as time passes due to the technical nature of digital asset movements. We recommend preserving evidence immediately.
                      </p>
                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
                        {[
                          { label: "Asset Movement", icon: Activity },
                          { label: "Account Closure", icon: XCircle },
                          { label: "Data Loss", icon: FileText },
-                         { label: "Evidence Degradation", icon: ShieldAlert }
+                         { label: "Evidence Decay", icon: ShieldAlert }
                        ].map((item, i) => (
                          <div key={i} className="flex flex-col items-center p-4 rounded-xl bg-background/40 border border-white/5 text-center">
                            <item.icon className="w-5 h-5 text-destructive mb-2" />
-                           <span className="text-[10px] font-black uppercase tracking-widest opacity-80">{item.label}</span>
+                           <span className="text-[9px] font-black uppercase tracking-widest opacity-80">{item.label}</span>
                          </div>
                        ))}
                      </div>
@@ -612,7 +679,7 @@ ${description}
               <div className="space-y-6">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
-                    <CheckCircle2 className="w-5 h-5 text-secondary" />
+                    <Database className="w-5 h-5 text-secondary" />
                   </div>
                   {selectedType?.id === 'wallet' ? 'Technical Recovery Path' : 'Forensic Investigation Focus'}
                 </h3>
@@ -651,7 +718,7 @@ ${description}
                   <Card className="border-destructive/20 bg-destructive/5 rounded-[2rem] overflow-hidden">
                     <CardContent className="p-8 space-y-5">
                       {result.importantConsiderations.map((con, idx) => (
-                        <div key={idx} className="flex items-start gap-4 text-sm leading-relaxed text-foreground/90 font-bold bg-background/40 p-4 rounded-xl">
+                        <div key={idx} className="flex items-start gap-4 text-sm leading-relaxed text-foreground/90 font-bold bg-background/40 p-4 rounded-xl border border-destructive/10">
                           <ShieldAlert className="w-5 h-5 text-destructive shrink-0" />
                           {con}
                         </div>
@@ -672,22 +739,22 @@ ${description}
                       <ShieldCheck className="w-32 h-32 text-emerald-500" />
                     </div>
                     <CardContent className="p-8">
-                      <h4 className="text-2xl font-headline font-bold mb-4 text-emerald-500">
+                      <h4 className="text-2xl font-headline font-bold mb-4 text-emerald-500 tracking-tight">
                         {result.overallCaseStrength > 40 
-                          ? "Your Case Appears Eligible For Professional Review" 
+                          ? "Case Eligible For Professional Review" 
                           : "Preliminary Eligibility Assessment"}
                       </h4>
                       <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium text-foreground/80">
-                        Based on the information provided, our investigators recommend a detailed assessment of your case to verify recovery paths and initiate the technical roadmap.
+                        Based on the information provided, our senior investigators recommend a detailed assessment of your case to verify recovery paths and initiate the technical roadmap.
                       </p>
                       
                       <div className="space-y-4 mb-10">
-                        <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">What Happens Next?</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Professional Next Steps</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                           {[
-                            "Specialist Review",
-                            "Evidence Verification",
-                            "Recovery Feasibility Analysis",
+                            "Specialist Audit",
+                            "Evidence Chain Verification",
+                            "Feasibility Analysis",
                             "Investigation Roadmap"
                           ].map((item, i) => (
                             <div key={i} className="flex items-center gap-3 text-sm font-bold text-foreground/90">
@@ -698,7 +765,7 @@ ${description}
                         </div>
                       </div>
 
-                      <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
+                      <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold transition-all hover:scale-[1.01]" asChild>
                         <a href="#contact">
                           Continue To Secure Assessment
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

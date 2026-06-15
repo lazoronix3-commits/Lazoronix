@@ -41,7 +41,7 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
       z.object({
         categoryName: z
           .string()
-          .describe('The name of the investigation focus (e.g., Identity Verification, Fund Movement Analysis).'),
+          .describe('The name of the investigation focus or technical recovery path (e.g., Fund Movement Analysis, Technical Credential Recovery).'),
         description: z
           .string()
           .describe(
@@ -50,12 +50,12 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
         specificItemsToGather: z
           .array(z.string())
           .describe(
-            'A list of specific forensic items or evidence the user should gather for this focus area.'
+            'A list of specific forensic items, evidence, or technical requirements the user should address.'
           ),
       })
     )
     .describe(
-      'A structured list of forensic investigation focus areas the user needs to address.'
+      'A structured list of forensic investigation focus areas or technical recovery steps the user needs to address.'
     ),
   importantConsiderations: z
     .array(z.string())
@@ -79,20 +79,18 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
   prompt: `You are an expert digital asset recovery forensic specialist. Your goal is to analyze a user's recovery case and provide a structured "Forensic Assessment".
 
 Based on the provided case data, identify:
-1. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and entity identification. Assign a status (positive/neutral/negative) for each.
-2. **Investigation Focus**: Instead of generic categories, use forensic terms such as:
-   - Identity Verification (especially for romance/job scams)
-   - Transaction Tracing (especially for crypto/broker scams)
-   - Fund Movement Analysis
-   - Communication Evidence Review
-3. **Scenario Summary**: A professional summary of what happened.
-4. **Security Warnings**: Critical safety advice.
-5. **Forensic Path**: Clear next steps.
+1. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility. Assign a status (positive/neutral/negative) for each.
+2. **Investigation Focus / Technical Path**: Instead of generic categories, use forensic and technical terms:
+   - For Scams: Identity Verification, Transaction Tracing, Fund Movement Analysis, Communication Evidence Review.
+   - For Wallet Access: Technical Credential Recovery, Device Forensic Analysis, Backup Verification, Software Version Compatibility.
+3. **Scenario Summary**: A professional, objective summary of what transpired.
+4. **Security Warnings**: Critical safety advice (e.g., "Do not share seed phrases with anyone claiming to be support").
+5. **Forensic Path**: Clear, authoritative next steps.
 
 User's Case Data:
 {{{initialProblemDescription}}}
 
-Be precise, authoritative, and focused on technical feasibility. Avoid generic platitudes; focus on digital forensics and technical trail analysis.`,
+Be precise, authoritative, and focused on technical feasibility. Avoid generic platitudes; focus on digital forensics, technical trail analysis, and cryptographical recovery constraints.`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

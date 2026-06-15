@@ -45,6 +45,7 @@ type CaseType = {
     placeholder: string;
     key: string;
     type?: string;
+    options?: string[];
   }[];
 }
 
@@ -59,8 +60,8 @@ const CASE_TYPES: CaseType[] = [
       { key: 'website', label: 'Website URL', placeholder: 'e.g. www.fakebroker.com' },
       { key: 'amount', label: 'Approximate Amount Lost', placeholder: 'e.g. 5,000', type: 'number' },
       { key: 'withdrawalAttempts', label: 'Withdrawal Attempts', placeholder: 'e.g. 3 attempts denied' },
-      { key: 'paymentMethods', label: 'Payment Methods Used', placeholder: 'e.g. Bank transfer, USDT, Credit Card' },
-      { key: 'walletAddress', label: 'Crypto Wallet Used (if applicable)', placeholder: 'Your or their wallet address' },
+      { key: 'paymentMethods', label: 'Payment Methods Used', placeholder: 'e.g. Bank transfer, USDT' },
+      { key: 'walletAddress', label: 'Destination Wallet (if known)', placeholder: 'Address you sent funds to' },
     ]
   },
   { 
@@ -73,7 +74,7 @@ const CASE_TYPES: CaseType[] = [
       { key: 'website', label: 'Website URL', placeholder: 'e.g. www.cryptogrowth.io' },
       { key: 'amount', label: 'Amount Invested', placeholder: 'e.g. 10,000', type: 'number' },
       { key: 'referralSource', label: 'Referral Source', placeholder: 'e.g. Telegram group, Facebook ad' },
-      { key: 'cryptoWallet', label: 'Destination Wallet Address', placeholder: 'Address you sent funds to' },
+      { key: 'cryptoWallet', label: 'Recipient Wallet Address', placeholder: 'Address you sent funds to' },
     ]
   },
   { 
@@ -98,7 +99,7 @@ const CASE_TYPES: CaseType[] = [
       { key: 'companyName', label: 'Company Name Used', placeholder: 'e.g. Remote Solutions Inc' },
       { key: 'jobTitle', label: 'Job Title Offered', placeholder: 'e.g. Data Entry Specialist' },
       { key: 'amount', label: 'Fees Paid', placeholder: 'e.g. 500', type: 'number' },
-      { key: 'contactPlatform', label: 'Contact Platform', placeholder: 'e.g. WhatsApp, LinkedIn, Indeed' },
+      { key: 'contactPlatform', label: 'Contact Platform', placeholder: 'e.g. WhatsApp, LinkedIn' },
     ]
   },
   { 
@@ -108,7 +109,7 @@ const CASE_TYPES: CaseType[] = [
     icon: Banknote,
     fields: [
       { key: 'lenderName', label: 'Lender/Agency Name', placeholder: 'e.g. FastCapital Loans' },
-      { key: 'feeReason', label: 'Reason Given for Upfront Fee', placeholder: 'e.g. Insurance, Tax, Activation' },
+      { key: 'feeReason', label: 'Reason for Upfront Fee', placeholder: 'e.g. Insurance, Tax, Activation' },
       { key: 'amount', label: 'Total Fees Paid', placeholder: 'e.g. 1,200', type: 'number' },
     ]
   },
@@ -118,10 +119,10 @@ const CASE_TYPES: CaseType[] = [
     description: "Lost access to crypto wallets or digital assets.",
     icon: Wallet,
     fields: [
-      { key: 'walletType', label: 'Wallet Type', placeholder: 'e.g. Ledger, Metamask, Trust Wallet' },
-      { key: 'assetType', label: 'Assets Held', placeholder: 'e.g. BTC, ETH, USDT' },
-      { key: 'lastAccess', label: 'Last Date of Successful Access', placeholder: 'e.g. 2023-12-01' },
-      { key: 'issueType', label: 'Issue Category', placeholder: 'e.g. Lost seed phrase, Hacked, Technical error' },
+      { key: 'walletType', label: 'Wallet Type', placeholder: 'Ledger, Metamask, Trust Wallet, etc.' },
+      { key: 'issueType', label: 'What is the Issue?', placeholder: 'Lost password, Lost seed, Damaged, etc.' },
+      { key: 'walletValue', label: 'Estimated Wallet Value', placeholder: 'e.g. 0.5 BTC / $25,000', type: 'text' },
+      { key: 'lastAccess', label: 'Last Successful Access', placeholder: 'e.g. 2023-12-01' },
     ]
   },
   { 
@@ -438,7 +439,7 @@ ${description}
                   <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
                     <CheckCircle2 className="w-5 h-5 text-secondary" />
                   </div>
-                  Forensic Investigation Focus
+                  {selectedType?.id === 'wallet' ? 'Technical Recovery Path' : 'Forensic Investigation Focus'}
                 </h3>
                 <Accordion type="single" collapsible className="w-full space-y-4">
                   {result.informationCategoriesToGather.map((cat, idx) => (
@@ -489,7 +490,7 @@ ${description}
                     <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                       <ArrowRightCircle className="w-5 h-5 text-primary" />
                     </div>
-                    Recommended Forensic Path
+                    {selectedType?.id === 'wallet' ? 'Technical Roadmap' : 'Recommended Forensic Path'}
                   </h3>
                   <Card className="border-primary/20 bg-primary/10 rounded-[2rem] overflow-hidden">
                     <CardContent className="p-8">
@@ -498,7 +499,7 @@ ${description}
                       </p>
                       <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
                         <a href="#assessment-form">
-                          Initiate Full Forensic Review
+                          {selectedType?.id === 'wallet' ? 'Initiate Technical Review' : 'Initiate Full Forensic Review'}
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>

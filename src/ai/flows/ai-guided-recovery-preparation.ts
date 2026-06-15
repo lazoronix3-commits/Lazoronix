@@ -30,6 +30,14 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
     .min(0)
     .max(100)
     .describe('A percentage score (0-100) indicating the completeness of the evidence provided.'),
+  preliminaryCaseFindings: z.object({
+    scamType: z.string().describe('The identified category of fraud or asset loss.'),
+    estimatedLoss: z.string().describe('The estimated financial value of the loss.'),
+    evidenceStrength: z.enum(['Low', 'Moderate', 'High']).describe('The forensic strength of the provided evidence.'),
+    transactionRecordsStatus: z.string().describe('The status or availability of transaction hashes/receipts.'),
+    recoveryComplexity: z.enum(['Low', 'Moderate', 'High', 'Extremely High']).describe('The technical difficulty of recovery.'),
+    recommendedAction: z.string().describe('The immediate next professional step (e.g., Formal Investigation, Technical Audit).'),
+  }).describe('Structured forensic findings for quick scannability.'),
   recoveryScenarioSummary: z
     .string()
     .describe(
@@ -89,12 +97,19 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
 Based on the provided case data, identify:
 1. **Risk Level**: Determine the risk based on time elapsed, scam complexity, and asset type.
 2. **Evidence Completeness**: Score the user on how much useful data (TX IDs, screenshots, names) they provided.
-3. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility.
-4. **Investigation Focus**: Use forensic/technical terms:
+3. **Preliminary Case Findings**: Provide structured data points:
+   - Identify the scam type clearly.
+   - Extract the estimated loss (with currency).
+   - Rate evidence strength based on detail provided.
+   - Note the status of transaction records.
+   - Determine technical complexity.
+   - Recommend a specific action type.
+4. **Recovery Indicators**: Evaluate factors like evidence availability, transaction traceability, and technical feasibility.
+5. **Investigation Focus**: Use forensic/technical terms:
    - For Scams: Identity Verification, Transaction Tracing, Fund Movement Analysis, Communication Evidence Review.
    - For Wallet Access: Technical Credential Recovery, Device Forensic Analysis, Backup Verification, Software Version Compatibility.
-5. **Scenario Summary**: A professional, objective forensic summary.
-6. **Safety Protocols**: Critical security advice.
+6. **Scenario Summary**: A concise professional forensic summary.
+7. **Safety Protocols**: Critical security advice.
 
 User's Case Data:
 {{{initialProblemDescription}}}

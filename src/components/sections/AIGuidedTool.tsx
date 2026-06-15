@@ -34,7 +34,8 @@ import {
   MinusCircle,
   Fingerprint,
   Info,
-  Clock
+  Clock,
+  ClipboardList
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -217,6 +218,15 @@ ${description}
   const getRiskColor = (risk: string) => {
     switch (risk) {
       case 'Critical': return 'text-destructive'
+      case 'High': return 'text-orange-500'
+      case 'Moderate': return 'text-amber-500'
+      default: return 'text-emerald-500'
+    }
+  }
+
+  const getComplexityColor = (complexity: string) => {
+    switch (complexity) {
+      case 'Extremely High': return 'text-destructive'
       case 'High': return 'text-orange-500'
       case 'Moderate': return 'text-amber-500'
       default: return 'text-emerald-500'
@@ -476,6 +486,31 @@ ${description}
               </Card>
             </div>
 
+            {/* Preliminary Case Findings Section */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-headline font-semibold flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                  <ClipboardList className="w-5 h-5 text-primary" />
+                </div>
+                Preliminary Case Findings
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {[
+                  { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
+                  { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
+                  { label: "Evidence Strength", value: result.preliminaryCaseFindings.evidenceStrength, color: result.preliminaryCaseFindings.evidenceStrength === 'High' ? 'text-emerald-500' : result.preliminaryCaseFindings.evidenceStrength === 'Moderate' ? 'text-amber-500' : 'text-destructive' },
+                  { label: "Transaction Records", value: result.preliminaryCaseFindings.transactionRecordsStatus },
+                  { label: "Recovery Complexity", value: result.preliminaryCaseFindings.recoveryComplexity, color: getComplexityColor(result.preliminaryCaseFindings.recoveryComplexity) },
+                  { label: "Recommended Action", value: result.preliminaryCaseFindings.recommendedAction }
+                ].map((finding, idx) => (
+                  <Card key={idx} className="glass-card border-white/5 p-4 flex flex-col justify-center text-center">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">{finding.label}</span>
+                    <span className={cn("text-sm font-bold leading-tight", finding.color || "text-foreground")}>{finding.value}</span>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
             {/* Probability Indicators */}
             <div className="grid md:grid-cols-4 gap-4">
               {result.recoveryIndicators.map((indicator, idx) => (
@@ -500,7 +535,7 @@ ${description}
                   <div className="p-2 rounded-lg bg-primary/20">
                     <Search className="w-6 h-6 text-primary" />
                   </div>
-                  Case Scenario Analysis
+                  Forensic Summary
                 </CardTitle>
               </CardHeader>
               <CardContent>

@@ -3,23 +3,23 @@ import { Button } from '@/components/ui/button';
 const steps = [
   {
     number: "01",
-    title: "Secure Case Intake",
-    description: "Submit your case details through our encrypted assessment process."
+    title: "Initial Consultation",
+    description: "Share the details of your case through our secure intake process."
   },
   {
     number: "02",
-    title: "Forensic Evaluation",
-    description: "Our specialists analyze available evidence, wallet information, and transaction history."
+    title: "Forensic Investigation",
+    description: "We examine transaction records, communications, wallet activity, and available evidence."
   },
   {
     number: "03",
     title: "Recovery Strategy",
-    description: "If viable paths exist, we create a structured plan based on technical findings."
+    description: "A customized recovery roadmap is developed based on investigative findings."
   },
   {
     number: "04",
-    title: "Recovery Execution",
-    description: "Approved procedures are performed under controlled security protocols."
+    title: "Resolution & Support",
+    description: "We guide you through the recovery process and provide ongoing case support."
   }
 ];
 
@@ -29,7 +29,7 @@ export function ProcessSection() {
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl font-headline font-bold mb-8">Our 4-Step Recovery Methodology</h2>
+            <h2 className="text-4xl font-headline font-bold mb-8">Our 4-Step Recovery Process</h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Every case is different. We focus on evidence, feasibility, and transparency—not assumptions or unrealistic promises.
             </p>

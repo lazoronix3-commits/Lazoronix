@@ -577,6 +577,37 @@ ${description}
               </Card>
             </div>
 
+            {/* Time-Sensitive Notice for Scam Cases */}
+            <Card className="border-destructive/20 bg-destructive/5 rounded-[2.5rem] overflow-hidden p-8 md:p-12 relative">
+                <div className="absolute top-0 right-0 p-8 opacity-5">
+                  <Clock className="w-32 h-32 text-destructive" />
+                </div>
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                   <div className="w-16 h-16 rounded-2xl bg-destructive/10 flex items-center justify-center shrink-0">
+                     <ShieldAlert className="w-8 h-8 text-destructive" />
+                   </div>
+                   <div className="space-y-4">
+                     <h3 className="text-2xl font-headline font-bold text-destructive">Time-Sensitive Investigative Notice</h3>
+                     <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl">
+                       Recovery opportunities can become more difficult as time passes due to the technical nature of digital asset movements. We recommend preserving evidence as soon as possible.
+                     </p>
+                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                       {[
+                         { label: "Asset Movement", icon: Activity },
+                         { label: "Account Closure", icon: XCircle },
+                         { label: "Data Loss", icon: FileText },
+                         { label: "Evidence Degradation", icon: ShieldAlert }
+                       ].map((item, i) => (
+                         <div key={i} className="flex flex-col items-center p-4 rounded-xl bg-background/40 border border-white/5 text-center">
+                           <item.icon className="w-5 h-5 text-destructive mb-2" />
+                           <span className="text-[10px] font-black uppercase tracking-widest opacity-80">{item.label}</span>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                </div>
+            </Card>
+
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <h3 className="text-xl font-headline font-semibold flex items-center gap-3">

@@ -631,19 +631,45 @@ ${description}
 
                 <div>
                   <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                      <ArrowRightCircle className="w-5 h-5 text-primary" />
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                     </div>
-                    {selectedType?.id === 'wallet' ? 'Technical Roadmap' : 'Recommended Forensic Path'}
+                    Case Eligibility Status
                   </h3>
-                  <Card className="border-primary/20 bg-primary/10 rounded-[2rem] overflow-hidden">
+                  <Card className="border-emerald-500/20 bg-emerald-500/5 rounded-[2rem] overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-10">
+                      <ShieldCheck className="w-32 h-32 text-emerald-500" />
+                    </div>
                     <CardContent className="p-8">
-                      <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium">
-                        {result.nextStepsRecommendation}
+                      <h4 className="text-2xl font-headline font-bold mb-4 text-emerald-500">
+                        {result.overallCaseStrength > 40 
+                          ? "Your Case Appears Eligible For Professional Review" 
+                          : "Preliminary Eligibility Assessment"}
+                      </h4>
+                      <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium text-foreground/80">
+                        Based on the information provided, our investigators recommend a detailed assessment of your case to verify recovery paths and initiate the technical roadmap.
                       </p>
+                      
+                      <div className="space-y-4 mb-10">
+                        <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">What Happens Next?</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+                          {[
+                            "Specialist Review",
+                            "Evidence Verification",
+                            "Recovery Feasibility Analysis",
+                            "Investigation Roadmap"
+                          ].map((item, i) => (
+                            <div key={i} className="flex items-center gap-3 text-sm font-bold text-foreground/90">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
                       <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold" asChild>
                         <a href="#contact">
-                          {selectedType?.id === 'wallet' ? 'Initiate Full Technical Review' : 'Initiate Full Forensic Review'}
+                          Continue To Secure Assessment
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>

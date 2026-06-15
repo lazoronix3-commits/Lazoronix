@@ -1,6 +1,24 @@
+'use client';
+
 import Link from 'next/link';
-import {Shield} from 'lucide-react';
-import {Button} from '@/components/ui/button';
+import { Shield, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const services = [
+  "Forex Scam Recovery",
+  "Investment Scam Recovery",
+  "Romance Scam Recovery",
+  "Job Scam Recovery",
+  "Loan Scam Recovery",
+  "Wallet Recovery",
+  "Asset Recovery Solutions",
+];
 
 export function Navbar() {
   return (
@@ -16,10 +34,25 @@ export function Navbar() {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <Link href="#services" className="text-sm font-medium hover:text-primary transition-colors">Services</Link>
-          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">How it Works</Link>
-          <Link href="#why-us" className="text-sm font-medium hover:text-primary transition-colors">Why Lazoronix</Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
+              Services <ChevronDown className="w-4 h-4 opacity-50" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56 bg-card border-white/10 shadow-2xl">
+              {services.map((service) => (
+                <DropdownMenuItem key={service} asChild>
+                  <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10">
+                    {service}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
+          <Link href="#why-us" className="text-sm font-medium hover:text-primary transition-colors">Success Stories</Link>
           <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
+          <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
         </div>
 
         <div className="flex items-center gap-4">
@@ -27,7 +60,7 @@ export function Navbar() {
             Client Portal
           </Button>
           <Button className="bg-primary hover:bg-primary/90">
-            Free Case Review
+            Get Free Assessment
           </Button>
         </div>
       </div>

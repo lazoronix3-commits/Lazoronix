@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
@@ -80,13 +81,17 @@ export function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-              <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black w-full sm:w-auto shadow-2xl shadow-primary/20 group uppercase tracking-widest rounded-none transition-all duration-300 premium-cta">
-                Request Assessment
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 px-12 text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full sm:w-auto font-bold uppercase tracking-widest rounded-none">
-                Speak With Specialists
-              </Button>
+              <Link href="#forensic-intake" className="w-full sm:w-auto">
+                <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black w-full shadow-2xl shadow-primary/20 group uppercase tracking-widest rounded-none transition-all duration-300 premium-cta">
+                  Request Assessment
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="#forensic-intake" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="h-16 px-12 text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full font-bold uppercase tracking-widest rounded-none">
+                  Speak With Specialists
+                </Button>
+              </Link>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-16 border-t border-white/5">

@@ -338,13 +338,17 @@ export default function Home() {
               Whether you've been affected by a forex scam, investment fraud, romance scam, fake job offer, loan scam, wallet access issue, or another asset recovery challenge, our specialists are ready to review your case.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-               <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none">
-                 Get My Free Case Assessment
-                 <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
-               </Button>
-               <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5 rounded-none font-bold uppercase tracking-widest">
-                 Speak With a Recovery Expert
-               </Button>
+               <Link href="#forensic-intake">
+                 <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none">
+                   Get My Free Case Assessment
+                   <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                 </Button>
+               </Link>
+               <Link href="#forensic-intake">
+                 <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5 rounded-none font-bold uppercase tracking-widest">
+                   Speak With a Recovery Expert
+                 </Button>
+               </Link>
             </div>
             
             <div className="pt-8 border-t border-white/5 max-w-2xl mx-auto">

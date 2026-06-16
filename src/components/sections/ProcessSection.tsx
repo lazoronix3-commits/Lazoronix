@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle2, Shield, Search, FileText, Activity, UserCheck } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
@@ -122,10 +123,12 @@ export function ProcessSection() {
               <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <div className="relative z-10">
                 <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Initialize Case Review</h4>
-                <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group">
-                  Begin Step 1 Now
-                  <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link href="#forensic-intake">
+                  <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group">
+                    Begin Step 1 Now
+                    <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
                 <p className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
                   Protected under non-disclosure protocols.
                 </p>

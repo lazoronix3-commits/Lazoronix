@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { AlertCircle, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -39,10 +40,12 @@ export function ProblemSection() {
                 </div>
               </div>
 
-              <Button size="lg" className="h-14 px-10 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold">
-                Request Free Case Review
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link href="#forensic-intake">
+                <Button size="lg" className="h-14 px-10 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold">
+                  Request Free Case Review
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
             
             <div className="flex flex-col justify-center">

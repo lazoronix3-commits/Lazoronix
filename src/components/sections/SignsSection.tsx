@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SectionReveal } from '@/components/ui/section-reveal';
@@ -60,10 +61,12 @@ export function SignsSection() {
                 <div className="relative z-10">
                   <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Requires Immediate Investigation?</h4>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group shadow-2xl shadow-primary/20">
-                      Request Forensic Assessment
-                      <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <Link href="#forensic-intake">
+                      <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group shadow-2xl shadow-primary/20">
+                        Request Forensic Assessment
+                        <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
                   </div>
                   <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
                     <span className="flex items-center gap-2">

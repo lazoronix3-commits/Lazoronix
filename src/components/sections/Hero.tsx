@@ -4,6 +4,35 @@ import { ShieldCheck, Lock, FileSearch, ArrowRight, CheckCircle2 } from 'lucide-
 export function Hero() {
   return (
     <section className="relative pt-32 pb-24 overflow-hidden hero-gradient border-b border-white/5">
+      {/* Living Intelligence Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" className="opacity-40">
+          <defs>
+            <pattern id="intelligence-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+              <circle cx="0" cy="0" r="0.5" fill="rgba(212, 175, 55, 0.1)" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#intelligence-grid)" />
+          
+          {/* Connection Lines - Slow Network Flow */}
+          <path d="M 0 100 Q 300 150 600 400 T 1200 700" className="network-line" />
+          <path d="M 1200 100 Q 900 300 600 400 T 0 700" className="network-line" />
+          <path d="M 600 0 L 600 800" className="network-line" style={{ animationDuration: '80s' }} />
+          <path d="M 0 400 L 1200 400" className="network-line" style={{ animationDuration: '90s' }} />
+          
+          {/* Traveling Pulses - Sparse High-Intensity Data */}
+          <path d="M 0 100 Q 300 150 600 400 T 1200 700" className="pulse-line" />
+          <path d="M 1200 100 Q 900 300 600 400 T 0 700" className="pulse-line" style={{ animationDelay: '-15s' }} />
+          
+          {/* Strategic Nodes - Glowing Intelligence Points */}
+          <circle cx="600" cy="400" r="2" className="network-node" />
+          <circle cx="300" cy="150" r="1.5" className="network-node" style={{ animationDelay: '-2s' }} />
+          <circle cx="900" cy="300" r="1.5" className="network-node" style={{ animationDelay: '-4s' }} />
+          <circle cx="200" cy="600" r="1.5" className="network-node" style={{ animationDelay: '-6s' }} />
+          <circle cx="1000" cy="500" r="1.5" className="network-node" style={{ animationDelay: '-8s' }} />
+        </svg>
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black mb-8 animate-in fade-in slide-in-from-top-4 duration-700 tracking-[0.3em] uppercase">

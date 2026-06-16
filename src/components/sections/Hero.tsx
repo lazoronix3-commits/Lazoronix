@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, ArrowRight } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
 
 export function Hero() {
@@ -33,33 +33,18 @@ export function Hero() {
           </defs>
           <rect width="100%" height="100%" fill="url(#intelligence-grid)" />
           
-          {/* Connection Lines - Sparse & Slow */}
           <path d="M 0 150 Q 300 100 600 400 T 1200 650" className="network-line" />
           <path d="M 1200 200 Q 900 350 600 400 T 0 600" className="network-line" style={{ animationDelay: '-10s' }} />
-          <path d="M 400 0 Q 600 300 400 800" className="network-line" style={{ animationDuration: '100s' }} />
-          <path d="M 800 0 Q 600 500 800 800" className="network-line" style={{ animationDuration: '120s' }} />
           
-          {/* Forensic Trace Signature Lines */}
           <g className="active">
             <path d="M 100 100 L 150 100 L 150 200" className="forensic-trace" style={{ animationDelay: '0.5s' }} />
             <circle cx="100" cy="100" r="1.5" className="network-node" />
             <circle cx="150" cy="200" r="1.5" className="network-node" />
-            
-            <path d="M 1000 600 L 1050 600 L 1050 500 L 1150 500" className="forensic-trace" style={{ animationDelay: '1.2s' }} />
-            <circle cx="1000" cy="600" r="1.5" className="network-node" />
-            <circle cx="1150" cy="500" r="1.5" className="network-node" />
           </g>
           
-          {/* Traveling Pulses - High Precision */}
           <path d="M 0 150 Q 300 100 600 400 T 1200 650" className="pulse-line" />
-          <path d="M 1200 200 Q 900 350 600 400 T 0 600" className="pulse-line" style={{ animationDelay: '-25s' }} />
           
-          {/* Strategic Nodes - Barely Pulsing */}
           <circle cx="600" cy="400" r="1.5" className="network-node" />
-          <circle cx="300" cy="100" r="1.2" className="network-node" style={{ animationDelay: '-5s' }} />
-          <circle cx="900" cy="350" r="1.2" className="network-node" style={{ animationDelay: '-8s' }} />
-          <circle cx="200" cy="600" r="1.2" className="network-node" style={{ animationDelay: '-12s' }} />
-          <circle cx="1000" cy="650" r="1.2" className="network-node" style={{ animationDelay: '-15s' }} />
         </svg>
       </div>
 
@@ -77,19 +62,19 @@ export function Hero() {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-              Lazoronix provides institutional-grade forensic investigation and blockchain intelligence for complex digital asset recovery. We identify definitive recovery pathways for victims of investment fraud.
+              Lazoronix provides institutional-grade forensic investigation and blockchain intelligence for complex digital asset recovery. We investigate financial fraud, trace digital assets, and identify recovery pathways.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
               <Link href="#forensic-intake" className="w-full sm:w-auto">
                 <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black w-full shadow-2xl shadow-primary/20 group uppercase tracking-widest rounded-none transition-all duration-300 premium-cta">
-                  Request Assessment
+                  Commence Investigation
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link href="#forensic-intake" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="h-16 px-12 text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full font-bold uppercase tracking-widest rounded-none">
-                  Speak With Specialists
+                  Consult Specialist
                 </Button>
               </Link>
             </div>
@@ -98,7 +83,7 @@ export function Hero() {
               {[
                 { text: "Worldwide Cases", value: "1,200+" },
                 { text: "Assets Traced", value: "$420M+" },
-                { text: "Success Rate", value: "High-Feasibility Only" },
+                { text: "Resolution Path", value: "High-Feasibility Only" },
                 { text: "Forensic Analysts", value: "Senior Tier" }
               ].map((item, idx) => (
                 <SectionReveal key={idx} delay={400 + (idx * 100)} className="active">
@@ -115,9 +100,7 @@ export function Hero() {
         </div>
       </div>
       
-      {/* Background visual element */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-primary/[0.03] rounded-full blur-[180px] -z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-50" />
     </section>
   );
 }

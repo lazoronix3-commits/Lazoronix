@@ -14,7 +14,7 @@ const AIGuidedRecoveryPreparationInputSchema = z.object({
   initialProblemDescription: z
     .string()
     .describe(
-      'A detailed description of the case, including structured category data and technical narrative.'
+      'A detailed description of the case, including structured division data and technical narrative.'
     ),
 });
 export type AIGuidedRecoveryPreparationInput = z.infer<
@@ -23,12 +23,12 @@ export type AIGuidedRecoveryPreparationInput = z.infer<
 
 const AIGuidedRecoveryPreparationOutputSchema = z.object({
   preliminaryCaseFindings: z.object({
-    scamType: z.string().describe('Identified fraud category.'),
-    estimatedLoss: z.string().describe('Total financial loss value.'),
+    scamType: z.string().describe('Identified investigative category.'),
+    estimatedLoss: z.string().describe('Total financial assessment.'),
     evidenceStatus: z.enum(['Incomplete', 'Partial', 'Substantial']).describe('Technical status of gathered evidence.'),
-    investigationReadiness: z.string().describe('Status of technical data required for investigation (e.g., Requires Additional Information).'),
+    investigationReadiness: z.string().describe('Status of technical data required for lifecycle (e.g., Qualified for Specialist Review).'),
     caseComplexity: z.enum(['Moderate', 'High', 'Extremely High']).describe('Technical difficulty level.'),
-    reviewRecommendation: z.string().describe('The definitive professional next step (e.g., Professional Assessment Recommended).'),
+    reviewRecommendation: z.string().describe('The definitive professional next step (e.g., Forensic Assessment Recommended).'),
   }).describe('Structured findings for clinical dashboard scanning.'),
   recoveryScenarioSummary: z
     .string()
@@ -39,7 +39,7 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
     categoryName: z.string().describe('Technical focus area.'),
     description: z.string().describe('Technical reason why this area is critical.'),
     specificItems: z.array(z.string()).describe('Specific items to gather.')
-  })).describe('Category-specific investigation requirements.')
+  })).describe('Division-specific investigation requirements.')
 });
 export type AIGuidedRecoveryPreparationOutput = z.infer<
   typeof AIGuidedRecoveryPreparationOutputSchema
@@ -53,18 +53,18 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
 
 Your task is to conduct an "Automated Case Intake Assessment" based on the user's data.
 
-Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler, empathy, or promises of success.
+Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler, empathy, or promises of "recovery".
 
 Analysis Goals:
-1. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Status, Investigation Readiness, Complexity, and Review Recommendation.
+1. **Findings Dashboard**: Provide structured data for Division Category, Assessment, Evidence Status, Investigation Readiness, Complexity, and Review Recommendation.
 2. **Scenario Summary**: A one-sentence technical summary of the incident.
-3. **Investigative Focus**: Identify 3-4 specific technical areas that require focus based on the scam type provided.
+3. **Investigative Focus**: Identify 3-4 specific technical areas that require focus based on the division type provided.
 
 Input Data:
 {{{initialProblemDescription}}}
 
-Be Technical. Use terms like "Fund Obfuscation", "Blockchain Analysis", "Asset Tracing", and "Evidence Integrity". 
-Do NOT use percentages or numeric probabilities for recovery outcomes. Use qualitative labels like "Moderate", "High", "Professional Assessment Recommended".`,
+Be Technical. Use terms like "Fund Obfuscation", "Blockchain Analysis", "Asset Tracing", "Evidence Integrity", and "Interdiction Protocols". 
+Do NOT use percentages or numeric probabilities for "recovery outcomes". Use qualitative labels like "Moderate", "High", "Forensic Assessment Recommended".`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

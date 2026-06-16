@@ -3,13 +3,13 @@ import { AlertCircle, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const problems = [
-  "Forex Trading Scams",
-  "Investment Platform Fraud",
-  "Crypto Romance Scams",
-  "Fake Job Offer Scams",
-  "Loan & Grant Scams",
-  "Locked or Inaccessible Wallets",
-  "Unauthorized Account Withdrawals"
+  "Financial Trading Fraud",
+  "Institutional Investment Schemes",
+  "Social Engineering Inquiries",
+  "Recruitment-Based Asset Loss",
+  "Institutional Loan Fraud",
+  "Digital Asset Access Recovery",
+  "Asset Tracing & Recovery Strategy"
 ];
 
 export function ProblemSection() {
@@ -21,15 +21,15 @@ export function ProblemSection() {
             <div className="glass-card rounded-[2.5rem] p-8 md:p-16 bg-gradient-to-br from-primary/10 to-transparent">
               <div className="inline-flex items-center gap-2 text-primary font-bold mb-6">
                 <AlertCircle className="w-5 h-5" />
-                <span className="tracking-widest text-xs uppercase">Critical Window</span>
+                <span className="tracking-widest text-xs uppercase">Technical Window</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 leading-tight">Can I Recover My <br/>Lost Assets?</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 leading-tight">Can Investigative Rigor <br/>Identify Your Path?</h2>
               <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-                Recovery feasibility depends on immediate action and proper documentation. Our specialists analyze the digital trail to determine if your assets can be pursued.
+                We investigate financial fraud, trace digital assets, and identify recovery pathways using institutional methodologies and high-compute forensic workstations.
               </p>
               
               <div className="space-y-6 mb-10">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">We Specialize in Investigating:</p>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">Investigative Specializations:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {problems.map((problem, idx) => (
                     <div key={idx} className="flex items-center gap-3 text-sm font-bold text-foreground/80">
@@ -42,7 +42,7 @@ export function ProblemSection() {
 
               <Link href="#forensic-intake">
                 <Button size="lg" className="h-14 px-10 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold">
-                  Request Free Case Review
+                  Request Technical Assessment
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -56,20 +56,20 @@ export function ProblemSection() {
                 
                 <div className="inline-flex items-center gap-2 text-destructive font-bold mb-8">
                   <ShieldAlert className="w-5 h-5" />
-                  <span className="tracking-widest text-xs uppercase">Time-Sensitive Notice</span>
+                  <span className="tracking-widest text-xs uppercase">Technical Degradation Warning</span>
                 </div>
                 
-                <h3 className="text-3xl font-headline font-bold mb-6">Immediate Action Required</h3>
+                <h3 className="text-3xl font-headline font-bold mb-6">Immediate Intake Recommended</h3>
                 <p className="text-lg text-foreground/80 mb-8 leading-relaxed">
-                  Recovery opportunities can become more difficult as time passes due to the technical nature of digital asset movements.
+                  Forensic evidence preservation is critical. Delay increases the probability of technical trail obfuscation and asset movement beyond exchange nodes.
                 </p>
                 
                 <div className="grid gap-6">
                   {[
-                    { label: "Asset Movement", desc: "Funds are frequently moved across multiple blockchains or obfuscated through mixers." },
-                    { label: "Account Closure", desc: "Fraudulent platforms and wallets are often shut down without notice." },
-                    { label: "Data Loss", desc: "Digital evidence trails can expire or be deleted by hosting providers." },
-                    { label: "Evidence Degradation", desc: "Memories and transaction logs become harder to retrieve as time elapses." }
+                    { label: "Asset Obfuscation", desc: "Funds are frequently moved across multiple blockchains or filtered through mixing protocols." },
+                    { label: "Platform Termination", desc: "Fraudulent infrastructure is often deactivated once technical markers are identified." },
+                    { label: "Meta-Data Loss", desc: "Digital evidence trails and server logs have limited retention windows." },
+                    { label: "Jurisdictional Shift", desc: "Assets moving to non-compliant jurisdictions complicate legal intercession." }
                   ].map((item, i) => (
                     <div key={i} className="flex gap-4 p-4 rounded-2xl bg-background/40 border border-white/5">
                       <div className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center shrink-0">
@@ -84,7 +84,7 @@ export function ProblemSection() {
                 </div>
                 
                 <p className="mt-8 text-sm font-bold text-destructive/80 italic">
-                  We recommend preserving all communications and transaction evidence as soon as possible.
+                  Preserve all transaction hashes and communications for Phase 01: Intake & Preservation.
                 </p>
               </div>
             </div>

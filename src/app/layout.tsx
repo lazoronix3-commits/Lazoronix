@@ -4,8 +4,8 @@ import {Toaster} from '@/components/ui/toaster';
 import {MouseSpotlight} from '@/components/ui/mouse-spotlight';
 
 export const metadata: Metadata = {
-  title: 'Lazoronix | Institutional Forensic Intelligence & Asset Resolution',
-  description: 'Specialized recovery assistance for victims of forex scams, investment fraud, romance scams, and locked crypto wallets. Get a confidential forensic assessment.',
+  title: 'Lazoronix | Institutional Forensic Intelligence & Digital Asset Investigation',
+  description: 'Specialized forensic investigation for victims of financial trading fraud, institutional investment schemes, and digital asset access challenges. Leading with evidence-based intelligence.',
 };
 
 export default function RootLayout({

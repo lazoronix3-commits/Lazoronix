@@ -51,18 +51,18 @@ export function Footer() {
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>
             <p className="text-muted-foreground text-[11px] leading-relaxed mb-6 uppercase tracking-wider opacity-70">
-              Professional digital asset recovery and blockchain forensics specialists. Providing institutional-grade evidence analysis for complex asset recovery challenges.
+              Institutional digital asset intelligence and blockchain forensics firm. Providing specialized investigative rigor for complex financial fraud and asset resolution.
             </p>
           </div>
           
           <div>
             <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
             <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Employment Fraud Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Access Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Financial Trading Fraud</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Institutional Investment Fraud</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Fraud</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Employment Fraud</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Access Recovery</Link></li>
             </ul>
           </div>
           
@@ -76,31 +76,31 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Resources</h5>
+            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Intelligence</h5>
             <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">Recovery Guides</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Scam Awareness</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Investigation Guides</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Technical Analysis</Link></li>
               <li><Link href="#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
             </ul>
           </div>
           
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Legal</h5>
+            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Compliance</h5>
             <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Disclaimer</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Protocols</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Institutional Terms</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Legal Disclaimer</Link></li>
             </ul>
           </div>
         </div>
         
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-            © {new Date().getFullYear()} Lazoronix Recovery. All rights reserved. 
+            © {new Date().getFullYear()} Lazoronix Intelligence. All rights reserved. 
           </p>
           <div className="flex gap-6">
             <p className="text-[9px] text-muted-foreground max-w-md text-left md:text-right leading-relaxed italic uppercase tracking-[0.1em] opacity-50">
-              Technical Note: Digital asset recovery involves inherent risks and jurisdictional complexity. Every investigation requires a formal forensic review phase prior to engagement.
+              Technical Note: Digital asset investigation involves inherent jurisdictional complexity. Every lifecycle requires a formal forensic review phase prior to departmental engagement.
             </p>
           </div>
         </div>

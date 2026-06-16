@@ -13,7 +13,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
-const services = [
+const divisions = [
   "Financial Trading Fraud Division",
   "Institutional Investment Fraud Division",
   "Social Engineering Fraud Division",
@@ -77,10 +77,10 @@ export function Navbar() {
                 Divisions <ChevronDown className="w-4 h-4 opacity-50" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-72 bg-card border-white/10 shadow-2xl">
-                {services.map((service) => (
-                  <DropdownMenuItem key={service} asChild>
-                    <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10">
-                      {service}
+                {divisions.map((division) => (
+                  <DropdownMenuItem key={division} asChild>
+                    <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10 uppercase tracking-widest text-[10px] font-bold">
+                      {division}
                     </Link>
                   </DropdownMenuItem>
                 ))}
@@ -101,7 +101,7 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <Button asChild className="bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest h-11 px-6">
             <Link href="#forensic-intake">
-              Case Assessment
+              Commence Assessment
             </Link>
           </Button>
         </div>

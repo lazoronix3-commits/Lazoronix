@@ -1,15 +1,45 @@
+
+'use client';
+
 import { Shield } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export function Footer() {
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchLogo();
+  }, []);
+
+  const fetchLogo = async () => {
+    const { data } = supabase.storage
+      .from('assets')
+      .getPublicUrl('logo.png');
+    
+    if (data?.publicUrl) {
+      setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+    }
+  };
+
   return (
     <footer id="contact" className="bg-card border-t border-white/5 pt-20 pb-10">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded bg-primary flex items-center justify-center">
-                <Shield className="text-white w-5 h-5" />
+              <div className="w-8 h-8 rounded bg-primary flex items-center justify-center overflow-hidden">
+                {logoUrl ? (
+                  <img 
+                    src={logoUrl} 
+                    alt="Logo" 
+                    className="w-full h-full object-contain"
+                    onError={() => setLogoUrl(null)}
+                  />
+                ) : (
+                  <Shield className="text-white w-5 h-5" />
+                )}
               </div>
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>

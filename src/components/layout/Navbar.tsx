@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from '@/lib/supabase';
 
 const services = [
   "Forex Scam Recovery",
@@ -23,17 +25,40 @@ const services = [
 
 export function Navbar() {
   const [mounted, setMounted] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    fetchLogo();
   }, []);
+
+  const fetchLogo = async () => {
+    // Note: Assumes an 'assets' bucket exists and is public
+    const { data } = supabase.storage
+      .from('assets')
+      .getPublicUrl('logo.png');
+    
+    if (data?.publicUrl) {
+      // Small check to see if file exists (optional, otherwise handles 404 internally)
+      setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:bg-accent transition-colors">
-            <Shield className="text-white w-6 h-6" />
+          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:bg-accent transition-colors overflow-hidden">
+            {logoUrl ? (
+              <img 
+                src={logoUrl} 
+                alt="Lazoronix Logo" 
+                className="w-full h-full object-contain"
+                onError={() => setLogoUrl(null)}
+              />
+            ) : (
+              <Shield className="text-white w-6 h-6" />
+            )}
           </div>
           <span className="text-2xl font-headline font-bold tracking-tight">
             LAZORONIX<span className="text-primary group-hover:text-accent transition-colors">.</span>

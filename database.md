@@ -1,3 +1,4 @@
+
 # Lazoronix Forensic Database Schema
 
 This document outlines the database structure and Row Level Security (RLS) policies used for the Lazoronix Digital Asset Recovery platform.
@@ -56,6 +57,16 @@ RLS is enabled on the `cases` table to ensure data privacy and administrative co
 - **Action**: `UPDATE`
 - **Definition**: Only logged-in administrators can modify case statuses or risk levels.
 - **Policy**: `auth.role() = 'authenticated'`
+
+---
+
+## Storage Buckets
+
+### `assets` (Public)
+Used for storing website branding and institutional media.
+- **File**: `logo.png` - The primary website logo.
+- **RLS (Insert/Update)**: Restricted to `authenticated` users.
+- **RLS (Select)**: Public access (`anon`).
 
 ---
 

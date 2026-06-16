@@ -218,13 +218,6 @@ const CASE_TYPES: CaseType[] = [
   },
 ]
 
-const SAFETY_PROTOCOLS = [
-  "Do NOT pay any 'upfront taxes' or 'activation fees' to unknown recovery services.",
-  "Never share your private keys or 12/24-word seed phrase with anyone.",
-  "Preserve all transaction logs, chat histories, and platform screenshots immediately.",
-  "Ignore unsolicited DMs from people claiming they can hack the blockchain for you."
-]
-
 export function AIGuidedTool() {
   const [step, setStep] = useState<'type' | 'details' | 'result' | 'booking' | 'success'>('type')
   const [selectedType, setSelectedType] = useState<CaseType | null>(null)
@@ -486,14 +479,22 @@ ${description}
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
               <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
                  <div className="flex items-center gap-6">
-                   <div className="w-16 h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg">
+                   <div className="w-16 h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg relative">
                      <Activity className="w-8 h-8 text-primary" />
+                     <div className="absolute inset-0 rounded-full bg-primary/20 animate-breathing -z-10" />
                    </div>
                    <div>
                      <h2 className="text-2xl font-headline font-bold mb-1 uppercase tracking-tight">Case Dashboard</h2>
                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
                        <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> ID: <span className="text-foreground font-black">{caseId}</span></span>
-                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary">Review Pending</span></span>
+                       <span className="flex items-center gap-1.5">
+                         <Activity className="w-3.5 h-3.5" /> 
+                         Status: 
+                         <span className="flex items-center gap-1.5 text-primary">
+                           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+                           Review Pending
+                         </span>
+                       </span>
                      </div>
                    </div>
                  </div>
@@ -517,11 +518,24 @@ ${description}
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
                 {TIMELINE_STEPS.map((timelineStep, idx) => (
                   <div key={timelineStep.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
-                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", timelineStep.status === 'completed' ? "bg-primary text-black" : timelineStep.status === 'current' ? "border border-primary text-primary" : "bg-muted text-muted-foreground border border-white/5")}>
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all relative", 
+                      timelineStep.status === 'completed' ? "bg-primary text-black" : 
+                      timelineStep.status === 'current' ? "border border-primary text-primary" : 
+                      "bg-muted text-muted-foreground border border-white/5"
+                    )}>
+                      {timelineStep.status === 'current' && (
+                        <div className="absolute inset-0 rounded-full border border-primary animate-breathing" />
+                      )}
                       <timelineStep.icon className="w-4 h-4" />
                     </div>
                     <div className="text-left md:text-center">
-                      <p className="text-[8px] font-black uppercase tracking-[0.25em] opacity-50">{timelineStep.label}</p>
+                      <p className={cn(
+                        "text-[8px] font-black uppercase tracking-[0.25em]",
+                        timelineStep.status === 'current' ? "text-primary opacity-100" : "opacity-50"
+                      )}>
+                        {timelineStep.label}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -541,7 +555,10 @@ ${description}
               </Card>
               <Card className="glass-card border-white/5 p-8">
                 <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">System Status</span>
-                <div className="text-3xl font-headline font-bold text-primary uppercase tracking-tighter">Qualified</div>
+                <div className="text-3xl font-headline font-bold text-primary uppercase tracking-tighter flex items-center gap-3">
+                   <span className="w-2.5 h-2.5 rounded-full bg-primary animate-breathing" />
+                   Qualified
+                </div>
                 <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting specialist verification.</p>
               </Card>
             </div>
@@ -581,7 +598,9 @@ ${description}
                       <div key={idx} className="space-y-2">
                         <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                           <span className="text-foreground/70">{tracker.label}</span>
-                          <span className={cn(tracker.score > 70 ? 'text-primary' : tracker.score > 40 ? 'text-primary/70' : 'text-muted-foreground')}>{tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Required'}</span>
+                          <span className={cn(tracker.score > 70 ? 'text-primary' : tracker.score > 40 ? 'text-primary/70' : 'text-muted-foreground')}>
+                            {tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Required'}
+                          </span>
                         </div>
                         <Progress value={tracker.score} className="h-1 bg-white/5" />
                       </div>
@@ -590,7 +609,10 @@ ${description}
                 </Card>
 
                 <Card className="border-destructive/20 bg-destructive/5 p-6">
-                  <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-destructive flex items-center gap-2 mb-4"><ShieldAlert className="w-4 h-4" /> Critical Notice</h4>
+                  <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-destructive flex items-center gap-2 mb-4">
+                    <ShieldAlert className={cn("w-4 h-4", riskLevel === 'Critical' && "animate-breathing")} /> 
+                    Critical Notice
+                  </h4>
                   <p className="text-[10px] text-foreground/80 leading-relaxed mb-4 uppercase font-bold tracking-widest">Asset movement detected within target networks. Immediate specialist engagement recommended.</p>
                 </Card>
               </div>
@@ -772,9 +794,10 @@ ${description}
         )}
 
         {step === 'success' && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-xl mx-auto text-center">
-            <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mx-auto mb-8">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-xl mx-auto text-center">
+            <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mx-auto mb-8 relative">
               <CheckCircle2 className="w-12 h-12 text-primary" />
+              <div className="absolute inset-0 rounded-full bg-primary/10 animate-breathing" />
             </div>
             <h2 className="text-4xl font-headline font-bold mb-4 tracking-tighter uppercase">Intake Registered</h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">

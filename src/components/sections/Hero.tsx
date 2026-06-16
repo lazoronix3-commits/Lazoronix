@@ -6,12 +6,12 @@ export function Hero() {
     <section className="relative pt-32 pb-24 overflow-hidden hero-gradient border-b border-white/5">
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-secondary text-sm font-bold mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-8 animate-in fade-in slide-in-from-top-4 duration-700 tracking-wider uppercase">
+            <ShieldCheck className="w-4 h-4 text-secondary" />
             Institutional Grade Forensic Recovery & Intelligence
           </div>
           
-          <h1 className="text-5xl md:text-8xl font-headline font-bold leading-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 tracking-tight">
+          <h1 className="text-5xl md:text-8xl font-headline font-bold leading-tight mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 tracking-tighter">
             Recovering From Financial Fraud <br/>
             <span className="gradient-text italic">Starts With The Right Investigation</span>
           </h1>
@@ -38,10 +38,10 @@ export function Hero() {
               { text: "Blockchain Intelligence" }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-                   <CheckCircle2 className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-2">
+                   <CheckCircle2 className="w-5 h-5 text-secondary" />
                 </div>
-                <span className="text-xs font-black uppercase tracking-widest text-foreground/70 text-center leading-tight">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/70 text-center leading-tight">
                   {item.text}
                 </span>
               </div>
@@ -51,8 +51,8 @@ export function Hero() {
       </div>
       
       {/* Background visual element */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/10 rounded-full blur-[160px] -z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 rounded-full blur-[160px] -z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-50" />
     </section>
   );
 }

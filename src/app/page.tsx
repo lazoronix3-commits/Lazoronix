@@ -10,6 +10,7 @@ import { Footer } from '@/components/layout/Footer';
 import { AIGuidedTool } from '@/components/sections/AIGuidedTool';
 import { SuccessStories } from '@/components/sections/SuccessStories';
 import { TeamSection } from '@/components/sections/TeamSection';
+import { GlobalIntelligence } from '@/components/sections/GlobalIntelligence';
 import { Button } from '@/components/ui/button';
 import { SectionReveal } from '@/components/ui/section-reveal';
 import { 
@@ -174,13 +175,13 @@ export default function Home() {
               },
             ].map((service, idx) => (
               <SectionReveal key={idx} delay={idx * 100} duration={500} className="h-full">
-                <div className="p-10 md:p-12 rounded-[2.5rem] bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full group relative overflow-hidden shadow-2xl shadow-black/20">
+                <div className="p-10 md:p-12 rounded-none bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full group relative overflow-hidden shadow-2xl shadow-black/20">
                   <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
                     <service.icon className="w-40 h-40" />
                   </div>
                   
                   <div className="flex items-center gap-6 mb-8">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <div className="w-16 h-16 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                       <service.icon className="w-8 h-8 text-primary" />
                     </div>
                     <div>
@@ -201,7 +202,7 @@ export default function Home() {
                      </div>
                   </div>
 
-                  <Link href="#forensic-intake" className="inline-flex items-center gap-2 px-8 h-14 rounded-xl bg-muted/50 border border-white/10 text-foreground font-bold hover:bg-primary hover:text-white transition-all w-fit">
+                  <Link href="#forensic-intake" className="inline-flex items-center gap-2 px-8 h-14 rounded-none bg-muted/50 border border-white/10 text-foreground font-bold hover:bg-primary hover:text-white transition-all w-fit">
                     Learn More
                     <ArrowRight className="w-5 h-5" />
                   </Link>
@@ -221,11 +222,11 @@ export default function Home() {
       {/* Case Qualification Section */}
       <section className="py-24 bg-primary/5">
         <div className="container mx-auto px-6">
-          <SectionReveal className="max-w-5xl mx-auto glass-card rounded-[2.5rem] overflow-hidden">
+          <SectionReveal className="max-w-5xl mx-auto glass-card rounded-none overflow-hidden">
             <div className="grid md:grid-cols-5 items-stretch">
               <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
-                <h2 className="text-4xl font-headline font-bold mb-6">Not Sure If Recovery Is Possible?</h2>
-                <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
+                <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Not Sure If Recovery Is Possible?</h2>
+                <p className="text-xl text-foreground/80 mb-8 leading-relaxed font-medium">
                   Every case is different. Before making recommendations, our specialists review available evidence, transaction records, communications, and technical circumstances to determine whether further investigation may be warranted.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
@@ -241,13 +242,13 @@ export default function Home() {
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                         <item.icon className="w-4 h-4 text-primary" />
                       </div>
-                      <span className="font-medium">{item.text}</span>
+                      <span className="font-bold text-xs uppercase tracking-widest text-foreground/80">{item.text}</span>
                     </div>
                   ))}
                 </div>
                 <div className="space-y-8">
                   <Link href="#forensic-intake">
-                    <Button size="lg" className="h-16 px-10 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
+                    <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
                       Start With A Confidential Assessment
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -273,27 +274,27 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="md:col-span-2 p-8 md:p-16 bg-primary text-white flex flex-col justify-center">
+              <div className="md:col-span-2 p-8 md:p-16 bg-primary text-primary-foreground flex flex-col justify-center">
                 <div className="space-y-8">
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-bold mb-2">100% Confidential</h4>
-                      <p className="opacity-80">All information shared is protected under strict investigative privacy protocols.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">100% Confidential</h4>
+                      <p className="opacity-80 text-sm font-medium">All information shared is protected under strict investigative privacy protocols.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-bold mb-2">No Obligation</h4>
-                      <p className="opacity-80">Our feasibility assessment is designed to provide you with facts, not a sales pitch.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">No Obligation</h4>
+                      <p className="opacity-80 text-sm font-medium">Our feasibility assessment is designed to provide you with facts, not a sales pitch.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Evidence-Based</h4>
-                      <p className="opacity-80">We only proceed if the technical trail indicates a legitimate path for recovery.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Evidence-Based</h4>
+                      <p className="opacity-80 text-sm font-medium">We only proceed if the technical trail indicates a legitimate path for recovery.</p>
                     </div>
                   </div>
                 </div>
@@ -303,20 +304,22 @@ export default function Home() {
         </div>
       </section>
       
+      <GlobalIntelligence />
+
       <AIGuidedTool />
       
       <ProcessSection />
       
       {/* Our Commitment Section */}
-      <section className="py-24 bg-primary text-white overflow-hidden relative">
+      <section className="py-24 bg-primary text-primary-foreground overflow-hidden relative">
          <div className="container mx-auto px-6 relative z-10 text-center">
             <SectionReveal>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8">Our Commitment</h2>
-              <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12">
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Our Commitment</h2>
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12 font-medium">
                 We understand that financial losses caused by scams can be devastating. <br/>
                 <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">That's why every case is evaluated using evidence, technical analysis, and investigative methodologies.</span>
               </p>
-              <p className="max-w-2xl mx-auto text-lg opacity-80 leading-relaxed">
+              <p className="max-w-2xl mx-auto text-lg opacity-80 leading-relaxed font-medium">
                 Our investigative protocols are designed to identify legitimate recovery opportunities while maintaining complete confidentiality.
               </p>
             </SectionReveal>
@@ -329,17 +332,17 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
-          <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-[3rem] hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight">Start Your Recovery Journey Today</h2>
-            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+          <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-none hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Start Your Recovery Journey Today</h2>
+            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
               Whether you've been affected by a forex scam, investment fraud, romance scam, fake job offer, loan scam, wallet access issue, or another asset recovery challenge, our specialists are ready to review your case.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-               <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-bold group">
+               <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none">
                  Get My Free Case Assessment
                  <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                </Button>
-               <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5">
+               <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5 rounded-none font-bold uppercase tracking-widest">
                  Speak With a Recovery Expert
                </Button>
             </div>
@@ -357,7 +360,7 @@ export default function Home() {
                   ].map((note, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs font-bold text-foreground/60">
                       <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>{note}</span>
+                      <span className="uppercase tracking-widest text-[10px]">{note}</span>
                     </div>
                   ))}
                </div>

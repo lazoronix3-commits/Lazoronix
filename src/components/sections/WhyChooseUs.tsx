@@ -1,4 +1,5 @@
-import { Database, TrendingUp, Lock, Search, ShieldCheck, UserCheck } from 'lucide-react';
+
+import { Database, TrendingUp, Lock, Search, ShieldCheck, UserCheck, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const features = [
@@ -66,21 +67,24 @@ export function WhyChooseUs() {
           ))}
         </div>
 
-        <div className="mt-24 pt-16 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-12 opacity-50 grayscale contrast-125 pointer-events-none">
-           <div className="text-sm font-black uppercase tracking-[0.4em] flex items-center gap-4">
-             <ShieldCheck className="w-5 h-5 text-primary" />
-             ISO-Aligned Protocols
-           </div>
-           <div className="hidden md:block w-px h-6 bg-white/10" />
-           <div className="text-sm font-black uppercase tracking-[0.4em] flex items-center gap-4">
-             <Lock className="w-5 h-5 text-primary" />
-             AES-256 Data Integrity
-           </div>
-           <div className="hidden md:block w-px h-6 bg-white/10" />
-           <div className="text-sm font-black uppercase tracking-[0.4em] flex items-center gap-4">
-             <Database className="w-5 h-5 text-primary" />
-             Full Chain-of-Custody
-           </div>
+        <div className="mt-24 pt-16 border-t border-white/5">
+          <div className="text-center mb-10">
+            <p className="text-xs font-black uppercase tracking-[0.4em] text-primary mb-2">Operational Security Standards</p>
+            <p className="text-sm text-muted-foreground">Your Information Is Protected</p>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-60 grayscale contrast-125 pointer-events-none">
+             {[
+               { icon: Lock, text: "Encrypted submissions" },
+               { icon: Shield, text: "Secure uploads" },
+               { icon: UserCheck, text: "Confidential review" },
+               { icon: ShieldCheck, text: "Restricted access" }
+             ].map((signal, i) => (
+               <div key={i} className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
+                 <signal.icon className="w-4 h-4 text-primary" />
+                 {signal.text}
+               </div>
+             ))}
+          </div>
         </div>
       </div>
     </section>

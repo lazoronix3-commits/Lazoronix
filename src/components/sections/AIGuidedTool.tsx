@@ -40,7 +40,9 @@ import {
   Phone,
   Globe,
   User,
-  MessageSquare
+  MessageSquare,
+  Lock,
+  Shield
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -83,6 +85,27 @@ const Database = ({ className }: { className?: string }) => (
     <path d="M3 5V19A9 3 0 0 0 21 19V5" />
     <path d="M3 12A9 3 0 0 0 21 12" />
   </svg>
+)
+
+const SecurityChecklist = () => (
+  <div className="pt-8 mt-8 border-t border-white/5">
+    <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+      <Lock className="w-3.5 h-3.5" /> Your Information Is Protected
+    </p>
+    <div className="grid grid-cols-2 gap-4">
+      {[
+        "Encrypted submissions",
+        "Secure document uploads",
+        "Confidential consultations",
+        "Restricted case access"
+      ].map((item, i) => (
+        <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/60">
+          <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+          {item}
+        </div>
+      ))}
+    </div>
+  </div>
 )
 
 const TIMELINE_STEPS = [
@@ -441,6 +464,8 @@ ${description}
                         </div>
                       ) : 'Generate Preliminary Assessment'}
                     </Button>
+                    
+                    <SecurityChecklist />
                   </CardContent>
                 </Card>
               </div>
@@ -765,7 +790,9 @@ ${description}
                   )}
                 </Button>
                 
-                <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest">
+                <SecurityChecklist />
+                
+                <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest mt-4">
                   Encrypted SSL Submission | Confidential Case Registration
                 </p>
               </CardContent>

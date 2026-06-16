@@ -1,4 +1,5 @@
 
+
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
@@ -89,7 +90,7 @@ export default function Home() {
       
       <SignsSection />
       
-      {/* Services Highlight Section - UPDATED with high visual weight */}
+      {/* Services Highlight Section */}
       <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
@@ -248,10 +249,31 @@ export default function Home() {
                 <p className="text-muted-foreground mb-10 leading-relaxed">
                   You'll receive a professional assessment outlining potential next steps before any recovery work begins.
                 </p>
-                <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
-                  Check My Recovery Options
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <div className="space-y-8">
+                  <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
+                    Check My Recovery Options
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <div className="pt-6 border-t border-white/5">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+                      <Lock className="w-3.5 h-3.5" /> Your Information Is Protected
+                    </p>
+                    <div className="flex flex-wrap gap-x-8 gap-y-3">
+                      {[
+                        "Encrypted submissions",
+                        "Secure document uploads",
+                        "Confidential consultations",
+                        "Restricted case access"
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/60">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="md:col-span-2 p-8 md:p-16 bg-primary text-white flex flex-col justify-center">
                 <div className="space-y-8">
@@ -322,17 +344,23 @@ export default function Home() {
                </Button>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 pt-8 border-t border-white/5">
-               {[
-                 { text: "Confidential Review" },
-                 { text: "Secure Submission" },
-                 { text: "No Obligation Consultation" }
-               ].map((note, idx) => (
-                 <div key={idx} className="flex items-center gap-2 text-sm font-medium text-foreground/80">
-                   <CheckCircle2 className="w-4 h-4 text-primary" />
-                   <span>{note.text}</span>
-                 </div>
-               ))}
+            <div className="pt-8 border-t border-white/5 max-w-2xl mx-auto">
+               <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-6 flex items-center justify-center gap-2">
+                 <Lock className="w-3.5 h-3.5" /> Your Information Is Protected
+               </p>
+               <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+                  {[
+                    "Encrypted submissions",
+                    "Secure document uploads",
+                    "Confidential consultations",
+                    "Restricted case access"
+                  ].map((note, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs font-bold text-foreground/60">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                      <span>{note}</span>
+                    </div>
+                  ))}
+               </div>
             </div>
           </div>
         </div>

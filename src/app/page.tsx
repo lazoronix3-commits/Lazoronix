@@ -23,7 +23,8 @@ import {
   MessageSquare,
   Globe,
   CreditCard,
-  CheckCircle2
+  CheckCircle2,
+  Shield
 } from 'lucide-react';
 
 export default function Home() {
@@ -32,6 +33,36 @@ export default function Home() {
       <Navbar />
       <Hero />
       
+      {/* Human Reassurance Section */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-5xl font-headline font-bold mb-8 leading-tight">
+              We Understand What's At Stake
+            </h2>
+            <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
+              <p className="text-foreground font-medium">
+                Financial fraud can leave victims feeling overwhelmed, uncertain, and unsure where to turn.
+              </p>
+              <p>
+                Our role is to help you understand your situation, preserve critical evidence, and determine whether viable recovery pathways may exist.
+              </p>
+              <div className="pt-8 flex flex-col items-center gap-4">
+                <div className="w-12 h-px bg-primary/30" />
+                <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary flex items-center gap-3">
+                  <Shield className="w-4 h-4" />
+                  Confidential & Professional
+                </p>
+                <p className="text-base italic">
+                  Every case is reviewed confidentially and treated with the highest level of investigative professionalism.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(70,123,224,0.03)_0%,transparent_70%)] pointer-events-none" />
+      </section>
+
       {/* Trust Bar */}
       <div className="py-12 bg-white/5 border-y border-white/5">
         <div className="container mx-auto px-6 text-center">

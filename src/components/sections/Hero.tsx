@@ -9,6 +9,21 @@ export function Hero() {
     <section className="relative pt-40 pb-32 overflow-hidden hero-gradient border-b border-white/5">
       {/* Living Intelligence Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        {/* Layer 1: Atmospheric Floating Metrics */}
+        <div className="absolute top-[15%] left-[8%] opacity-[0.03] text-[9px] font-black uppercase tracking-[0.5em] text-primary animate-slow-float">
+          Forensic Analysis
+        </div>
+        <div className="absolute top-[55%] left-[4%] opacity-[0.02] text-[9px] font-black uppercase tracking-[0.5em] text-primary animate-slow-float" style={{ animationDelay: '-15s' }}>
+          Blockchain Intelligence
+        </div>
+        <div className="absolute top-[25%] right-[12%] opacity-[0.03] text-[9px] font-black uppercase tracking-[0.5em] text-primary animate-slow-float" style={{ animationDelay: '-8s' }}>
+          Case Review
+        </div>
+        <div className="absolute bottom-[20%] right-[8%] opacity-[0.02] text-[9px] font-black uppercase tracking-[0.5em] text-primary animate-slow-float" style={{ animationDelay: '-22s' }}>
+          Asset Tracing
+        </div>
+
+        {/* Layer 2: Intelligence Grid & Trace Patterns */}
         <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" className="opacity-40">
           <defs>
             <pattern id="intelligence-grid" width="60" height="60" patternUnits="userSpaceOnUse">
@@ -55,7 +70,7 @@ export function Hero() {
               Institutional Forensic Intelligence
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-headline font-bold leading-[0.95] mb-8 tracking-tighter text-white uppercase">
+            <h1 className="text-6xl md:text-8xl font-headline font-bold leading-[0.95] mb-8 tracking-tighter text-white uppercase text-balance">
               Investigative Rigor. <br/>
               <span className="gradient-text italic font-medium gold-glow">Asset Resolution.</span>
             </h1>

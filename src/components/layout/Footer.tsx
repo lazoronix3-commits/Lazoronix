@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Shield } from 'lucide-react';
@@ -35,8 +34,8 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6">
               <div className={cn(
-                "w-10 h-10 rounded flex items-center justify-center transition-all overflow-hidden",
-                logoUrl ? "bg-transparent p-0.5" : "bg-primary shadow-lg"
+                "w-12 h-12 rounded flex items-center justify-center transition-all overflow-hidden",
+                logoUrl ? "bg-transparent p-1" : "bg-primary shadow-lg"
               )}>
                 {logoUrl ? (
                   <img 
@@ -46,7 +45,7 @@ export function Footer() {
                     onError={() => setLogoUrl(null)}
                   />
                 ) : (
-                  <Shield className="text-white w-6 h-6" />
+                  <Shield className="text-white w-7 h-7" />
                 )}
               </div>
               <span className="text-xl font-headline font-bold">LAZORONIX</span>

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -84,18 +83,34 @@ export default function AdminDashboard() {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
     checkAuth();
     fetchCases();
+    fetchLogo();
   }, []);
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
       router.push('/admin/login');
+    }
+  };
+
+  const fetchLogo = async () => {
+    try {
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('logo.png');
+      
+      if (data?.publicUrl) {
+        setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      setLogoUrl(null);
     }
   };
 
@@ -141,8 +156,6 @@ export default function AdminDashboard() {
     setUploadingLogo(true);
 
     try {
-      // Diagnostic check: Ensure bucket 'assets' exists before uploading
-      // Note: upload will return a 400 if bucket is missing or RLS fails
       const { data, error } = await supabase.storage
         .from('assets')
         .upload('logo.png', logoFile, {
@@ -163,6 +176,7 @@ export default function AdminDashboard() {
       });
       setLogoFile(null);
       setLogoPreview(null);
+      fetchLogo(); // Refresh logo across the page
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -179,8 +193,20 @@ export default function AdminDashboard() {
       {/* Admin Nav */}
       <nav className="h-20 border-b border-white/5 bg-card/50 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-50">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded bg-primary flex items-center justify-center">
-            <Shield className="text-black w-6 h-6" />
+          <div className={cn(
+            "w-12 h-12 rounded flex items-center justify-center transition-all overflow-hidden",
+            logoUrl ? "bg-transparent p-0.5" : "bg-primary shadow-lg"
+          )}>
+            {logoUrl ? (
+              <img 
+                src={logoUrl} 
+                alt="Logo" 
+                className="w-full h-full object-contain"
+                onError={() => setLogoUrl(null)}
+              />
+            ) : (
+              <Shield className="text-white w-7 h-7" />
+            )}
           </div>
           <div>
             <h1 className="text-xl font-headline font-bold tracking-tight uppercase">Command Center</h1>

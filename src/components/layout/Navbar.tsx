@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -43,7 +42,6 @@ export function Navbar() {
         setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
       }
     } catch (error) {
-      console.warn('Custom logo not found, falling back to default icon.');
       setLogoUrl(null);
     }
   };
@@ -53,8 +51,8 @@ export function Navbar() {
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <div className={cn(
-            "w-12 h-12 rounded-lg flex items-center justify-center transition-all overflow-hidden",
-            logoUrl ? "bg-transparent p-0.5" : "bg-primary group-hover:bg-accent shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+            "w-14 h-14 rounded-lg flex items-center justify-center transition-all overflow-hidden",
+            logoUrl ? "bg-transparent p-1" : "bg-primary group-hover:bg-accent shadow-[0_0_15px_rgba(212,175,55,0.2)]"
           )}>
             {logoUrl ? (
               <img 
@@ -64,7 +62,7 @@ export function Navbar() {
                 onError={() => setLogoUrl(null)}
               />
             ) : (
-              <Shield className="text-white w-7 h-7" />
+              <Shield className="text-white w-8 h-8" />
             )}
           </div>
           <span className="text-2xl font-headline font-bold tracking-tight">

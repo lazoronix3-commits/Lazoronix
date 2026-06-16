@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -10,13 +9,33 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Lock, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const router = useRouter();
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchLogo();
+  }, []);
+
+  const fetchLogo = async () => {
+    try {
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('logo.png');
+      
+      if (data?.publicUrl) {
+        setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      setLogoUrl(null);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,8 +65,20 @@ export default function AdminLoginPage() {
     <main className="min-h-screen bg-background flex items-center justify-center p-6">
       <Card className="w-full max-w-md glass-card border-primary/20">
         <CardHeader className="text-center space-y-4 pt-10">
-          <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto">
-            <Shield className="w-8 h-8 text-primary" />
+          <div className={cn(
+            "w-20 h-20 rounded-xl flex items-center justify-center mx-auto transition-all overflow-hidden",
+            logoUrl ? "bg-transparent p-1" : "bg-primary/10 border border-primary/20"
+          )}>
+            {logoUrl ? (
+              <img 
+                src={logoUrl} 
+                alt="Logo" 
+                className="w-full h-full object-contain"
+                onError={() => setLogoUrl(null)}
+              />
+            ) : (
+              <Shield className="w-10 h-10 text-primary" />
+            )}
           </div>
           <CardTitle className="text-3xl font-headline font-bold uppercase tracking-tighter">
             Forensic Portal

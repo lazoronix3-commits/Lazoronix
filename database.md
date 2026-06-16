@@ -8,7 +8,7 @@ This document outlines the database structure and Row Level Security (RLS) polic
 To ensure the application functions correctly, execute the following SQL in your Supabase project:
 
 ```sql
--- 1. Create the cases table
+-- 1. Create the cases table (For intake)
 CREATE TABLE IF NOT EXISTS cases (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   case_id text,
@@ -30,46 +30,58 @@ CREATE TABLE IF NOT EXISTS cases (
   created_at timestamptz DEFAULT now()
 );
 
--- 2. Enable Row Level Security
-ALTER TABLE cases ENABLE ROW LEVEL SECURITY;
+-- 2. Create the success_stories table
+CREATE TABLE IF NOT EXISTS success_stories (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  case_id text,
+  case_type text,
+  amount text,
+  status text DEFAULT 'Recovered',
+  narrative text,
+  icon_name text DEFAULT 'TrendingUp',
+  created_at timestamptz DEFAULT now()
+);
 
--- 3. Policy: Allow Public Submissions (Insert)
--- This allows the AI-Guided Tool to submit new cases without login.
+-- 3. Enable Row Level Security
+ALTER TABLE cases ENABLE ROW LEVEL SECURITY;
+ALTER TABLE success_stories ENABLE ROW LEVEL SECURITY;
+
+-- 4. Policy: Allow Public Submissions (Insert)
 DROP POLICY IF EXISTS "Allow public insert" ON cases;
 CREATE POLICY "Allow public insert" ON cases 
 FOR INSERT WITH CHECK (true);
 
--- 4. Policy: Restrict Read Access (Select)
--- Only authenticated admins can see the data in the Command Center.
+-- 5. Policy: Restrict Read Access (Select)
 DROP POLICY IF EXISTS "Allow authenticated select" ON cases;
 CREATE POLICY "Allow authenticated select" ON cases 
 FOR SELECT TO authenticated USING (true);
 
--- 5. Policy: Restrict Updates (Update)
--- Only authenticated admins can update case status.
+-- 6. Policy: Restrict Updates (Update)
 DROP POLICY IF EXISTS "Allow authenticated update" ON cases;
 CREATE POLICY "Allow authenticated update" ON cases 
 FOR UPDATE TO authenticated USING (true);
 
--- 6. Policy: Restrict Deletion (Delete)
--- Only authenticated admins can delete records.
+-- 7. Policy: Restrict Deletion (Delete)
 DROP POLICY IF EXISTS "Allow authenticated delete" ON cases;
 CREATE POLICY "Allow authenticated delete" ON cases 
 FOR DELETE TO authenticated USING (true);
+
+-- 8. Policy: Public Read for Success Stories
+DROP POLICY IF EXISTS "Allow public select stories" ON success_stories;
+CREATE POLICY "Allow public select stories" ON success_stories 
+FOR SELECT USING (true);
+
+-- 9. Policy: Admin All for Success Stories
+DROP POLICY IF EXISTS "Allow authenticated all stories" ON success_stories;
+CREATE POLICY "Allow authenticated all stories" ON success_stories 
+FOR ALL TO authenticated USING (true);
 ```
 
 ## Table: `cases`
+Used for secure forensic intake submissions.
 
-| Column | Type | Description |
-| :--- | :--- | :--- |
-| `id` | `uuid` | Primary Key |
-| `case_id` | `text` | Human-readable tracking ID (e.g., LRX-12345) |
-| `case_type` | `text` | Category of the scam/recovery case |
-| `user_name` | `text` | Full name of the participant |
-| `user_email` | `text` | Email address |
-| `status` | `text` | Operational status (Review Pending, Investigating, Resolved) |
-| `result_data` | `jsonb` | AI-generated forensic findings |
-| `form_values` | `jsonb` | Categorical intake fields |
+## Table: `success_stories`
+Used for marketing and social proof on the homepage.
 
 ---
 

@@ -1,6 +1,31 @@
-import { CheckCircle2, TrendingUp, ShieldCheck, Wallet, Landmark, Search, Database, Lock, Fingerprint, Activity, FileSearch } from 'lucide-react';
+
+'use client';
+
+import { useEffect, useState } from 'react';
+import { CheckCircle2, TrendingUp, ShieldCheck, Wallet, Landmark, Search, Database, Lock, Fingerprint, Activity, FileSearch, Loader2, Briefcase } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
+
+const iconMap: Record<string, any> = {
+  TrendingUp,
+  Landmark,
+  Wallet,
+  Briefcase,
+  Search,
+  Database
+};
+
+type Story = {
+  id: string;
+  case_id: string;
+  case_type: string;
+  amount: string;
+  status: string;
+  narrative: string;
+  icon_name: string;
+};
 
 const expertise = [
   { title: "Blockchain Investigations", icon: Database },
@@ -11,34 +36,30 @@ const expertise = [
   { title: "Digital Forensics", icon: Fingerprint }
 ];
 
-const stories = [
-  {
-    caseId: "LRX-41209",
-    type: "Forex Fraud Recovery",
-    amount: "$84,200",
-    status: "Recovered",
-    icon: TrendingUp,
-    narrative: "Targeted fund tracing across offshore jurisdictions. Successfully identified beneficiaries through advanced analysis and legal intercession."
-  },
-  {
-    caseId: "LRX-77124",
-    type: "Investment Scam Recovery",
-    amount: "$210,000",
-    status: "Recovered",
-    icon: Landmark,
-    narrative: "Forensic identification of liquidity vulnerabilities. Coordinated asset freezing with international exchange partners."
-  },
-  {
-    caseId: "LRX-99382",
-    type: "Wallet Access Recovery",
-    amount: "4.2 BTC",
-    status: "Restored",
-    icon: Wallet,
-    narrative: "Technical data extraction from corrupted hardware. Reconstructed encrypted volumes and verified seed integrity for restoration."
-  }
-];
-
 export function SuccessStories() {
+  const [stories, setStories] = useState<Story[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchStories();
+  }, []);
+
+  const fetchStories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('success_stories')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setStories(data || []);
+    } catch (error) {
+      console.error('Failed to fetch resolutions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="success-stories" className="py-24 bg-background overflow-hidden border-t border-white/5">
       <div className="container mx-auto px-6">
@@ -70,41 +91,56 @@ export function SuccessStories() {
         
         <div className="mb-12">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-8 text-center lg:text-left">Example Case Resolutions</h4>
-          <div className="grid md:grid-cols-3 gap-8">
-            {stories.map((story, idx) => (
-              <Card key={idx} className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-3xl -mr-16 -mt-16" />
-                <CardContent className="p-10">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center">
-                      <story.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px]">
-                      {story.status}
-                    </Badge>
-                  </div>
-                  
-                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">Case #{story.caseId}</p>
-                  <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight text-white">{story.type}</h4>
-                  <p className="text-3xl font-headline font-bold text-primary mb-6">{story.amount}</p>
-                  
-                  <div className="p-6 bg-white/[0.03] border border-white/5 mb-8">
-                     <p className="text-[9px] font-black uppercase tracking-widest text-foreground/50 mb-4 flex items-center gap-2">
-                       <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Forensic Narrative
-                     </p>
-                     <p className="text-[11px] text-muted-foreground leading-relaxed italic uppercase tracking-widest">
-                       "{story.narrative}"
-                     </p>
-                  </div>
+          
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <Loader2 className="w-8 h-8 animate-spin text-primary opacity-50" />
+              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Retrieving Records...</p>
+            </div>
+          ) : stories.length === 0 ? (
+            <div className="text-center py-20 border border-dashed border-white/5">
+              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">No public resolutions currently available</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-8">
+              {stories.map((story) => {
+                const Icon = iconMap[story.icon_name] || TrendingUp;
+                return (
+                  <Card key={story.id} className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-3xl -mr-16 -mt-16" />
+                    <CardContent className="p-10">
+                      <div className="flex justify-between items-start mb-8">
+                        <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center">
+                          <Icon className="w-6 h-6 text-primary" />
+                        </div>
+                        <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px]">
+                          {story.status}
+                        </Badge>
+                      </div>
+                      
+                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">Case #{story.case_id}</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight text-white">{story.case_type}</h4>
+                      <p className="text-3xl font-headline font-bold text-primary mb-6">{story.amount}</p>
+                      
+                      <div className="p-6 bg-white/[0.03] border border-white/5 mb-8">
+                         <p className="text-[9px] font-black uppercase tracking-widest text-foreground/50 mb-4 flex items-center gap-2">
+                           <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Forensic Narrative
+                         </p>
+                         <p className="text-[11px] text-muted-foreground leading-relaxed italic uppercase tracking-widest">
+                           "{story.narrative}"
+                         </p>
+                      </div>
 
-                  <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-primary">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Verified Case Resolution
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                      <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-primary">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Verified Case Resolution
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         <div className="mt-16 text-center">

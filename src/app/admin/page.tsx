@@ -28,7 +28,13 @@ import {
   Image as ImageIcon,
   Settings,
   Info,
-  Layers
+  Layers,
+  Star,
+  Plus,
+  TrendingUp,
+  Landmark,
+  Wallet,
+  Briefcase
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -56,6 +62,8 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import placeholderData from '@/app/lib/placeholder-images.json';
@@ -79,14 +87,36 @@ type CaseRecord = {
   preferred_method?: string;
 };
 
+type SuccessStory = {
+  id: string;
+  case_id: string;
+  case_type: string;
+  amount: string;
+  status: string;
+  narrative: string;
+  icon_name: string;
+};
+
 export default function AdminDashboard() {
   const [cases, setCases] = useState<CaseRecord[]>([]);
+  const [stories, setStories] = useState<SuccessStory[]>([]);
   const [loading, setLoading] = useState(true);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   
+  // Success Story Form State
+  const [isStoryDialogOpen, setIsStoryDialogOpen] = useState(false);
+  const [storyForm, setStoryForm] = useState<Partial<SuccessStory>>({
+    case_id: '',
+    case_type: '',
+    amount: '',
+    status: 'Recovered',
+    narrative: '',
+    icon_name: 'TrendingUp'
+  });
+
   // Media Library State
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
   const [assetFile, setAssetFile] = useState<File | null>(null);
@@ -99,6 +129,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     checkAuth();
     fetchCases();
+    fetchStories();
     fetchLogo();
   }, []);
 
@@ -138,6 +169,19 @@ export default function AdminDashboard() {
     setLoading(false);
   };
 
+  const fetchStories = async () => {
+    const { data, error } = await supabase
+      .from('success_stories')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching stories:', error);
+    } else {
+      setStories(data || []);
+    }
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/admin/login');
@@ -149,6 +193,42 @@ export default function AdminDashboard() {
       if (!error) {
         setCases(cases.filter(c => c.id !== id));
       }
+    }
+  };
+
+  const deleteStory = async (id: string) => {
+    if (confirm('Delete this success story?')) {
+      const { error } = await supabase.from('success_stories').delete().eq('id', id);
+      if (!error) {
+        setStories(stories.filter(s => s.id !== id));
+        toast({ title: "Story Removed" });
+      }
+    }
+  };
+
+  const saveStory = async () => {
+    if (!storyForm.case_id || !storyForm.narrative) return;
+
+    try {
+      const { error } = await supabase
+        .from('success_stories')
+        .insert([storyForm]);
+
+      if (error) throw error;
+
+      toast({ title: "Resolution Registered", description: "The success story is now live." });
+      setIsStoryDialogOpen(false);
+      setStoryForm({
+        case_id: '',
+        case_type: '',
+        amount: '',
+        status: 'Recovered',
+        narrative: '',
+        icon_name: 'TrendingUp'
+      });
+      fetchStories();
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: "Save Failed", description: error.message });
     }
   };
 
@@ -258,6 +338,81 @@ export default function AdminDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+          <Dialog open={isStoryDialogOpen} onOpenChange={setIsStoryDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">
+                <Star className="w-3.5 h-3.5 mr-2" /> Resolutions
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="glass-card border-white/10 max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Case Resolutions Library</DialogTitle>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage public success stories and technical outcomes</p>
+              </DialogHeader>
+              
+              <div className="py-6 space-y-8">
+                <div className="grid md:grid-cols-2 gap-8 p-8 border border-primary/20 bg-primary/5">
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2"><Plus className="w-4 h-4" /> Add New Resolution</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-[8px] uppercase tracking-widest">Case ID</Label>
+                        <Input placeholder="LRX-00000" className="bg-black/50 border-white/10" value={storyForm.case_id} onChange={e => setStoryForm({...storyForm, case_id: e.target.value})} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-[8px] uppercase tracking-widest">Category</Label>
+                        <Input placeholder="Forex Recovery" className="bg-black/50 border-white/10" value={storyForm.case_type} onChange={e => setStoryForm({...storyForm, case_type: e.target.value})} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-[8px] uppercase tracking-widest">Amount</Label>
+                        <Input placeholder="$50,000" className="bg-black/50 border-white/10" value={storyForm.amount} onChange={e => setStoryForm({...storyForm, amount: e.target.value})} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-[8px] uppercase tracking-widest">Visual Icon</Label>
+                        <Select value={storyForm.icon_name} onValueChange={val => setStoryForm({...storyForm, icon_name: val})}>
+                          <SelectTrigger className="bg-black/50 border-white/10">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="TrendingUp">Trending Up (Forex)</SelectItem>
+                            <SelectItem value="Landmark">Landmark (Investment)</SelectItem>
+                            <SelectItem value="Wallet">Wallet (Crypto)</SelectItem>
+                            <SelectItem value="Briefcase">Briefcase (Job)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[8px] uppercase tracking-widest">Technical Narrative</Label>
+                      <Textarea placeholder="Describe the recovery process..." className="bg-black/50 border-white/10 min-h-[100px]" value={storyForm.narrative} onChange={e => setStoryForm({...storyForm, narrative: e.target.value})} />
+                    </div>
+                    <Button onClick={saveStory} className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12">Register Resolution</Button>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Live Resolutions</h4>
+                    <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                      {stories.map(s => (
+                        <div key={s.id} className="p-4 bg-white/5 border border-white/5 flex justify-between items-start group">
+                          <div>
+                            <p className="text-[9px] font-black text-primary uppercase">{s.case_id}</p>
+                            <p className="text-[10px] font-bold text-white mt-1">{s.case_type}</p>
+                            <p className="text-[8px] text-muted-foreground mt-2 line-clamp-2">{s.narrative}</p>
+                          </div>
+                          <Button variant="ghost" size="icon" onClick={() => deleteStory(s.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">

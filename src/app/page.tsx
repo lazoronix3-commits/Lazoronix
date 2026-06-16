@@ -24,7 +24,10 @@ import {
   Globe,
   CreditCard,
   CheckCircle2,
-  Shield
+  Shield,
+  Search,
+  Lock,
+  ChevronRight
 } from 'lucide-react';
 
 export default function Home() {
@@ -84,60 +87,122 @@ export default function Home() {
       
       <SignsSection />
       
-      {/* Services Highlight Section */}
-      <section id="services" className="py-24">
+      {/* Services Highlight Section - UPDATED with high visual weight */}
+      <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-headline font-bold mb-6">How Can We Help?</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">Specialized recovery assistance tailored to the specific nature of your loss.</p>
+          <div className="text-center mb-20">
+            <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Recovery Specialties</h2>
+            <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6">Expert Investigation for Complex Fraud</h3>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Our specialists provide technical support and evidence analysis for a range of financial and digital asset fraud scenarios.
+            </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-10 max-w-7xl mx-auto">
             {[
               { 
                 title: "Forex Scam Recovery", 
+                subtitle: "Lost money to a broker or trading platform?",
                 icon: TrendingUp, 
-                desc: "Recover funds lost through fake brokers, trading platforms, withdrawal restrictions, account manipulation, and investment fraud schemes." 
+                markers: [
+                  "Withdrawal restrictions",
+                  "Fake trading profits",
+                  "Broker disappearance",
+                  "Account balance manipulation"
+                ],
+                desc: "Forensic identification of fraudulent brokerage entities and tracing of funds sent to offshore jurisdictions."
               },
               { 
                 title: "Investment Scam Recovery", 
+                subtitle: "Victim of a fraudulent investment scheme?",
                 icon: BarChart, 
-                desc: "Assistance for victims of fraudulent investment opportunities, crypto investment schemes, and unauthorized fund transfers." 
+                markers: [
+                  "Crypto Ponzi schemes",
+                  "Fake ICO/Token sales",
+                  "High-yield investment fraud",
+                  "Unauthorized fund transfers"
+                ],
+                desc: "Technical analysis of investment platforms to identify the ultimate beneficiary and secure digital evidence."
               },
               { 
                 title: "Romance Scam Recovery", 
+                subtitle: "Sent funds to someone you met online?",
                 icon: Heart, 
-                desc: "Investigative support for individuals who transferred funds or digital assets to fraudulent online relationships." 
+                markers: [
+                  "Fraudulent crypto transfers",
+                  "Wire transfer deception",
+                  "Gift card fraud patterns",
+                  "Identity deception cases"
+                ],
+                desc: "Sensitive investigative support for individuals targeted through online relationship deception and fund requests."
               },
               { 
-                title: "Job Scam Recovery", 
-                icon: Briefcase, 
-                desc: "Recovery assistance for victims targeted through fake employment offers, remote work scams, and recruitment fraud." 
-              },
-              { 
-                title: "Loan Scam Recovery", 
-                icon: Banknote, 
-                desc: "Investigation and recovery support related to advance-fee loan scams and fraudulent lending schemes." 
-              },
-              { 
-                title: "Wallet Recovery", 
+                title: "Wallet & Asset Recovery", 
+                subtitle: "Lost access to your digital holdings?",
                 icon: Wallet, 
-                desc: "Support for lost wallet access, missing credentials, inaccessible crypto holdings, and wallet-related technical issues." 
+                markers: [
+                  "Hardware wallet corruption",
+                  "Lost seed phrase extraction",
+                  "Inaccessible exchange accounts",
+                  "Corrupted encrypted volumes"
+                ],
+                desc: "Advanced forensic workstations and proprietary tools used to regain access to hardware and software wallets."
               },
               { 
-                title: "Asset Recovery Solutions", 
+                title: "Job & Recruitment Fraud", 
+                subtitle: "Targeted through a fake employment offer?",
+                icon: Briefcase, 
+                markers: [
+                  "Upfront training fees",
+                  "Remote work equipment scams",
+                  "Fake onboarding platforms",
+                  "Identity theft attempts"
+                ],
+                desc: "Support for victims of employment scams, focusing on credential protection and fee tracing."
+              },
+              { 
+                title: "Asset Tracing Solutions", 
+                subtitle: "Require institutional-grade blockchain analysis?",
                 icon: ShieldCheck, 
-                desc: "Comprehensive investigation and recovery strategies for complex financial and digital asset losses." 
+                markers: [
+                  "Blockchain path history",
+                  "Liquidity pool mapping",
+                  "Exchange partner intercession",
+                  "Jurisdictional analysis"
+                ],
+                desc: "Comprehensive blockchain intelligence for complex high-value digital asset losses and fund obfuscation."
               },
             ].map((service, idx) => (
-              <div key={idx} className="p-8 rounded-2xl bg-muted/20 border border-white/5 hover:border-primary/50 transition-all flex flex-col h-full group">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="w-6 h-6 text-primary" />
+              <div key={idx} className="p-10 md:p-12 rounded-[2.5rem] bg-card border border-white/5 hover:border-primary/40 transition-all flex flex-col h-full group relative overflow-hidden shadow-2xl shadow-black/20">
+                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
+                  <service.icon className="w-40 h-40" />
                 </div>
-                <h4 className="text-xl font-headline font-bold mb-3">{service.title}</h4>
-                <p className="text-muted-foreground text-sm flex-grow leading-relaxed mb-6">{service.desc}</p>
-                <Link href="#" className="inline-flex items-center text-sm font-bold text-primary hover:text-accent transition-colors">
-                  Learn More
-                  <ArrowRight className="ml-1 w-4 h-4" />
+                
+                <div className="flex items-center gap-6 mb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <service.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-headline font-bold">{service.title}</h4>
+                    <p className="text-primary text-sm font-medium">{service.subtitle}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4 mb-10 flex-grow">
+                   <p className="text-muted-foreground leading-relaxed">{service.desc}</p>
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 pt-6 border-t border-white/5">
+                     {service.markers.map((marker, mIdx) => (
+                       <div key={mIdx} className="flex items-center gap-2 text-sm font-bold text-foreground/80">
+                         <ChevronRight className="w-3.5 h-3.5 text-primary" />
+                         {marker}
+                       </div>
+                     ))}
+                   </div>
+                </div>
+
+                <Link href="#ai-tool" className="inline-flex items-center gap-2 px-8 h-14 rounded-xl bg-muted/50 border border-white/10 text-foreground font-bold hover:bg-primary hover:text-white transition-all w-fit">
+                  Check Recovery Options
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
             ))}

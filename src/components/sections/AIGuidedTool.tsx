@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect, useMemo } from 'react'
@@ -95,11 +96,20 @@ const TIMELINE_STEPS = [
   { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
 ]
 
-const SecurityChecklist = () => (
+const SecurityChecklist = ({ active = false }: { active?: boolean }) => (
   <div className="pt-8 mt-8 border-t border-white/5">
-    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4 flex items-center gap-2">
-      <Lock className="w-3.5 h-3.5 text-primary" /> Your Information Is Protected
-    </p>
+    <div className={cn(
+      "mb-6 flex items-center gap-3 p-4 transition-all duration-500 border",
+      active ? "bg-primary/5 border-primary/30" : "bg-white/5 border-white/5"
+    )}>
+      <Lock className={cn("w-4 h-4 transition-all", active ? "text-primary animate-breathing" : "text-muted-foreground")} />
+      <div>
+        <p className={cn("text-[10px] font-black uppercase tracking-[0.2em] transition-colors", active ? "text-primary" : "text-muted-foreground")}>
+          Secure Encrypted Submission Active
+        </p>
+        {active && <p className="text-[8px] font-bold text-foreground/50 uppercase tracking-widest mt-0.5">AES-256 Institutional Grade Protection</p>}
+      </div>
+    </div>
     <div className="grid grid-cols-2 gap-4">
       {[
         "Encrypted submissions",
@@ -229,6 +239,7 @@ export function AIGuidedTool() {
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
   const [scanStatus, setScanStatus] = useState('Initializing...')
+  const [isInputFocused, setIsInputFocused] = useState(false)
   
   const [bookingValues, setBookingValues] = useState({
     name: '',
@@ -418,8 +429,10 @@ ${description}
                           <Input 
                             type={field.type || 'text'}
                             placeholder={field.placeholder}
-                            className="h-12 bg-background/50 border-white/10 rounded-none"
+                            className="h-12 bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors"
                             onChange={(e) => handleInputChange(field.key, e.target.value)}
+                            onFocus={() => setIsInputFocused(true)}
+                            onBlur={() => setIsInputFocused(false)}
                           />
                         </div>
                       ))}
@@ -438,9 +451,11 @@ ${description}
                       <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Narrative</Label>
                       <Textarea 
                         placeholder="Provide specific technical details about the entities, transaction IDs, and communication methods involved."
-                        className="min-h-[160px] bg-background/50 border-white/10 rounded-none"
+                        className="min-h-[160px] bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        onFocus={() => setIsInputFocused(true)}
+                        onBlur={() => setIsInputFocused(false)}
                       />
                     </div>
                     <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-lg font-black uppercase tracking-[0.2em] bg-primary text-black">
@@ -452,7 +467,7 @@ ${description}
                       ) : 'Generate Intake Summary'}
                     </Button>
                     
-                    <SecurityChecklist />
+                    <SecurityChecklist active={isInputFocused} />
                   </CardContent>
                 </Card>
               </div>
@@ -700,9 +715,11 @@ ${description}
                     </Label>
                     <Input 
                       placeholder="e.g. John Doe" 
-                      className="bg-background/50 border-white/10 rounded-none" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
                       value={bookingValues.name}
                       onChange={(e) => setBookingValues({...bookingValues, name: e.target.value})}
+                      onFocus={() => setIsInputFocused(true)}
+                      onBlur={() => setIsInputFocused(false)}
                     />
                   </div>
                   <div className="space-y-2">
@@ -712,9 +729,11 @@ ${description}
                     <Input 
                       type="email" 
                       placeholder="e.g. john@example.com" 
-                      className="bg-background/50 border-white/10 rounded-none" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
                       value={bookingValues.email}
                       onChange={(e) => setBookingValues({...bookingValues, email: e.target.value})}
+                      onFocus={() => setIsInputFocused(true)}
+                      onBlur={() => setIsInputFocused(false)}
                     />
                   </div>
                 </div>
@@ -725,9 +744,11 @@ ${description}
                     </Label>
                     <Input 
                       placeholder="+1 (555) 000-0000" 
-                      className="bg-background/50 border-white/10 rounded-none" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
                       value={bookingValues.phone}
                       onChange={(e) => setBookingValues({...bookingValues, phone: e.target.value})}
+                      onFocus={() => setIsInputFocused(true)}
+                      onBlur={() => setIsInputFocused(false)}
                     />
                   </div>
                   <div className="space-y-2">
@@ -736,9 +757,11 @@ ${description}
                     </Label>
                     <Input 
                       placeholder="e.g. United States" 
-                      className="bg-background/50 border-white/10 rounded-none" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
                       value={bookingValues.country}
                       onChange={(e) => setBookingValues({...bookingValues, country: e.target.value})}
+                      onFocus={() => setIsInputFocused(true)}
+                      onBlur={() => setIsInputFocused(false)}
                     />
                   </div>
                 </div>
@@ -748,7 +771,7 @@ ${description}
                       <Clock className="w-3 h-3" /> Best Contact Time
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, bestTime: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors">
                         <SelectValue placeholder="Select timeframe" />
                       </SelectTrigger>
                       <SelectContent>
@@ -763,7 +786,7 @@ ${description}
                       <MessageSquare className="w-3 h-3" /> Preferred Method
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, method: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors">
                         <SelectValue placeholder="Select method" />
                       </SelectTrigger>
                       <SelectContent>
@@ -794,7 +817,7 @@ ${description}
                   )}
                 </Button>
                 
-                <SecurityChecklist />
+                <SecurityChecklist active={isInputFocused} />
                 
                 <p className="text-[8px] text-center text-muted-foreground uppercase tracking-[0.4em] mt-4">
                   Encrypted SSL Submission | Professional Registry

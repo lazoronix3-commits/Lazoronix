@@ -25,6 +25,8 @@
     --input: 0 0% 15%;
     --ring: 46 65% 52%;
     --radius: 0.25rem; /* Sharper corners for executive feel */
+    --mouse-x: 50%;
+    --mouse-y: 50%;
   }
 }
 
@@ -51,6 +53,18 @@
 .hero-gradient {
   background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 50%),
               radial-gradient(circle at bottom left, rgba(79, 126, 255, 0.03), transparent 50%);
+}
+
+.mouse-spotlight {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(212, 175, 55, 0.07),
+    transparent 80%
+  );
 }
 
 /* Institutional Typography refinements */

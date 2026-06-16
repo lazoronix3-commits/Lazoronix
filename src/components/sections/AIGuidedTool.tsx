@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
+import { useToast } from '@/hooks/use-toast'
 import { 
   Sparkles, 
   Loader2, 
@@ -175,6 +176,7 @@ export function AIGuidedTool() {
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
   const [scanStatus, setScanStatus] = useState('Initializing...')
+  const { toast } = useToast()
 
   useEffect(() => {
     if (step === 'result' && !caseId) {
@@ -192,7 +194,6 @@ export function AIGuidedTool() {
     setFormValues(prev => ({ ...prev, [key]: value }))
   }
 
-  // Local Logic: Evidence Completeness Scoring
   const evidenceMetrics = useMemo(() => {
     if (!selectedType) return { total: 0, items: [] };
     
@@ -208,7 +209,6 @@ export function AIGuidedTool() {
     return { total, items };
   }, [formValues, description, hasAccess, selectedType]);
 
-  // Local Logic: Risk Level Calculation
   const riskLevel = useMemo(() => {
     const amount = parseInt(formValues.amount || "0");
     if (isBlocked && amount > 20000) return 'Critical';
@@ -255,9 +255,13 @@ ${description}
       setResult(output)
       clearInterval(interval)
       setStep('result')
-    } catch (error) {
-      console.error(error)
+    } catch (error: any) {
       clearInterval(interval)
+      toast({
+        variant: "destructive",
+        title: "System High Demand",
+        description: "The forensic engine is currently at capacity. Please try again in a few moments.",
+      })
     } finally {
       setLoading(false)
     }
@@ -268,7 +272,6 @@ ${description}
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
       
       <div className="container mx-auto px-6 max-w-6xl">
-        {/* Step Indicator */}
         <div className="flex justify-center mb-16">
           <div className="flex items-center gap-4">
             <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'type' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>1</div>
@@ -352,7 +355,12 @@ ${description}
                       />
                     </div>
                     <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-xl font-bold">
-                      {loading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : 'Generate Preliminary Assessment'}
+                      {loading ? (
+                        <div className="flex items-center gap-3">
+                          <Loader2 className="h-6 w-6 animate-spin" />
+                          <span>{scanStatus}</span>
+                        </div>
+                      ) : 'Generate Preliminary Assessment'}
                     </Button>
                   </CardContent>
                 </Card>
@@ -377,7 +385,6 @@ ${description}
 
         {step === 'result' && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Header / Meta */}
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
               <div className="flex-grow p-8 glass-card rounded-[2rem] border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
                  <div className="flex items-center gap-6">
@@ -409,7 +416,6 @@ ${description}
               </Card>
             </div>
 
-            {/* Timeline */}
             <Card className="glass-card border-white/5 p-8">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
                 {TIMELINE_STEPS.map((step, idx) => (
@@ -425,7 +431,6 @@ ${description}
               </div>
             </Card>
 
-            {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="glass-card border-white/5 p-6">
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Risk Level</span>
@@ -444,7 +449,6 @@ ${description}
               </Card>
             </div>
 
-            {/* Findings Dashboard */}
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
                 <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Preliminary Case Findings</h3>
@@ -488,7 +492,6 @@ ${description}
                   </div>
                 </Card>
 
-                {/* Static Urgency Notice */}
                 <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
                   <h4 className="text-sm font-bold text-destructive flex items-center gap-2 mb-4"><ShieldAlert className="w-4 h-4" /> Time-Sensitive Notice</h4>
                   <p className="text-xs text-foreground/80 leading-relaxed mb-4">Recovery opportunities can become more difficult as time passes due to:</p>
@@ -501,7 +504,6 @@ ${description}
               </div>
             </div>
 
-            {/* Static Roadmap & Conversion */}
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
                 <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Target className="w-5 h-5 text-primary" /> Investigation Roadmap</h3>
@@ -539,7 +541,6 @@ ${description}
                   </Button>
                 </Card>
 
-                {/* Static Safety Protocols */}
                 <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
                   <h4 className="text-xs font-black uppercase tracking-widest text-destructive mb-4">Critical Safety Protocols</h4>
                   <div className="space-y-3">

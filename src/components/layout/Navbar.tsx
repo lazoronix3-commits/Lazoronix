@@ -89,7 +89,7 @@ export function Navbar() {
           {mounted && (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors outline-none">
-                Divisions <ChevronDown className="w-3 h-3 opacity-50" />
+                Services <ChevronDown className="w-3 h-3 opacity-50" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-72 bg-card border-white/10 shadow-2xl">
                 {divisions.map((division) => (
@@ -132,7 +132,7 @@ export function Navbar() {
               </SheetHeader>
               <div className="flex flex-col p-6 space-y-6">
                 <div className="space-y-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Divisions</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Services</p>
                   <div className="grid gap-3">
                     {divisions.map((division) => (
                       <Link 

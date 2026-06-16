@@ -14,13 +14,13 @@ import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
 const services = [
-  "Forex Scam Recovery",
-  "Investment Scam Recovery",
-  "Romance Scam Recovery",
-  "Job Scam Recovery",
-  "Loan Scam Recovery",
-  "Wallet Recovery",
-  "Asset Recovery Solutions",
+  "Financial Trading Fraud Division",
+  "Institutional Investment Fraud Division",
+  "Social Engineering Fraud Division",
+  "Employment & Recruitment Fraud Division",
+  "Institutional Loan Fraud Division",
+  "Digital Asset Access & Recovery Division",
+  "Blockchain Intelligence & Tracing Division",
 ];
 
 export function Navbar() {
@@ -74,9 +74,9 @@ export function Navbar() {
           {mounted ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
-                Services <ChevronDown className="w-4 h-4 opacity-50" />
+                Divisions <ChevronDown className="w-4 h-4 opacity-50" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 bg-card border-white/10 shadow-2xl">
+              <DropdownMenuContent align="start" className="w-72 bg-card border-white/10 shadow-2xl">
                 {services.map((service) => (
                   <DropdownMenuItem key={service} asChild>
                     <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10">
@@ -88,12 +88,12 @@ export function Navbar() {
             </DropdownMenu>
           ) : (
             <button className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
-              Services <ChevronDown className="w-4 h-4 opacity-50" />
+              Divisions <ChevronDown className="w-4 h-4 opacity-50" />
             </button>
           )}
 
           <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
-          <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Success Stories</Link>
+          <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Forensic Records</Link>
           <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
           <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
         </div>
@@ -101,7 +101,7 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <Button asChild className="bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest h-11 px-6">
             <Link href="#forensic-intake">
-              Get Free Assessment
+              Case Assessment
             </Link>
           </Button>
         </div>

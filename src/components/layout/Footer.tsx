@@ -56,13 +56,13 @@ export function Footer() {
           </div>
           
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Services</h5>
+            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
             <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#services" className="hover:text-primary transition-colors">Forex Scam Recovery</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Investment Scam Recovery</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Romance Scam Recovery</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Job Scam Recovery</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Wallet Recovery</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Employment Fraud Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Access Division</Link></li>
             </ul>
           </div>
           

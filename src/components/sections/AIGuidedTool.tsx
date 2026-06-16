@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect, useMemo } from 'react'
@@ -144,8 +143,8 @@ type CaseType = {
 const CASE_TYPES: CaseType[] = [
   { 
     id: "forex", 
-    title: "Forex Scam Recovery", 
-    description: "Lost money to a broker, trading platform, or investment advisor.",
+    title: "Financial Trading Fraud Division", 
+    description: "Department specializing in brokerage fraud, trading platform manipulation, and offshore fund tracing.",
     icon: TrendingUp,
     fields: [
       { key: 'brokerName', label: 'Broker/Platform Name', placeholder: 'e.g. Global Trade FX' },
@@ -158,8 +157,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "investment", 
-    title: "Investment Scam Recovery", 
-    description: "Fake investment opportunities, crypto investments, Ponzi schemes.",
+    title: "Institutional Investment Fraud Division", 
+    description: "Investigation of fake ICOs, DeFi schemes, and high-yield investment programs (HYIP).",
     icon: BarChart,
     fields: [
       { key: 'platformName', label: 'Investment Platform', placeholder: 'e.g. CryptoGrowth Pro' },
@@ -171,8 +170,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "romance", 
-    title: "Romance Scam Recovery", 
-    description: "Funds sent to someone met online.",
+    title: "Social Engineering Fraud Division", 
+    description: "Department for online relationship deception, grooming schemes, and identity fraud.",
     icon: Heart,
     fields: [
       { key: 'platformMet', label: 'Platform Where You Met', placeholder: 'e.g. Tinder, Hinge, Facebook' },
@@ -184,8 +183,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "job", 
-    title: "Job Scam Recovery", 
-    description: "Fake employment opportunities and recruitment fraud.",
+    title: "Employment & Recruitment Fraud Division", 
+    description: "Investigation of fake job offers, equipment scams, and recruitment-based identity theft.",
     icon: Briefcase,
     fields: [
       { key: 'companyName', label: 'Company Name Used', placeholder: 'e.g. Remote Solutions Inc' },
@@ -196,8 +195,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "loan", 
-    title: "Loan Scam Recovery", 
-    description: "Advance-fee loan scams and lending fraud.",
+    title: "Institutional Loan Fraud Division", 
+    description: "Advance-fee lending fraud and fraudulent institutional grant investigations.",
     icon: Banknote,
     fields: [
       { key: 'lenderName', label: 'Lender/Agency Name', placeholder: 'e.g. FastCapital Loans' },
@@ -207,8 +206,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "wallet", 
-    title: "Wallet Recovery", 
-    description: "Lost access to crypto wallets or digital assets.",
+    title: "Digital Asset Access & Recovery Division", 
+    description: "Forensic recovery of hardware wallets, lost credentials, and encrypted volume bypass.",
     icon: Wallet,
     fields: [
       { key: 'walletType', label: 'Wallet Type', placeholder: 'Ledger, Metamask, Trust Wallet, etc.' },
@@ -219,8 +218,8 @@ const CASE_TYPES: CaseType[] = [
   },
   { 
     id: "other", 
-    title: "Other Asset Recovery", 
-    description: "Custom investigation case.",
+    title: "Blockchain Intelligence Division", 
+    description: "Custom digital asset tracing and complex jurisdictional investigations.",
     icon: MoreHorizontal,
     fields: [
       { key: 'subject', label: 'Case Subject', placeholder: 'Briefly name the entity involved' },
@@ -469,7 +468,7 @@ ${description}
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 tracking-tighter uppercase">Forensic Case Intake</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Select your recovery category to initialize the formal intake process. All data is protected under institutional-grade encryption.
+                Select the investigative division to initialize the formal intake process. All data is protected under institutional-grade encryption.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -498,7 +497,7 @@ ${description}
         {step === 'details' && selectedType && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto">
             <Button variant="ghost" className="mb-8 text-[10px] font-black uppercase tracking-widest" onClick={() => setStep('type')}>
-              <ArrowLeft className="mr-2 w-3.5 h-3.5" /> Back to Categories
+              <ArrowLeft className="mr-2 w-3.5 h-3.5" /> Back to Divisions
             </Button>
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-8">
@@ -925,4 +924,3 @@ ${description}
     </section>
   )
 }
-

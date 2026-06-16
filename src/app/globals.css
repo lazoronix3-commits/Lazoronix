@@ -81,6 +81,11 @@
   50% { opacity: 0.4; transform: scale(1.4); }
 }
 
+@keyframes line-grow {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
 /* Intelligence Motion Classes */
 .network-line {
   fill: none;
@@ -113,4 +118,13 @@
 .reveal-glow.active {
   box-shadow: 0 0 30px rgba(212, 175, 55, 0.05);
   border-color: rgba(212, 175, 55, 0.2);
+}
+
+.reveal-glow.active .timeline-line-fill {
+  animation: line-grow 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 400ms;
+}
+
+.reveal-glow.active .timeline-node {
+  @apply bg-primary border-primary shadow-[0_0_15px_rgba(212,175,55,0.4)];
 }

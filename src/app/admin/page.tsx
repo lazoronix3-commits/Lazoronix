@@ -58,7 +58,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderData from '@/app/lib/placeholder-images.json';
 
 type CaseRecord = {

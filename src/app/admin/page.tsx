@@ -35,7 +35,8 @@ import {
   Landmark,
   Wallet,
   Briefcase,
-  Download
+  Download,
+  Database
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -96,6 +97,9 @@ type SuccessStory = {
   case_type: string;
   amount: string;
   status: string;
+  challenge: string;
+  focus: string;
+  outcome: string;
   narrative: string;
   icon_name: string;
 };
@@ -115,7 +119,10 @@ export default function AdminDashboard() {
     case_id: '',
     case_type: '',
     amount: '',
-    status: 'Recovered',
+    status: 'Resolved',
+    challenge: '',
+    focus: '',
+    outcome: '',
     narrative: '',
     icon_name: 'TrendingUp'
   });
@@ -200,17 +207,17 @@ export default function AdminDashboard() {
   };
 
   const deleteStory = async (id: string) => {
-    if (confirm('Delete this success story?')) {
+    if (confirm('Delete this case insight?')) {
       const { error } = await supabase.from('success_stories').delete().eq('id', id);
       if (!error) {
         setStories(stories.filter(s => s.id !== id));
-        toast({ title: "Story Removed" });
+        toast({ title: "Insight Removed" });
       }
     }
   };
 
   const saveStory = async () => {
-    if (!storyForm.case_id || !storyForm.narrative) return;
+    if (!storyForm.case_id || !storyForm.challenge) return;
 
     try {
       const { error } = await supabase
@@ -219,13 +226,16 @@ export default function AdminDashboard() {
 
       if (error) throw error;
 
-      toast({ title: "Resolution Registered", description: "The success story is now live." });
+      toast({ title: "Resolution Registered", description: "The clinical case insight is now live." });
       setIsStoryDialogOpen(false);
       setStoryForm({
         case_id: '',
         case_type: '',
         amount: '',
-        status: 'Recovered',
+        status: 'Resolved',
+        challenge: '',
+        focus: '',
+        outcome: '',
         narrative: '',
         icon_name: 'TrendingUp'
       });
@@ -347,62 +357,76 @@ export default function AdminDashboard() {
                 <Star className="w-3.5 h-3.5 mr-2" /> Resolutions
               </Button>
             </DialogTrigger>
-            <DialogContent className="glass-card border-white/10 max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="glass-card border-white/10 max-w-5xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Case Resolutions Library</DialogTitle>
-                <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage public success stories and technical outcomes</DialogDescription>
+                <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Forensic Case Records</DialogTitle>
+                <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage institutional case insights and technical outcomes</DialogDescription>
               </DialogHeader>
               
               <div className="py-6 space-y-8">
                 <div className="grid md:grid-cols-2 gap-8 p-8 border border-primary/20 bg-primary/5">
                   <div className="space-y-4">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2"><Plus className="w-4 h-4" /> Add New Resolution</h4>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2"><Plus className="w-4 h-4" /> Register New Insight</h4>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label className="text-[8px] uppercase tracking-widest">Case ID</Label>
+                        <Label className="text-[8px] uppercase tracking-widest">Case Identifier</Label>
                         <Input placeholder="LRX-00000" className="bg-black/50 border-white/10" value={storyForm.case_id} onChange={e => setStoryForm({...storyForm, case_id: e.target.value})} />
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-[8px] uppercase tracking-widest">Category</Label>
-                        <Input placeholder="Forex Recovery" className="bg-black/50 border-white/10" value={storyForm.case_type} onChange={e => setStoryForm({...storyForm, case_type: e.target.value})} />
+                        <Label className="text-[8px] uppercase tracking-widest">Division</Label>
+                        <Input placeholder="Trading Fraud" className="bg-black/50 border-white/10" value={storyForm.case_type} onChange={e => setStoryForm({...storyForm, case_type: e.target.value})} />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label className="text-[8px] uppercase tracking-widest">Amount</Label>
+                        <Label className="text-[8px] uppercase tracking-widest">Value Resolved</Label>
                         <Input placeholder="$50,000" className="bg-black/50 border-white/10" value={storyForm.amount} onChange={e => setStoryForm({...storyForm, amount: e.target.value})} />
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-[8px] uppercase tracking-widest">Visual Icon</Label>
+                        <Label className="text-[8px] uppercase tracking-widest">Visual Class</Label>
                         <Select value={storyForm.icon_name} onValueChange={val => setStoryForm({...storyForm, icon_name: val})}>
                           <SelectTrigger className="bg-black/50 border-white/10">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="TrendingUp">Trending Up (Forex)</SelectItem>
-                            <SelectItem value="Landmark">Landmark (Investment)</SelectItem>
-                            <SelectItem value="Wallet">Wallet (Crypto)</SelectItem>
-                            <SelectItem value="Briefcase">Briefcase (Job)</SelectItem>
+                            <SelectItem value="TrendingUp">Market/Forex</SelectItem>
+                            <SelectItem value="Landmark">Institutional</SelectItem>
+                            <SelectItem value="Wallet">Digital Asset/Crypto</SelectItem>
+                            <SelectItem value="Briefcase">Employment</SelectItem>
+                            <SelectItem value="Database">Intelligence</SelectItem>
+                            <SelectItem value="Search">Forensics</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-[8px] uppercase tracking-widest">Technical Narrative</Label>
-                      <Textarea placeholder="Describe the recovery process..." className="bg-black/50 border-white/10 min-h-[100px]" value={storyForm.narrative} onChange={e => setStoryForm({...storyForm, narrative: e.target.value})} />
+                      <Label className="text-[8px] uppercase tracking-widest">Technical Challenge</Label>
+                      <Input placeholder="e.g. Obfuscated fund movements" className="bg-black/50 border-white/10" value={storyForm.challenge} onChange={e => setStoryForm({...storyForm, challenge: e.target.value})} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[8px] uppercase tracking-widest">Investigative Focus</Label>
+                      <Input placeholder="e.g. Multi-chain cluster analysis" className="bg-black/50 border-white/10" value={storyForm.focus} onChange={e => setStoryForm({...storyForm, focus: e.target.value})} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[8px] uppercase tracking-widest">Technical Outcome</Label>
+                      <Input placeholder="e.g. Asset interdiction successful" className="bg-black/50 border-white/10" value={storyForm.outcome} onChange={e => setStoryForm({...storyForm, outcome: e.target.value})} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[8px] uppercase tracking-widest">Summary Narrative</Label>
+                      <Textarea placeholder="Clinical summary..." className="bg-black/50 border-white/10 min-h-[80px]" value={storyForm.narrative} onChange={e => setStoryForm({...storyForm, narrative: e.target.value})} />
                     </div>
                     <Button onClick={saveStory} className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12">Register Resolution</Button>
                   </div>
                   
                   <div className="space-y-4">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Live Resolutions</h4>
-                    <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Live Insights</h4>
+                    <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
                       {stories.map(s => (
                         <div key={s.id} className="p-4 bg-white/5 border border-white/5 flex justify-between items-start group">
                           <div>
-                            <p className="text-[9px] font-black text-primary uppercase">{s.case_id}</p>
-                            <p className="text-[10px] font-bold text-white mt-1">{s.case_type}</p>
-                            <p className="text-[8px] text-muted-foreground mt-2 line-clamp-2">{s.narrative}</p>
+                            <p className="text-[9px] font-black text-primary uppercase">{s.case_id} | {s.case_type}</p>
+                            <p className="text-[10px] font-bold text-white mt-1">{s.challenge}</p>
+                            <p className="text-[8px] text-muted-foreground mt-2 line-clamp-1">{s.outcome}</p>
                           </div>
                           <Button variant="ghost" size="icon" onClick={() => deleteStory(s.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity">
                             <Trash2 className="w-3.5 h-3.5" />

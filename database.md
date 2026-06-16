@@ -31,14 +31,17 @@ CREATE TABLE IF NOT EXISTS cases (
   created_at timestamptz DEFAULT now()
 );
 
--- 2. Create the success_stories table
+-- 2. Create the success_stories table (Case Insights)
 CREATE TABLE IF NOT EXISTS success_stories (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   case_id text,
-  case_type text,
+  case_type text, -- Division
   amount text,
-  status text DEFAULT 'Recovered',
-  narrative text,
+  status text DEFAULT 'Resolved',
+  challenge text, -- Technical Challenge
+  focus text,     -- Investigative Focus
+  outcome text,   -- Technical Outcome
+  narrative text, -- General Summary
   icon_name text DEFAULT 'TrendingUp',
   created_at timestamptz DEFAULT now()
 );

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -16,7 +17,7 @@ export function SectionReveal({
   children, 
   className, 
   delay = 0, 
-  duration = 700,
+  duration = 400, // 0.4s Duration as requested
   threshold = 0.1,
   once = true
 }: SectionRevealProps) {
@@ -54,8 +55,8 @@ export function SectionReveal({
     <div
       ref={domRef}
       className={cn(
-        'opacity-0 translate-y-8 transition-all ease-out',
-        isVisible && 'opacity-100 translate-y-0 reveal-glow active',
+        'opacity-0 translate-y-4 transition-all ease-out filter blur-[1px]',
+        isVisible && 'opacity-100 translate-y-0 filter-none reveal-glow active',
         className
       )}
       style={{ 

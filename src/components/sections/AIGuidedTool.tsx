@@ -368,7 +368,7 @@ ${description}
   }
 
   return (
-    <section id="ai-tool" className="py-24 bg-muted/30 relative overflow-hidden">
+    <section id="forensic-intake" className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
       
       <div className="container mx-auto px-6 max-w-6xl">
@@ -462,7 +462,7 @@ ${description}
                           <Loader2 className="h-6 w-6 animate-spin" />
                           <span>{scanStatus}</span>
                         </div>
-                      ) : 'Generate Preliminary Assessment'}
+                      ) : 'Generate Forensic Intake Summary'}
                     </Button>
                     
                     <SecurityChecklist />
@@ -499,7 +499,7 @@ ${description}
                      <h2 className="text-2xl font-headline font-bold mb-1">Investigation Dashboard</h2>
                      <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
                        <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-bold">{caseId}</span></span>
-                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Automated Review</span></span>
+                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Forensic Review Pending</span></span>
                      </div>
                    </div>
                  </div>
@@ -554,7 +554,7 @@ ${description}
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Automated Preliminary Findings</h3>
+                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Preliminary Case Findings</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
@@ -575,7 +575,7 @@ ${description}
                 </div>
                 <div className="mt-6 flex gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-500/80">
                   <Info className="w-3.5 h-3.5 shrink-0" />
-                  <p>This assessment is generated automatically and is not a professional investigation. Final recommendations require review by a recovery specialist.</p>
+                  <p>This assessment is part of the preliminary intake process. Final recommendations require review by a recovery specialist.</p>
                 </div>
               </Card>
 

@@ -1,5 +1,3 @@
-
-
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
@@ -203,7 +201,7 @@ export default function Home() {
                    </div>
                 </div>
 
-                <Link href="#ai-tool" className="inline-flex items-center gap-2 px-8 h-14 rounded-xl bg-muted/50 border border-white/10 text-foreground font-bold hover:bg-primary hover:text-white transition-all w-fit">
+                <Link href="#forensic-intake" className="inline-flex items-center gap-2 px-8 h-14 rounded-xl bg-muted/50 border border-white/10 text-foreground font-bold hover:bg-primary hover:text-white transition-all w-fit">
                   Check Recovery Options
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -227,7 +225,7 @@ export default function Home() {
               <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
                 <h2 className="text-4xl font-headline font-bold mb-6">Not Sure If Recovery Is Possible?</h2>
                 <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
-                  Every case begins with a forensic review. We don't guess—we investigate the digital evidence to determine the viability of your claim.
+                  Every case is different. Before making recommendations, our specialists review available evidence, transaction records, communications, and technical circumstances to determine whether further investigation may be warranted.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                   {[
@@ -246,14 +244,13 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-10 leading-relaxed">
-                  You'll receive a professional assessment outlining potential next steps before any recovery work begins.
-                </p>
                 <div className="space-y-8">
-                  <Button size="lg" className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
-                    Check My Recovery Options
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="#forensic-intake">
+                    <Button size="lg" className="h-16 px-10 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group">
+                      Start With A Confidential Assessment
+                      <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                   
                   <div className="pt-6 border-t border-white/5">
                     <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">

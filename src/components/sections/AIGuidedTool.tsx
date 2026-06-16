@@ -254,12 +254,6 @@ export function AIGuidedTool() {
   
   const { toast } = useToast()
 
-  useEffect(() => {
-    if (step === 'result' && !caseId) {
-      setCaseId(`LRX-${Math.floor(10000 + Math.random() * 90000)}`)
-    }
-  }, [step, caseId])
-
   const handleSelectType = (type: CaseType) => {
     setSelectedType(type)
     setStep('details')
@@ -298,6 +292,10 @@ export function AIGuidedTool() {
   const handleAssessment = async () => {
     if (!selectedType) return
     setLoading(true)
+
+    // Pre-generate case ID for the technical dashboard
+    const generatedId = `LRX-${Math.floor(10000 + Math.random() * 90000)}`;
+    setCaseId(generatedId);
     
     const statuses = [
       "Accessing blockchain ledger...",
@@ -363,37 +361,42 @@ ${description}
     setBookingValuesLoading(true)
     
     try {
+      // Ensure we have a valid case payload
+      const payload = {
+        case_id: caseId,
+        case_type: selectedType?.title,
+        form_values: formValues || {},
+        description: description || '',
+        is_blocked: !!isBlocked,
+        has_access: !!hasAccess,
+        result_data: result || {},
+        user_name: bookingValues.name,
+        user_email: bookingValues.email,
+        user_phone: bookingValues.phone || null,
+        user_country: bookingValues.country,
+        best_contact_time: bookingValues.bestTime,
+        preferred_method: bookingValues.method,
+        status: 'Review Pending',
+        risk_level: riskLevel,
+        evidence_integrity: evidenceMetrics.status
+      };
+
       // Persist to Supabase Database
       const { error } = await supabase
         .from('cases')
-        .insert([{
-          case_id: caseId,
-          case_type: selectedType?.title,
-          form_values: formValues,
-          description: description,
-          is_blocked: isBlocked,
-          has_access: hasAccess,
-          result_data: result,
-          user_name: bookingValues.name,
-          user_email: bookingValues.email,
-          user_phone: bookingValues.phone,
-          user_country: bookingValues.country,
-          best_contact_time: bookingValues.bestTime,
-          preferred_method: bookingValues.method,
-          status: 'Review Pending',
-          risk_level: riskLevel,
-          evidence_integrity: evidenceMetrics.status
-        }]);
+        .insert([payload]);
 
-      if (error) throw error;
+      if (error) {
+        throw new Error(error.message || 'Database error occurred');
+      }
       
       setStep('success')
     } catch (error: any) {
-      console.error('Error saving case:', error);
+      console.error('Forensic Intake Error:', error.message || error);
       toast({
         variant: "destructive",
-        title: "Submission Error",
-        description: "Could not register your case in our forensic database. Please contact support if the issue persists."
+        title: "Registration Failed",
+        description: error.message || "Could not register your case. Please check your connection and try again."
       });
     } finally {
       setBookingValuesLoading(false)

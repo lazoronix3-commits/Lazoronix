@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -165,7 +166,7 @@ export default function AdminDashboard() {
     setUploadingLogo(true);
 
     try {
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('assets')
         .upload('logo.png', logoFile, {
           upsert: true,
@@ -205,7 +206,6 @@ export default function AdminDashboard() {
     setUploadingAsset(true);
 
     try {
-      // We save assets as {assetId}.png in the same assets bucket
       const fileName = `${selectedAssetId}.png`;
       const { error } = await supabase.storage
         .from('assets')
@@ -236,7 +236,6 @@ export default function AdminDashboard() {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
-      {/* Admin Nav */}
       <nav className="h-20 border-b border-white/5 bg-card/50 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-50">
         <div className="flex items-center gap-4">
           <div className={cn(
@@ -260,7 +259,6 @@ export default function AdminDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          {/* Branding Dialog */}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">
@@ -295,7 +293,9 @@ export default function AdminDashboard() {
                     <Info className="w-3.5 h-3.5" /> Project Configuration
                   </p>
                   <p className="text-[9px] text-muted-foreground uppercase tracking-widest leading-relaxed">
-                    Bucket: <span className="text-primary font-bold">assets</span> (Public)
+                    1. Go to Supabase &gt; Storage<br />
+                    2. Create a bucket named <span className="text-primary font-bold">assets</span><br />
+                    3. Set the bucket to <span className="text-primary font-bold">Public</span>
                   </p>
                 </div>
 
@@ -311,7 +311,6 @@ export default function AdminDashboard() {
             </DialogContent>
           </Dialog>
 
-          {/* Media Library Dialog */}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">
@@ -392,7 +391,6 @@ export default function AdminDashboard() {
       </nav>
 
       <div className="p-8 max-w-[1600px] mx-auto space-y-8">
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[
             { label: 'Total Investigations', value: cases.length, icon: FileText },
@@ -413,7 +411,6 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        {/* Search & Filters */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="relative w-full md:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -432,7 +429,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Table Area */}
         <Card className="glass-card border-white/5 overflow-hidden">
           <Table>
             <TableHeader className="bg-white/5">
@@ -529,7 +525,6 @@ export default function AdminDashboard() {
                               </DialogTitle>
                             </DialogHeader>
                             <div className="p-8 space-y-12">
-                              {/* Summary Section */}
                               <div className="grid md:grid-cols-3 gap-8">
                                 <div className="space-y-4">
                                   <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><User className="w-3.5 h-3.5" /> Participant Details</h4>
@@ -561,7 +556,6 @@ export default function AdminDashboard() {
                                 </div>
                               </div>
 
-                              {/* AI Narrative Section */}
                               <div className="space-y-6">
                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Technical Narrative</h4>
                                 <div className="p-8 bg-card border border-white/10 italic text-sm text-foreground/80 leading-relaxed border-l-2 border-l-primary">
@@ -574,7 +568,6 @@ export default function AdminDashboard() {
                                 )}
                               </div>
 
-                              {/* AI Findings Grid */}
                               {c.result_data?.preliminaryCaseFindings && (
                                 <div className="space-y-6">
                                   <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> AI Forensic Findings</h4>
@@ -589,7 +582,6 @@ export default function AdminDashboard() {
                                 </div>
                               )}
 
-                              {/* Roadmap */}
                               {c.result_data?.investigativeFocusAreas && (
                                 <div className="space-y-6">
                                   <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Network className="w-3.5 h-3.5" /> Suggested Roadmap</h4>
@@ -644,7 +636,6 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      {/* Decorative Atmosphere */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/[0.02] rounded-full blur-[160px]" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/[0.01] rounded-full blur-[120px]" />

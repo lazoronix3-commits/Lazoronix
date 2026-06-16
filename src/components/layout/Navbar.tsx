@@ -94,7 +94,7 @@ export function Navbar() {
 
           <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
           <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Forensic Records</Link>
-          <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
+          <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-[11px] font-black">Knowledge Base</Link>
           <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
         </div>
 

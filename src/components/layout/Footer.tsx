@@ -80,7 +80,7 @@ export function Footer() {
             <ul className="space-y-4 text-xs text-muted-foreground font-medium">
               <li><Link href="#" className="hover:text-primary transition-colors">Recovery Guides</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Scam Awareness</Link></li>
-              <li><Link href="#faq" className="hover:text-primary transition-colors">FAQ</Link></li>
+              <li><Link href="#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
             </ul>
           </div>
           

@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
@@ -9,6 +10,7 @@ import { FAQSection } from '@/components/sections/FAQSection';
 import { Footer } from '@/components/layout/Footer';
 import { AIGuidedTool } from '@/components/sections/AIGuidedTool';
 import { SuccessStories } from '@/components/sections/SuccessStories';
+import { TeamSection } from '@/components/sections/TeamSection';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, 
@@ -213,6 +215,8 @@ export default function Home() {
       <WhyChooseUs />
       
       <SuccessStories />
+
+      <TeamSection />
 
       {/* Case Qualification Section */}
       <section className="py-24 bg-primary/5">

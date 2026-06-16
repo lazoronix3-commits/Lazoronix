@@ -1,3 +1,4 @@
+
 {
   "placeholderImages": [
     {
@@ -17,6 +18,30 @@
       "description": "Abstract representation of secure digital storage",
       "imageUrl": "https://picsum.photos/seed/laz-3/800/600",
       "imageHint": "secure server vault"
+    },
+    {
+      "id": "team-1",
+      "description": "Lead Digital Forensic Analyst",
+      "imageUrl": "https://picsum.photos/seed/team1/400/500",
+      "imageHint": "professional investigator"
+    },
+    {
+      "id": "team-2",
+      "description": "Blockchain Intelligence Specialist",
+      "imageUrl": "https://picsum.photos/seed/team2/400/500",
+      "imageHint": "cybersecurity expert"
+    },
+    {
+      "id": "team-3",
+      "description": "Financial Fraud Investigator",
+      "imageUrl": "https://picsum.photos/seed/team3/400/500",
+      "imageHint": "business professional"
+    },
+    {
+      "id": "team-4",
+      "description": "Cybersecurity & Recovery Analyst",
+      "imageUrl": "https://picsum.photos/seed/team4/400/500",
+      "imageHint": "forensic specialist"
     }
   ]
 }

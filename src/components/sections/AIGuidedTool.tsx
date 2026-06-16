@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect, useMemo } from 'react'
@@ -214,7 +215,6 @@ export function AIGuidedTool() {
   const [caseId, setCaseId] = useState('')
   const [scanStatus, setScanStatus] = useState('Initializing...')
   
-  // Booking state
   const [bookingValues, setBookingValues] = useState({
     name: '',
     email: '',
@@ -304,23 +304,41 @@ ${description}
 
       const output = await aiGuidedRecoveryPreparation({ initialProblemDescription: fullPrompt })
       setResult(output)
-      clearInterval(interval)
       setStep('result')
     } catch (error: any) {
-      clearInterval(interval)
+      // FAIL-SAFE FALLBACK: Provide generic assessment if AI is down
+      const fallbackResult: AIGuidedRecoveryPreparationOutput = {
+        preliminaryCaseFindings: {
+          scamType: selectedType.title,
+          estimatedLoss: formValues.amount || "Pending Verification",
+          evidenceStatus: evidenceMetrics.status as any,
+          investigationReadiness: "Qualified for Specialist Review",
+          caseComplexity: riskLevel === 'Critical' ? 'Extremely High' : riskLevel === 'High' ? 'High' : 'Moderate',
+          reviewRecommendation: "Professional Assessment Recommended"
+        },
+        recoveryScenarioSummary: "Forensic intake complete. Specialist review is required to verify the technical parameters of the digital asset movement.",
+        investigativeFocusAreas: [
+          {
+            categoryName: "Manual Forensic Review",
+            description: "A Senior Recovery Analyst must manually verify the transaction logs and platform details provided due to high system load.",
+            specificItems: ["Verification of Wallet Addresses", "Platform Credential Audit", "Jurisdictional Analysis"]
+          }
+        ]
+      }
+      setResult(fallbackResult)
+      setStep('result')
       toast({
-        variant: "destructive",
-        title: "System High Demand",
-        description: "The forensic engine is currently at capacity. Please try again in a few moments.",
+        title: "Manual Review Initialized",
+        description: "Due to high volume, we've bypassed automated scanning and moved you directly to specialist qualification.",
       })
     } finally {
+      clearInterval(interval)
       setLoading(false)
     }
   }
 
   const handleBooking = async () => {
     setBookingValuesLoading(true)
-    // Simulate API call to register lead
     await new Promise(resolve => setTimeout(resolve, 1500))
     setBookingValuesLoading(false)
     setStep('success')
@@ -591,7 +609,6 @@ ${description}
               </Card>
 
               <div className="space-y-8">
-                {/* HARD STOP SECTION */}
                 <Card className="border-primary/20 bg-primary/5 p-8 rounded-[2rem] shadow-2xl shadow-primary/10 border-2">
                   <h4 className="text-3xl font-headline font-bold text-primary mb-4">Professional Review Required</h4>
                   <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">

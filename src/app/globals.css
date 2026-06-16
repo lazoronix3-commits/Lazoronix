@@ -70,15 +70,15 @@
 
 @keyframes gold-pulse {
   0% { stroke-dashoffset: 1000; opacity: 0; }
-  10% { opacity: 0.3; }
-  50% { opacity: 0.3; }
-  90% { opacity: 0.3; }
+  10% { opacity: 0.2; }
+  50% { opacity: 0.2; }
+  90% { opacity: 0.2; }
   100% { stroke-dashoffset: 0; opacity: 0; }
 }
 
 @keyframes node-glow {
   0%, 100% { opacity: 0.1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.5); }
+  50% { opacity: 0.4; transform: scale(1.4); }
 }
 
 /* Intelligence Motion Classes */
@@ -87,20 +87,30 @@
   stroke: hsl(var(--primary));
   stroke-width: 0.5;
   stroke-dasharray: 1 8;
-  opacity: 0.12;
-  animation: network-flow 60s linear infinite;
+  opacity: 0.08;
+  animation: network-flow 80s linear infinite;
 }
 
 .pulse-line {
   fill: none;
   stroke: hsl(var(--primary));
-  stroke-width: 1.2;
-  stroke-dasharray: 150 850;
+  stroke-width: 1;
+  stroke-dasharray: 100 900;
   opacity: 0;
-  animation: gold-pulse 45s linear infinite;
+  animation: gold-pulse 60s linear infinite;
 }
 
 .network-node {
   fill: hsl(var(--primary));
-  animation: node-glow 10s ease-in-out infinite;
+  animation: node-glow 15s ease-in-out infinite;
+}
+
+/* Reveal Settle Glow */
+.reveal-glow {
+  transition: box-shadow 0.8s ease-out, border-color 0.8s ease-out;
+}
+
+.reveal-glow.active {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.05);
+  border-color: rgba(212, 175, 55, 0.2);
 }

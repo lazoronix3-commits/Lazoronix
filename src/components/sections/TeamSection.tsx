@@ -1,10 +1,11 @@
-
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ShieldCheck, User, Award, Globe, Fingerprint } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
 import placeholderData from '@/app/lib/placeholder-images.json';
+import { supabase } from '@/lib/supabase';
 
 const teamMembers = [
   { 
@@ -42,7 +43,29 @@ const teamMembers = [
 ];
 
 export function TeamSection() {
+  const [assetUrls, setAssetUrls] = useState<Record<string, string>>({});
   const images = placeholderData.placeholderImages;
+
+  useEffect(() => {
+    fetchCustomAssets();
+  }, []);
+
+  const fetchCustomAssets = async () => {
+    const urls: Record<string, string> = {};
+    for (const member of teamMembers) {
+      const fileName = `${member.id}.png`;
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl(fileName);
+      
+      if (data?.publicUrl) {
+        // We verify if it's a "real" file or just a fallback by checking for 404 in an actual app, 
+        // but here we'll just attempt to use it with a cache-buster.
+        urls[member.id] = `${data.publicUrl}?t=${Date.now()}`;
+      }
+    }
+    setAssetUrls(urls);
+  };
 
   return (
     <section className="py-32 bg-background relative overflow-hidden border-y border-white/5">
@@ -79,17 +102,32 @@ export function TeamSection() {
           <div className="lg:w-2/3 w-full grid sm:grid-cols-2 gap-8">
             {teamMembers.map((member, idx) => {
               const imageData = images.find(img => img.id === member.id);
+              const customUrl = assetUrls[member.id];
+              const displayUrl = customUrl || imageData?.imageUrl || '';
+
               return (
                 <SectionReveal key={member.id} delay={idx * 150} className="active">
                   <div className="group relative overflow-hidden bg-card border border-white/5 aspect-[4/5] shadow-2xl transition-all duration-500 hover:border-primary/40">
                     {/* Image with Zoom */}
-                    <Image 
-                      src={imageData?.imageUrl || ''}
-                      alt={member.role}
-                      fill
-                      className="object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                      data-ai-hint={imageData?.imageHint}
-                    />
+                    <div className="relative w-full h-full">
+                       <Image 
+                        src={displayUrl}
+                        alt={member.role}
+                        fill
+                        className="object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        data-ai-hint={imageData?.imageHint}
+                        onError={(e) => {
+                          // If custom URL fails (e.g. 404), fallback to placeholder
+                          if (customUrl) {
+                            setAssetUrls(prev => {
+                              const next = { ...prev };
+                              delete next[member.id];
+                              return next;
+                            });
+                          }
+                        }}
+                      />
+                    </div>
                     
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-70" />

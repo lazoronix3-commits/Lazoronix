@@ -26,7 +26,8 @@ import {
   Upload,
   Image as ImageIcon,
   Settings,
-  Info
+  Info,
+  Layers
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -57,6 +58,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import placeholderData from '@/app/lib/placeholder-images.json';
 
 type CaseRecord = {
   id: string;
@@ -84,6 +86,13 @@ export default function AdminDashboard() {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  
+  // Media Library State
+  const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
+  const [assetFile, setAssetFile] = useState<File | null>(null);
+  const [assetPreview, setAssetPreview] = useState<string | null>(null);
+  const [uploadingAsset, setUploadingAsset] = useState(false);
+
   const router = useRouter();
   const { toast } = useToast();
 
@@ -163,12 +172,7 @@ export default function AdminDashboard() {
           contentType: logoFile.type
         });
 
-      if (error) {
-        if (error.message.includes('not found')) {
-          throw new Error("Storage bucket 'assets' not found. Please create a public bucket named 'assets' in your Supabase project.");
-        }
-        throw error;
-      }
+      if (error) throw error;
 
       toast({
         title: "Branding Updated",
@@ -176,15 +180,57 @@ export default function AdminDashboard() {
       });
       setLogoFile(null);
       setLogoPreview(null);
-      fetchLogo(); // Refresh logo across the page
+      fetchLogo();
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Deployment Error (400)",
-        description: error.message || "Failed to upload logo. Ensure the 'assets' bucket exists and is set to Public.",
+        title: "Upload Error",
+        description: error.message || "Ensure 'assets' bucket exists and is Public.",
       });
     } finally {
       setUploadingLogo(false);
+    }
+  };
+
+  const handleAssetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAssetFile(file);
+      setAssetPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadAsset = async () => {
+    if (!assetFile || !selectedAssetId) return;
+    setUploadingAsset(true);
+
+    try {
+      // We save assets as {assetId}.png in the same assets bucket
+      const fileName = `${selectedAssetId}.png`;
+      const { error } = await supabase.storage
+        .from('assets')
+        .upload(fileName, assetFile, {
+          upsert: true,
+          contentType: assetFile.type
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Media Synchronized",
+        description: `The asset '${selectedAssetId}' has been updated successfully.`,
+      });
+      setAssetFile(null);
+      setAssetPreview(null);
+      setSelectedAssetId(null);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Media Error",
+        description: error.message,
+      });
+    } finally {
+      setUploadingAsset(false);
     }
   };
 
@@ -213,7 +259,8 @@ export default function AdminDashboard() {
             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">Forensic Management Engine</p>
           </div>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
+          {/* Branding Dialog */}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">
@@ -238,19 +285,17 @@ export default function AdminDashboard() {
                   ) : (
                     <ImageIcon className="w-12 h-12 text-muted-foreground opacity-30 mb-4" />
                   )}
-                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground text-center px-4">
                     {logoFile ? logoFile.name : 'Select Logo (PNG/SVG Preferred)'}
                   </p>
                 </div>
                 
                 <div className="p-4 bg-primary/5 border border-primary/20 space-y-3">
                   <p className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-2">
-                    <Info className="w-3.5 h-3.5" /> Project Configuration Required
+                    <Info className="w-3.5 h-3.5" /> Project Configuration
                   </p>
                   <p className="text-[9px] text-muted-foreground uppercase tracking-widest leading-relaxed">
-                    1. Go to Supabase &gt; Storage<br />
-                    2. Create a bucket named <span className="text-primary font-bold">assets</span><br />
-                    3. Set the bucket to <span className="text-primary font-bold">Public</span>
+                    Bucket: <span className="text-primary font-bold">assets</span> (Public)
                   </p>
                 </div>
 
@@ -265,10 +310,80 @@ export default function AdminDashboard() {
               </div>
             </DialogContent>
           </Dialog>
-          <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Active Intelligence Stream</span>
-          </div>
+
+          {/* Media Library Dialog */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="border-white/5 bg-white/5 uppercase text-[9px] font-black tracking-widest h-9">
+                <Layers className="w-3.5 h-3.5 mr-2" /> Media Library
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="glass-card border-white/10 max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Technical Asset Library</DialogTitle>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage website imagery and forensic personnel avatars</p>
+              </DialogHeader>
+              
+              <div className="py-6 space-y-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {placeholderData.placeholderImages.map((asset) => (
+                    <div 
+                      key={asset.id}
+                      onClick={() => setSelectedAssetId(asset.id)}
+                      className={cn(
+                        "p-4 border border-white/5 bg-white/5 cursor-pointer hover:border-primary/50 transition-all text-center space-y-3",
+                        selectedAssetId === asset.id && "border-primary bg-primary/5"
+                      )}
+                    >
+                      <div className="aspect-[4/5] bg-black/40 flex items-center justify-center relative overflow-hidden">
+                         <img src={asset.imageUrl} alt={asset.id} className="object-cover w-full h-full opacity-40" />
+                         <div className="absolute inset-0 flex items-center justify-center">
+                            <ImageIcon className="w-6 h-6 text-white opacity-20" />
+                         </div>
+                      </div>
+                      <p className="text-[8px] font-black uppercase tracking-widest">{asset.id.replace('-', ' ')}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {selectedAssetId && (
+                  <div className="p-8 border border-primary/20 bg-primary/5 space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Upload Replacement for {selectedAssetId}</h4>
+                      <Button variant="ghost" size="sm" onClick={() => setSelectedAssetId(null)} className="h-6 text-[8px] uppercase font-bold tracking-widest">Cancel</Button>
+                    </div>
+                    
+                    <div className="flex flex-col items-center justify-center p-8 border border-dashed border-primary/20 bg-black/40 relative group cursor-pointer">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                        onChange={handleAssetChange}
+                      />
+                      {assetPreview ? (
+                        <img src={assetPreview} alt="Preview" className="h-32 w-auto object-contain mb-4" />
+                      ) : (
+                        <Upload className="w-10 h-10 text-primary opacity-30 mb-4" />
+                      )}
+                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                        {assetFile ? assetFile.name : 'Click to Upload High-Res Media'}
+                      </p>
+                    </div>
+
+                    <Button 
+                      onClick={uploadAsset} 
+                      disabled={!assetFile || uploadingAsset}
+                      className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest premium-cta"
+                    >
+                      {uploadingAsset ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShieldCheck className="w-4 h-4 mr-2" />}
+                      Sync Media Asset
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Button variant="ghost" size="sm" onClick={handleLogout} className="text-muted-foreground hover:text-destructive">
             <LogOut className="w-4 h-4 mr-2" />
             Logout

@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                     <Info className="w-3.5 h-3.5" /> Project Configuration Required
                   </p>
                   <p className="text-[9px] text-muted-foreground uppercase tracking-widest leading-relaxed">
-                    1. Go to Supabase > Storage<br />
+                    1. Go to Supabase &gt; Storage<br />
                     2. Create a bucket named <span className="text-primary font-bold">assets</span><br />
                     3. Set the bucket to <span className="text-primary font-bold">Public</span>
                   </p>

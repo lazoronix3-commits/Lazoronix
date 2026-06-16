@@ -50,7 +50,7 @@ export function Navbar() {
           </DropdownMenu>
 
           <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
-          <Link href="#why-us" className="text-sm font-medium hover:text-primary transition-colors">Success Stories</Link>
+          <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Success Stories</Link>
           <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors">FAQ</Link>
           <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
         </div>

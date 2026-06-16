@@ -8,6 +8,7 @@ import { ProcessSection } from '@/components/sections/ProcessSection';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { Footer } from '@/components/layout/Footer';
 import { AIGuidedTool } from '@/components/sections/AIGuidedTool';
+import { SuccessStories } from '@/components/sections/SuccessStories';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, 
@@ -114,6 +115,8 @@ export default function Home() {
       </section>
 
       <WhyChooseUs />
+      
+      <SuccessStories />
 
       {/* Case Qualification Section */}
       <section className="py-24 bg-primary/5">

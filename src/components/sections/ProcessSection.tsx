@@ -5,35 +5,35 @@ const steps = [
   {
     number: "01",
     title: "Case Review",
-    description: "Our specialists conduct an initial assessment of your situation to understand the scope of the loss and the technical entities involved.",
+    description: "Initial assessment of your situation to understand the scope and technical entities involved.",
     icon: Shield,
-    details: ["Jurisdictional check", "Entity identification", "Preliminary risk assessment"]
+    details: ["Jurisdictional check", "Entity identification", "Risk assessment"]
   },
   {
     number: "02",
     title: "Evidence Collection",
-    description: "We guide you through identifying and securing critical documentation, transaction records, and communication logs required for a formal investigation.",
+    description: "Identification and secure intake of documentation, transaction records, and communication logs.",
     icon: FileText,
-    details: ["Transaction hash retrieval", "Chat log preservation", "Platform credential audit"]
+    details: ["Hash retrieval", "Log preservation", "Platform audit"]
   },
   {
     number: "03",
     title: "Forensic Investigation",
-    description: "A deep-dive technical analysis of blockchain movements, fund obfuscation patterns, and communications to map the flow of digital assets.",
+    description: "Deep-dive analysis of blockchain movements, fund patterns, and communications.",
     icon: Search,
-    details: ["Wallet cluster analysis", "Asset path history", "Exchange intercession data"]
+    details: ["Cluster analysis", "Path history", "Intercession data"]
   },
   {
     number: "04",
     title: "Recovery Strategy",
-    description: "Based on forensic findings, we develop a customized roadmap outlining the most viable technical and legal pathways for asset pursuit.",
+    description: "Development of a customized roadmap outlining the most viable technical and legal pathways.",
     icon: Activity,
-    details: ["Feasibility reporting", "Strategy briefing", "Asset freezing protocols"]
+    details: ["Feasibility reporting", "Strategy briefing", "Freezing protocols"]
   },
   {
     number: "05",
     title: "Ongoing Support",
-    description: "Dedicated investigative guidance throughout the entire process, ensuring you are supported at every critical milestone of the recovery journey.",
+    description: "Dedicated investigative guidance throughout the entire resolution process.",
     icon: UserCheck,
     details: ["Case management", "Specialist consultations", "Resolution monitoring"]
   }
@@ -41,49 +41,42 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section id="process" className="py-32 bg-muted/10 relative overflow-hidden">
-      {/* Background visual element */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(70,123,224,0.05)_0%,transparent_50%)] pointer-events-none" />
-      
+    <section id="process" className="py-32 bg-card/30 relative overflow-hidden border-y border-white/5">
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-24">
-          <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.3em] mb-4">The Lazoronix Methodology</h2>
-          <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8">What Happens After You Contact Us</h3>
-          <p className="text-muted-foreground text-xl leading-relaxed">
-            Our structured 5-step investigative process is designed to eliminate uncertainty and build a factual foundation for your recovery case.
+          <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-4">Methodology</h2>
+          <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8 uppercase tracking-tighter">What Happens After Contact</h3>
+          <p className="text-muted-foreground text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+            Our structured 5-step investigative process is designed to eliminate uncertainty and build a factual foundation for your case.
           </p>
         </div>
         
         <div className="max-w-5xl mx-auto space-y-12">
           {steps.map((step, idx) => (
             <div key={idx} className="group relative">
-              {/* Connector Line */}
               {idx !== steps.length - 1 && (
-                <div className="absolute left-8 top-20 bottom-0 w-0.5 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent hidden md:block" />
+                <div className="absolute left-8 top-20 bottom-0 w-px bg-white/5 hidden md:block" />
               )}
               
               <div className="grid md:grid-cols-12 gap-8 items-start">
-                {/* Number \u0026 Icon column */}
                 <div className="md:col-span-2 flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-2xl bg-card border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-xl group-hover:shadow-primary/20 relative z-20">
-                    <step.icon className="w-8 h-8" />
+                  <div className="w-16 h-16 rounded-full border border-white/10 bg-black flex items-center justify-center text-primary group-hover:border-primary/50 transition-all duration-500 shadow-xl relative z-20">
+                    <step.icon className="w-6 h-6" />
                   </div>
-                  <span className="mt-4 text-xs font-black text-muted-foreground uppercase tracking-widest">{step.number}</span>
+                  <span className="mt-4 text-[10px] font-black text-muted-foreground uppercase tracking-widest">{step.number}</span>
                 </div>
                 
-                {/* Content column */}
                 <div className="md:col-span-7">
-                  <h4 className="text-2xl font-headline font-bold mb-4 group-hover:text-primary transition-colors">{step.title}</h4>
+                  <h4 className="text-2xl font-headline font-bold mb-4 group-hover:text-primary transition-colors uppercase tracking-tight">{step.title}</h4>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Details column */}
                 <div className="md:col-span-3">
-                  <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-3">
+                  <div className="p-6 bg-white/[0.03] border border-white/5 space-y-3">
                     {step.details.map((detail, dIdx) => (
-                      <div key={dIdx} className="flex items-center gap-2 text-xs font-bold text-foreground/70">
+                      <div key={dIdx} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/50">
                         <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
                         {detail}
                       </div>
@@ -96,18 +89,17 @@ export function ProcessSection() {
         </div>
 
         <div className="mt-24 text-center">
-          <div className="inline-block p-12 rounded-[3rem] bg-card border border-white/5 shadow-2xl relative overflow-hidden">
+          <div className="inline-block p-12 glass-card border-white/5 shadow-2xl relative overflow-hidden">
             <div className="relative z-10">
-              <h4 className="text-2xl font-headline font-bold mb-6">Ready to Initialize Your Case Review?</h4>
-              <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-bold group">
-                Begin Step 1: Secure Case Review
+              <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Initialize Case Review</h4>
+              <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group">
+                Begin Step 1 Now
                 <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <p className="mt-6 text-sm text-muted-foreground">
-                All initial consultations are protected under non-disclosure protocols.
+              <p className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
+                Protected under non-disclosure protocols.
               </p>
             </div>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16" />
           </div>
         </div>
       </div>

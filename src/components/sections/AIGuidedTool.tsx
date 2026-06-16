@@ -97,8 +97,8 @@ const TIMELINE_STEPS = [
 
 const SecurityChecklist = () => (
   <div className="pt-8 mt-8 border-t border-white/5">
-    <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
-      <Lock className="w-3.5 h-3.5 text-secondary" /> Your Information Is Protected
+    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4 flex items-center gap-2">
+      <Lock className="w-3.5 h-3.5 text-primary" /> Your Information Is Protected
     </p>
     <div className="grid grid-cols-2 gap-4">
       {[
@@ -107,8 +107,8 @@ const SecurityChecklist = () => (
         "Confidential consultations",
         "Restricted case access"
       ].map((item, i) => (
-        <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/60">
-          <CheckCircle2 className="w-3 h-3 text-secondary" />
+        <div key={i} className="flex items-center gap-2 text-[9px] font-bold text-foreground/50 uppercase tracking-widest">
+          <CheckCircle2 className="w-3 h-3 text-primary" />
           {item}
         </div>
       ))}
@@ -295,10 +295,10 @@ export function AIGuidedTool() {
     setLoading(true)
     
     const statuses = [
-      "Connecting to blockchain node...",
-      "Analyzing wallet cluster patterns...",
-      "Verifying platform credentials...",
-      "Compiling forensic report..."
+      "Accessing blockchain ledger...",
+      "Analyzing fund obfuscation paths...",
+      "Verifying platform entities...",
+      "Compiling investigative intake..."
     ]
     
     let i = 0
@@ -328,7 +328,6 @@ ${description}
       setResult(output)
       setStep('result')
     } catch (error: any) {
-      // FAIL-SAFE FALLBACK: Provide generic assessment if AI is down
       const fallbackResult: AIGuidedRecoveryPreparationOutput = {
         preliminaryCaseFindings: {
           scamType: selectedType.title,
@@ -349,10 +348,6 @@ ${description}
       }
       setResult(fallbackResult)
       setStep('result')
-      toast({
-        title: "Manual Review Initialized",
-        description: "Due to high volume, we've bypassed automated scanning and moved you directly to specialist qualification.",
-      })
     } finally {
       clearInterval(interval)
       setLoading(false)
@@ -367,45 +362,45 @@ ${description}
   }
 
   return (
-    <section id="forensic-intake" className="py-24 bg-muted/10 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
+    <section id="forensic-intake" className="py-24 bg-card/30 relative overflow-hidden border-y border-white/5">
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/[0.03] blur-[120px] -z-10" />
       
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="flex justify-center mb-16">
           <div className="flex items-center gap-4">
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'type' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>1</div>
-            <div className={cn("w-12 h-0.5 transition-colors", step !== 'type' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'details' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : step === 'result' || step === 'booking' || step === 'success' ? "bg-primary/20 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>2</div>
-            <div className={cn("w-12 h-0.5 transition-colors", step === 'result' || step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'result' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : step === 'booking' || step === 'success' ? "bg-primary/20 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>3</div>
-            <div className={cn("w-12 h-0.5 transition-colors", step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'booking' || step === 'success' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>4</div>
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'type' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>01</div>
+            <div className={cn("w-12 h-px transition-colors", step !== 'type' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'details' ? "bg-primary border-primary text-black" : step === 'result' || step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>02</div>
+            <div className={cn("w-12 h-px transition-colors", step === 'result' || step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'result' ? "bg-primary border-primary text-black" : step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>03</div>
+            <div className={cn("w-12 h-px transition-colors", step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'booking' || step === 'success' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>04</div>
           </div>
         </div>
 
         {step === 'type' && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 tracking-tighter">What Type of Recovery Case <br/> Do You Have?</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 tracking-tighter uppercase">Forensic Case Intake</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Our forensic methodology is tailored to the specific nature of your loss. Select a category to begin your guided assessment.
+                Select your recovery category to initialize the formal intake process. All data is protected under institutional-grade encryption.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CASE_TYPES.map((type) => (
                 <Card 
                   key={type.id} 
-                  className="glass-card hover:border-primary/50 transition-all cursor-pointer group hover:shadow-2xl active:scale-[0.98]"
+                  className="glass-card hover:border-primary/50 transition-all cursor-pointer group active:scale-[0.98]"
                   onClick={() => handleSelectType(type)}
                 >
                   <CardContent className="p-8">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
+                    <div className="w-14 h-14 rounded-full border border-primary/20 flex items-center justify-center mb-8 group-hover:bg-primary/5 transition-colors">
                       <type.icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-xl font-headline font-bold mb-3">{type.title}</h3>
+                    <h3 className="text-xl font-headline font-bold mb-3 uppercase tracking-tight">{type.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-8">{type.description}</p>
-                    <div className="flex items-center text-primary font-bold text-sm">
-                      Select Case Type <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-center text-primary font-black text-[10px] uppercase tracking-widest">
+                      Initialize Case <ArrowRight className="ml-2 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
@@ -416,8 +411,8 @@ ${description}
 
         {step === 'details' && selectedType && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto">
-            <Button variant="ghost" className="mb-8" onClick={() => setStep('type')}>
-              <ArrowLeft className="mr-2 w-4 h-4" /> Back to Case Types
+            <Button variant="ghost" className="mb-8 text-[10px] font-black uppercase tracking-widest" onClick={() => setStep('type')}>
+              <ArrowLeft className="mr-2 w-3.5 h-3.5" /> Back to Categories
             </Button>
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-8">
@@ -426,11 +421,11 @@ ${description}
                     <div className="grid sm:grid-cols-2 gap-6">
                       {selectedType.fields.map((field) => (
                         <div key={field.key} className="space-y-3">
-                          <Label className="text-sm font-bold">{field.label}</Label>
+                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{field.label}</Label>
                           <Input 
                             type={field.type || 'text'}
                             placeholder={field.placeholder}
-                            className="h-12 bg-background/50 border-white/10"
+                            className="h-12 bg-background/50 border-white/10 rounded-none"
                             onChange={(e) => handleInputChange(field.key, e.target.value)}
                           />
                         </div>
@@ -438,30 +433,30 @@ ${description}
                     </div>
                     <div className="grid sm:grid-cols-2 gap-8 py-4 border-y border-white/5">
                       <div className="flex items-center justify-between gap-4">
-                        <Label className="text-sm font-bold">Withdrawals Blocked?</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Withdrawals Blocked?</Label>
                         <Switch checked={isBlocked} onCheckedChange={setIsBlocked} />
                       </div>
                       <div className="flex items-center justify-between gap-4">
-                        <Label className="text-sm font-bold">Account Access?</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Account Access?</Label>
                         <Switch checked={hasAccess} onCheckedChange={setHasAccess} />
                       </div>
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-sm font-bold">Case Narrative (Technical Details)</Label>
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Narrative</Label>
                       <Textarea 
-                        placeholder="Provide details about entities, communications, and wallet addresses involved."
-                        className="min-h-[160px] bg-background/50 border-white/10"
+                        placeholder="Provide specific technical details about the entities, transaction IDs, and communication methods involved."
+                        className="min-h-[160px] bg-background/50 border-white/10 rounded-none"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
-                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-xl font-bold">
+                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-lg font-black uppercase tracking-[0.2em] bg-primary text-black">
                       {loading ? (
                         <div className="flex items-center gap-3">
-                          <Loader2 className="h-6 w-6 animate-spin" />
+                          <Loader2 className="h-5 w-5 animate-spin" />
                           <span>{scanStatus}</span>
                         </div>
-                      ) : 'Generate Forensic Intake Summary'}
+                      ) : 'Generate Intake Summary'}
                     </Button>
                     
                     <SecurityChecklist />
@@ -470,14 +465,14 @@ ${description}
               </div>
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-6">
-                  <h4 className="font-bold flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-5 h-5" /> Evidence Intake</h4>
-                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center bg-white/5 mb-6">
-                    <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-xs font-bold">Drag & Drop Evidence</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-4 h-4" /> Evidence Portal</h4>
+                  <div className="border border-dashed border-white/10 rounded-none p-8 text-center bg-white/5 mb-6">
+                    <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
+                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Encrypted Evidence Upload</p>
                   </div>
                   <ul className="space-y-3">
-                    {["Receipts", "Chat Logs", "Emails"].map((item, i) => (
-                      <li key={i} className="flex items-center gap-2 text-xs text-foreground/70"><FileText className="w-3.5 h-3.5 text-primary" /> {item}</li>
+                    {["Transaction Hashes", "Chat Histories", "Email Logs"].map((item, i) => (
+                      <li key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/50 uppercase tracking-widest"><FileText className="w-3 h-3 text-primary" /> {item}</li>
                     ))}
                   </ul>
                 </Card>
@@ -489,31 +484,31 @@ ${description}
         {step === 'result' && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
-              <div className="flex-grow p-8 glass-card rounded-[2rem] border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
                  <div className="flex items-center gap-6">
-                   <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg">
-                     <Activity className="w-8 h-8 text-white" />
+                   <div className="w-16 h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg">
+                     <Activity className="w-8 h-8 text-primary" />
                    </div>
                    <div>
-                     <h2 className="text-2xl font-headline font-bold mb-1">Investigation Dashboard</h2>
-                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                       <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-bold">{caseId}</span></span>
-                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold uppercase tracking-wider text-[10px]">Forensic Review Pending</span></span>
+                     <h2 className="text-2xl font-headline font-bold mb-1 uppercase tracking-tight">Case Dashboard</h2>
+                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                       <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> ID: <span className="text-foreground font-black">{caseId}</span></span>
+                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary">Review Pending</span></span>
                      </div>
                    </div>
                  </div>
                  <div className="flex items-center gap-3">
-                   <Button variant="outline" className="opacity-50 cursor-not-allowed border-white/10 bg-white/5">Download Report</Button>
+                   <Button variant="outline" className="opacity-50 cursor-not-allowed border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-widest">Download Report</Button>
                  </div>
               </div>
-              <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[300px]">
-                <Avatar className="h-12 w-12 border-2 border-primary/20">
+              <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[320px]">
+                <Avatar className="h-12 w-12 border border-primary/20">
                   <AvatarImage src={`https://picsum.photos/seed/${caseId}/100/100`} />
-                  <AvatarFallback className="bg-primary">SA</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-black">SA</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-bold text-sm tracking-tight">Senior Recovery Analyst</p>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Financial Fraud Division</p>
+                  <p className="font-black text-[10px] uppercase tracking-widest text-white">Senior Recovery Analyst</p>
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest">Financial Fraud Division</p>
                 </div>
               </Card>
             </div>
@@ -522,11 +517,11 @@ ${description}
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
                 {TIMELINE_STEPS.map((timelineStep, idx) => (
                   <div key={timelineStep.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
-                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", timelineStep.status === 'completed' ? "bg-secondary text-secondary-foreground" : timelineStep.status === 'current' ? "bg-primary text-white" : "bg-muted text-muted-foreground border border-white/5")}>
+                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", timelineStep.status === 'completed' ? "bg-primary text-black" : timelineStep.status === 'current' ? "border border-primary text-primary" : "bg-muted text-muted-foreground border border-white/5")}>
                       <timelineStep.icon className="w-4 h-4" />
                     </div>
                     <div className="text-left md:text-center">
-                      <p className="text-[9px] font-black uppercase tracking-[0.2em] opacity-50">{timelineStep.label}</p>
+                      <p className="text-[8px] font-black uppercase tracking-[0.25em] opacity-50">{timelineStep.label}</p>
                     </div>
                   </div>
                 ))}
@@ -534,96 +529,85 @@ ${description}
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Risk Level</span>
-                <div className={cn("text-3xl font-headline font-bold", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-orange-500' : 'text-secondary')}>{riskLevel}</div>
-                <p className="text-xs text-muted-foreground mt-2">Calculated based on amount and platform status.</p>
+              <Card className="glass-card border-white/5 p-8">
+                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Complexity</span>
+                <div className={cn("text-3xl font-headline font-bold uppercase tracking-tighter", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-primary/70' : 'text-primary')}>{riskLevel}</div>
+                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Based on technical loss parameters.</p>
               </Card>
-              <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Status</span>
-                <div className="text-3xl font-headline font-bold">{evidenceMetrics.status}</div>
-                <Progress value={evidenceMetrics.total} className="h-1.5 mt-2 bg-white/5" />
+              <Card className="glass-card border-white/5 p-8">
+                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Integrity</span>
+                <div className="text-3xl font-headline font-bold uppercase tracking-tighter">{evidenceMetrics.status}</div>
+                <Progress value={evidenceMetrics.total} className="h-1 mt-2 bg-white/5" />
               </Card>
-              <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Investigation Readiness</span>
-                <div className="text-3xl font-headline font-bold text-secondary">Qualified</div>
-                <p className="text-xs text-muted-foreground mt-2">Ready for specialist analysis.</p>
+              <Card className="glass-card border-white/5 p-8">
+                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">System Status</span>
+                <div className="text-3xl font-headline font-bold text-primary uppercase tracking-tighter">Qualified</div>
+                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting specialist verification.</p>
               </Card>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Preliminary Case Findings</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Search className="w-4 h-4" /> Forensic Intake Findings</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
-                    { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
+                    { label: "Asset Type", value: result.preliminaryCaseFindings.scamType },
+                    { label: "Estimated Value", value: result.preliminaryCaseFindings.estimatedLoss },
                     { label: "Evidence Status", value: result.preliminaryCaseFindings.evidenceStatus },
-                    { label: "Case Complexity", value: result.preliminaryCaseFindings.caseComplexity },
-                    { label: "Investigation Readiness", value: result.preliminaryCaseFindings.investigationReadiness },
-                    { label: "Review Recommendation", value: result.preliminaryCaseFindings.reviewRecommendation }
+                    { label: "Complexity", value: result.preliminaryCaseFindings.caseComplexity },
+                    { label: "Status", value: result.preliminaryCaseFindings.investigationReadiness },
+                    { label: "Action", value: result.preliminaryCaseFindings.reviewRecommendation }
                   ].map((finding, idx) => (
-                    <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">{finding.label}</p>
-                      <p className="text-xs font-bold">{finding.value}</p>
+                    <div key={idx} className="p-4 bg-white/5 border border-white/5">
+                      <p className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">{finding.label}</p>
+                      <p className="text-[10px] font-bold text-white uppercase tracking-wider">{finding.value}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 p-6 bg-primary/5 rounded-2xl border border-primary/10 italic text-sm text-foreground/80 leading-relaxed border-l-4 border-l-primary">
+                <div className="mt-8 p-6 bg-primary/[0.03] border border-primary/10 italic text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary">
                   "{result.recoveryScenarioSummary}"
                 </div>
-                <div className="mt-6 flex gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-500/80">
+                <div className="mt-6 flex gap-2 p-3 bg-secondary/5 border border-secondary/20 text-[9px] text-secondary/80 uppercase tracking-widest">
                   <Info className="w-3.5 h-3.5 shrink-0" />
-                  <p>This assessment is part of the preliminary intake process. Final recommendations require review by a recovery specialist.</p>
+                  <p>System Assessment Complete. Final qualification requires specialist manual audit.</p>
                 </div>
               </Card>
 
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-8">
-                  <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Network className="w-5 h-5 text-primary" /> Evidence Collection Tracker</h3>
+                  <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Network className="w-4 h-4" /> Evidence Tracker</h3>
                   <div className="space-y-6">
                     {evidenceMetrics.items.map((tracker, idx) => (
                       <div key={idx} className="space-y-2">
-                        <div className="flex justify-between text-xs font-bold">
+                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                           <span className="text-foreground/70">{tracker.label}</span>
-                          <span className={cn("text-[10px] uppercase tracking-wider", tracker.score > 70 ? 'text-secondary' : tracker.score > 40 ? 'text-primary' : 'text-muted-foreground')}>{tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Requires Data'}</span>
+                          <span className={cn(tracker.score > 70 ? 'text-primary' : tracker.score > 40 ? 'text-primary/70' : 'text-muted-foreground')}>{tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Required'}</span>
                         </div>
-                        <Progress value={tracker.score} className="h-1.5 bg-white/5" />
+                        <Progress value={tracker.score} className="h-1 bg-white/5" />
                       </div>
                     ))}
                   </div>
-                  <div className="mt-8 pt-6 border-t border-white/5">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-bold">Evidence Integrity Profile</span>
-                      <span className="text-xl font-headline font-bold text-secondary">{evidenceMetrics.status}</span>
-                    </div>
-                  </div>
                 </Card>
 
-                <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-destructive flex items-center gap-2 mb-4"><ShieldAlert className="w-4 h-4" /> Time-Sensitive Notice</h4>
-                  <p className="text-xs text-foreground/80 leading-relaxed mb-4">Recovery opportunities can become more difficult as time passes due to:</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {["Asset Movement", "Account Closure", "Data Loss", "Evidence Decay"].map((item, i) => (
-                      <div key={i} className="px-3 py-2 rounded-lg bg-background/40 border border-white/5 text-[9px] font-black tracking-widest uppercase text-center">{item}</div>
-                    ))}
-                  </div>
+                <Card className="border-destructive/20 bg-destructive/5 p-6">
+                  <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-destructive flex items-center gap-2 mb-4"><ShieldAlert className="w-4 h-4" /> Critical Notice</h4>
+                  <p className="text-[10px] text-foreground/80 leading-relaxed mb-4 uppercase font-bold tracking-widest">Asset movement detected within target networks. Immediate specialist engagement recommended.</p>
                 </Card>
               </div>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Target className="w-5 h-5 text-primary" /> Investigation Roadmap</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Target className="w-4 h-4" /> Recovery Roadmap</h3>
                 <Accordion type="single" collapsible className="space-y-4">
                   {result.investigativeFocusAreas.map((cat, idx) => (
-                    <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-xl px-5 bg-card/40 border-white/5">
-                      <AccordionTrigger className="hover:no-underline font-bold text-sm tracking-tight">{cat.categoryName}</AccordionTrigger>
-                      <AccordionContent className="text-xs space-y-4 text-muted-foreground">
+                    <AccordionItem key={idx} value={`item-${idx}`} className="border border-white/5 px-5 bg-white/5">
+                      <AccordionTrigger className="hover:no-underline font-bold text-[11px] tracking-[0.1em] uppercase">{cat.categoryName}</AccordionTrigger>
+                      <AccordionContent className="text-[10px] space-y-4 text-muted-foreground leading-relaxed uppercase tracking-widest">
                         <p>{cat.description}</p>
                         <ul className="space-y-2">
                           {cat.specificItems.map((item, i) => (
-                            <li key={i} className="flex items-center gap-2 text-foreground/80"><ChevronRight className="w-3 h-3 text-secondary" /> {item}</li>
+                            <li key={i} className="flex items-center gap-2 text-foreground/80"><ChevronRight className="w-3 h-3 text-primary" /> {item}</li>
                           ))}
                         </ul>
                       </AccordionContent>
@@ -633,47 +617,34 @@ ${description}
               </Card>
 
               <div className="space-y-8">
-                <Card className="border-primary/20 bg-primary/5 p-8 rounded-[2rem] shadow-2xl shadow-primary/20 border-2 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -mr-16 -mt-16" />
-                  <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter">Professional Review Required</h4>
+                <Card className="border-primary/40 bg-primary/[0.03] p-8 shadow-2xl border-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -mr-16 -mt-16" />
+                  <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter uppercase">Specialist Review Required</h4>
                   <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">
-                    Our automated intake has identified a potential recovery scenario. <br/>
-                    <span className="text-muted-foreground text-base">Further analysis requires review by a recovery specialist.</span>
+                    Intake parameters indicate a viable recovery scenario. <br/>
+                    <span className="text-muted-foreground text-sm uppercase tracking-widest">Formal verification must be completed by a Senior Investigator.</span>
                   </p>
                   
                   <div className="space-y-6 mb-10">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Immediate Next Steps:</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {[
-                        "Specialist Review", 
-                        "Evidence Verification", 
-                        "Recovery Feasibility Assessment", 
-                        "Investigation Roadmap"
+                        "Specialist Verification", 
+                        "Blockchain Path Audit", 
+                        "Feasibility Study", 
+                        "Strategy Briefing"
                       ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 text-xs font-bold bg-background/40 p-4 rounded-xl border border-white/5">
-                          <CheckCircle2 className="w-5 h-5 text-secondary shrink-0" /> 
+                        <div key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest bg-black/40 p-4 border border-white/5">
+                          <CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 
                           {item}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/30 transition-all hover:scale-[1.02]">
-                    Continue To Secure Assessment 
+                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20">
+                    Confirm Consultation 
                     <ArrowRight className="ml-2 w-6 h-6" />
                   </Button>
-                </Card>
-
-                <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-destructive mb-4">Critical Safety Protocols</h4>
-                  <div className="space-y-3">
-                    {SAFETY_PROTOCOLS.map((con, idx) => (
-                      <div key={idx} className="flex items-start gap-3 text-xs leading-relaxed font-bold bg-background/40 p-4 rounded-lg border border-destructive/10">
-                        <ShieldAlert className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
-                        {con}
-                      </div>
-                    ))}
-                  </div>
                 </Card>
               </div>
             </div>
@@ -683,32 +654,32 @@ ${description}
         {step === 'booking' && (
           <div className="animate-in fade-in zoom-in-95 duration-500 max-w-2xl mx-auto">
             <Card className="glass-card border-primary/20 shadow-2xl overflow-hidden">
-              <div className="bg-primary p-8 text-white text-center">
-                <Calendar className="w-12 h-12 mx-auto mb-4 opacity-80" />
-                <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter">Schedule Specialist Review</h2>
-                <p className="opacity-80">Connect with a Senior Recovery Analyst to verify your forensic data and determine recovery viability.</p>
+              <div className="bg-primary p-10 text-black text-center">
+                <Calendar className="w-12 h-12 mx-auto mb-4 opacity-70" />
+                <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Initialize Specialist Review</h2>
+                <p className="text-[11px] font-bold uppercase tracking-widest opacity-80 leading-relaxed">Secure your formal investigation slot with a Senior Recovery Specialist.</p>
               </div>
-              <CardContent className="p-8 space-y-6">
+              <CardContent className="p-10 space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <User className="w-3 h-3" /> Full Name
                     </Label>
                     <Input 
                       placeholder="e.g. John Doe" 
-                      className="bg-background/50 border-white/10" 
+                      className="bg-background/50 border-white/10 rounded-none" 
                       value={bookingValues.name}
                       onChange={(e) => setBookingValues({...bookingValues, name: e.target.value})}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Mail className="w-3 h-3" /> Email Address
                     </Label>
                     <Input 
                       type="email" 
                       placeholder="e.g. john@example.com" 
-                      className="bg-background/50 border-white/10" 
+                      className="bg-background/50 border-white/10 rounded-none" 
                       value={bookingValues.email}
                       onChange={(e) => setBookingValues({...bookingValues, email: e.target.value})}
                     />
@@ -716,23 +687,23 @@ ${description}
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Phone className="w-3 h-3" /> Phone Number
                     </Label>
                     <Input 
                       placeholder="+1 (555) 000-0000" 
-                      className="bg-background/50 border-white/10" 
+                      className="bg-background/50 border-white/10 rounded-none" 
                       value={bookingValues.phone}
                       onChange={(e) => setBookingValues({...bookingValues, phone: e.target.value})}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Globe className="w-3 h-3" /> Country
                     </Label>
                     <Input 
                       placeholder="e.g. United States" 
-                      className="bg-background/50 border-white/10" 
+                      className="bg-background/50 border-white/10 rounded-none" 
                       value={bookingValues.country}
                       onChange={(e) => setBookingValues({...bookingValues, country: e.target.value})}
                     />
@@ -740,11 +711,11 @@ ${description}
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Clock className="w-3 h-3" /> Best Contact Time
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, bestTime: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none">
                         <SelectValue placeholder="Select timeframe" />
                       </SelectTrigger>
                       <SelectContent>
@@ -755,11 +726,11 @@ ${description}
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <MessageSquare className="w-3 h-3" /> Preferred Method
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, method: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none">
                         <SelectValue placeholder="Select method" />
                       </SelectTrigger>
                       <SelectContent>
@@ -775,7 +746,7 @@ ${description}
                 <Button 
                   onClick={handleBooking} 
                   disabled={bookingLoading || !bookingValues.email || !bookingValues.name} 
-                  className="w-full h-16 text-lg font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90"
+                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90"
                 >
                   {bookingLoading ? (
                     <div className="flex items-center gap-3">
@@ -784,7 +755,7 @@ ${description}
                     </div>
                   ) : (
                     <>
-                      Confirm Secure Assessment
+                      Verify Case Registration
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </>
                   )}
@@ -792,8 +763,8 @@ ${description}
                 
                 <SecurityChecklist />
                 
-                <p className="text-[9px] text-center text-muted-foreground uppercase tracking-widest mt-4">
-                  Encrypted SSL Submission | Confidential Case Registration
+                <p className="text-[8px] text-center text-muted-foreground uppercase tracking-[0.4em] mt-4">
+                  Encrypted SSL Submission | Professional Registry
                 </p>
               </CardContent>
             </Card>
@@ -802,35 +773,36 @@ ${description}
 
         {step === 'success' && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-xl mx-auto text-center">
-            <div className="w-24 h-24 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-8 border-4 border-secondary/20">
-              <CheckCircle2 className="w-12 h-12 text-secondary" />
+            <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mx-auto mb-8">
+              <CheckCircle2 className="w-12 h-12 text-primary" />
             </div>
-            <h2 className="text-4xl font-headline font-bold mb-4 tracking-tighter">Case Transmitted</h2>
+            <h2 className="text-4xl font-headline font-bold mb-4 tracking-tighter uppercase">Intake Registered</h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Your forensic intake has been registered under Case ID: <span className="text-primary font-bold">{caseId}</span>. <br/>
-              A Senior Recovery Analyst will contact you within 24-48 business hours using your preferred communication method.
+              Your forensic intake has been confirmed. <br/>
+              Reference ID: <span className="text-primary font-black">{caseId}</span>. <br/>
+              A Senior Recovery Analyst will contact you within 24-48 business hours.
             </p>
-            <Card className="glass-card p-8 border-white/5 mb-10 text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl -mr-16 -mt-16" />
-              <h4 className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2 mb-6">
-                <Target className="w-4 h-4 text-secondary" /> Next Investigative Steps:
+            <Card className="glass-card p-10 border-white/5 mb-10 text-left relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] blur-3xl -mr-16 -mt-16" />
+              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-2 mb-8">
+                <Target className="w-4 h-4 text-primary" /> Investigative Protocol:
               </h4>
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 {[
-                  "Specialist manual evidence verification",
-                  "Blockchain path finalization",
-                  "Jurisdictional recovery feasibility study",
-                  "Initial client strategy briefing"
+                  "Manual Evidence Audit",
+                  "Blockchain Path Finalization",
+                  "Jurisdictional Feasibility Study",
+                  "Strategy Briefing"
                 ].map((step, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0 mt-1.5" />
+                  <li key={i} className="flex items-start gap-4 text-[11px] font-black uppercase tracking-widest text-foreground/80">
+                    <div className="w-1 h-1 bg-primary shrink-0 mt-1.5" />
                     {step}
                   </li>
                 ))}
               </ul>
             </Card>
-            <Button size="lg" variant="outline" className="border-white/10 bg-white/5" onClick={() => window.location.reload()}>
-              Return to Homepage
+            <Button size="lg" variant="outline" className="border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12" onClick={() => window.location.reload()}>
+              Return
             </Button>
           </div>
         )}

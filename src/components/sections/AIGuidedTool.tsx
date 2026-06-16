@@ -1,7 +1,6 @@
-
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { aiGuidedRecoveryPreparation, type AIGuidedRecoveryPreparationOutput } from '@/ai/flows/ai-guided-recovery-preparation'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -40,7 +39,8 @@ import {
   UserCheck,
   Zap,
   Network,
-  Database
+  Database,
+  ChevronRight
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -56,7 +56,6 @@ type CaseType = {
     placeholder: string;
     key: string;
     type?: string;
-    options?: string[];
   }[];
 }
 
@@ -158,6 +157,13 @@ const TIMELINE_STEPS = [
   { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
 ]
 
+const SAFETY_PROTOCOLS = [
+  "Do NOT pay any 'upfront taxes' or 'activation fees' to unknown recovery services.",
+  "Never share your private keys or 12/24-word seed phrase with anyone.",
+  "Preserve all transaction logs, chat histories, and platform screenshots immediately.",
+  "Ignore unsolicited DMs from people claiming they can hack the blockchain for you."
+]
+
 export function AIGuidedTool() {
   const [step, setStep] = useState<'type' | 'details' | 'result'>('type')
   const [selectedType, setSelectedType] = useState<CaseType | null>(null)
@@ -186,16 +192,38 @@ export function AIGuidedTool() {
     setFormValues(prev => ({ ...prev, [key]: value }))
   }
 
+  // Local Logic: Evidence Completeness Scoring
+  const evidenceMetrics = useMemo(() => {
+    if (!selectedType) return { total: 0, items: [] };
+    
+    const items = [
+      { label: "Transaction Records", score: Object.values(formValues).some(v => v.length > 5) ? 80 : 20 },
+      { label: "Communication Logs", score: description.length > 50 ? 90 : 30 },
+      { label: "Platform Evidence", score: hasAccess ? 70 : 40 },
+      { label: "Identity Verification", score: formValues.brokerName || formValues.platformName ? 60 : 20 },
+      { label: "Asset Path History", score: formValues.walletAddress || formValues.cryptoWallet ? 85 : 15 }
+    ];
+    
+    const total = Math.round(items.reduce((acc, curr) => acc + curr.score, 0) / items.length);
+    return { total, items };
+  }, [formValues, description, hasAccess, selectedType]);
+
+  // Local Logic: Risk Level Calculation
+  const riskLevel = useMemo(() => {
+    const amount = parseInt(formValues.amount || "0");
+    if (isBlocked && amount > 20000) return 'Critical';
+    if (isBlocked || amount > 5000) return 'High';
+    if (amount > 1000) return 'Moderate';
+    return 'Low';
+  }, [formValues.amount, isBlocked]);
+
   const handleAssessment = async () => {
     if (!selectedType) return
     setLoading(true)
     
-    // Simulate forensic scan steps for UI feel
     const statuses = [
       "Connecting to blockchain node...",
-      "Searching transaction registries...",
       "Analyzing wallet cluster patterns...",
-      "Mapping fund movement paths...",
       "Verifying platform credentials...",
       "Compiling forensic report..."
     ]
@@ -206,7 +234,7 @@ export function AIGuidedTool() {
         setScanStatus(statuses[i])
         i++
       }
-    }, 1500)
+    }, 1200)
 
     try {
       const structuredDetails = Object.entries(formValues)
@@ -219,8 +247,7 @@ STRUCTURED DATA:
 ${structuredDetails}
 WITHDRAWALS BLOCKED: ${isBlocked ? 'YES' : 'NO'}
 STILL HAVE ACCESS: ${hasAccess ? 'YES' : 'NO'}
-
-DETAILED NARRATIVE:
+NARRATIVE:
 ${description}
       `.trim()
 
@@ -236,46 +263,11 @@ ${description}
     }
   }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'positive': return <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-      case 'negative': return <XCircle className="w-5 h-5 text-destructive" />
-      default: return <MinusCircle className="w-5 h-5 text-amber-500" />
-    }
-  }
-
-  const getStatusBg = (status: string) => {
-    switch (status) {
-      case 'positive': return 'bg-emerald-500/10 border-emerald-500/20'
-      case 'negative': return 'bg-destructive/10 border-destructive/20'
-      default: return 'bg-amber-500/10 border-amber-500/20'
-    }
-  }
-
-  const getRiskColor = (risk: string) => {
-    switch (risk) {
-      case 'Critical': return 'text-destructive'
-      case 'High': return 'text-orange-500'
-      case 'Moderate': return 'text-amber-500'
-      default: return 'text-emerald-500'
-    }
-  }
-
-  const getComplexityColor = (complexity: string) => {
-    switch (complexity) {
-      case 'Extremely High': return 'text-destructive'
-      case 'High': return 'text-orange-500'
-      case 'Moderate': return 'text-amber-500'
-      default: return 'text-emerald-500'
-    }
-  }
-
   return (
     <section id="ai-tool" className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
       
       <div className="container mx-auto px-6 max-w-6xl">
-        
         {/* Step Indicator */}
         <div className="flex justify-center mb-16">
           <div className="flex items-center gap-4">
@@ -290,21 +282,16 @@ ${description}
         {step === 'type' && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-6">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Case Intake System
-              </div>
               <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6">What Type of Recovery Case <br/> Do You Have?</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                 Our forensic methodology is tailored to the specific nature of your loss. Select a category to begin your guided assessment.
               </p>
             </div>
-
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CASE_TYPES.map((type) => (
                 <Card 
                   key={type.id} 
-                  className="glass-card hover:border-primary/50 transition-all cursor-pointer group hover:shadow-2xl hover:shadow-primary/5 active:scale-[0.98]"
+                  className="glass-card hover:border-primary/50 transition-all cursor-pointer group hover:shadow-2xl active:scale-[0.98]"
                   onClick={() => handleSelectType(type)}
                 >
                   <CardContent className="p-8">
@@ -325,135 +312,64 @@ ${description}
 
         {step === 'details' && selectedType && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto">
-            <Button 
-              variant="ghost" 
-              className="mb-8 hover:bg-white/5 text-muted-foreground hover:text-foreground"
-              onClick={() => {
-                setStep('type')
-                setFormValues({})
-                setDescription('')
-              }}
-            >
+            <Button variant="ghost" className="mb-8" onClick={() => setStep('type')}>
               <ArrowLeft className="mr-2 w-4 h-4" /> Back to Case Types
             </Button>
-            
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4">Forensic Intake: {selectedType.title}</h2>
-              <p className="text-muted-foreground text-lg">
-                Please provide specific details to help our system map the digital trail of your assets.
-              </p>
-            </div>
-
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-8">
-                <Card className="glass-card border-white/5 overflow-hidden">
-                  <div className="p-1 bg-gradient-to-r from-primary/20 to-transparent" />
+                <Card className="glass-card border-white/5">
                   <CardContent className="p-8 space-y-8">
                     <div className="grid sm:grid-cols-2 gap-6">
                       {selectedType.fields.map((field) => (
                         <div key={field.key} className="space-y-3">
-                          <Label className="text-sm font-bold text-foreground/80">{field.label}</Label>
+                          <Label className="text-sm font-bold">{field.label}</Label>
                           <Input 
                             type={field.type || 'text'}
                             placeholder={field.placeholder}
-                            className="h-12 bg-background/50 border-white/10 focus:border-primary/50"
+                            className="h-12 bg-background/50 border-white/10"
                             onChange={(e) => handleInputChange(field.key, e.target.value)}
                           />
                         </div>
                       ))}
                     </div>
-
                     <div className="grid sm:grid-cols-2 gap-8 py-4 border-y border-white/5">
                       <div className="flex items-center justify-between gap-4">
-                        <div className="space-y-0.5">
-                          <Label className="text-sm font-bold">Withdrawals Blocked?</Label>
-                          <p className="text-xs text-muted-foreground">Is the platform refusing payouts?</p>
-                        </div>
+                        <Label className="text-sm font-bold">Withdrawals Blocked?</Label>
                         <Switch checked={isBlocked} onCheckedChange={setIsBlocked} />
                       </div>
                       <div className="flex items-center justify-between gap-4">
-                        <div className="space-y-0.5">
-                          <Label className="text-sm font-bold">Account Access?</Label>
-                          <p className="text-xs text-muted-foreground">Do you still have portal access?</p>
-                        </div>
+                        <Label className="text-sm font-bold">Account Access?</Label>
                         <Switch checked={hasAccess} onCheckedChange={setHasAccess} />
                       </div>
                     </div>
-
                     <div className="space-y-3">
-                      <Label className="text-sm font-bold text-foreground/80">Additional Narrative (What happened?)</Label>
-                      <p className="text-xs text-muted-foreground mb-2 italic">Provide as much detail as possible about the entities, communications, and wallet addresses involved.</p>
+                      <Label className="text-sm font-bold">Case Narrative (Technical Details)</Label>
                       <Textarea 
-                        placeholder="e.g. I was contacted via Telegram by a 'Senior Manager' who directed me to deposit USDT into the following address..."
-                        className="min-h-[160px] bg-background/50 border-white/10 focus:border-primary/50 text-base"
+                        placeholder="Provide details about entities, communications, and wallet addresses involved."
+                        className="min-h-[160px] bg-background/50 border-white/10"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
-
-                    <Button 
-                      onClick={handleAssessment} 
-                      disabled={loading}
-                      className="w-full h-16 text-xl bg-primary hover:bg-primary/90 font-bold shadow-xl shadow-primary/20"
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                          {scanStatus}
-                        </>
-                      ) : (
-                        <>
-                          Initiate Technical Assessment
-                          <Sparkles className="ml-2 h-6 w-6" />
-                        </>
-                      )}
+                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-xl font-bold">
+                      {loading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : 'Generate Preliminary Assessment'}
                     </Button>
                   </CardContent>
                 </Card>
               </div>
-
               <div className="space-y-6">
-                <Card className="glass-card border-white/5">
-                  <CardHeader className="pb-4">
-                    <CardTitle className="text-lg font-headline flex items-center gap-2">
-                      <UploadCloud className="w-5 h-5 text-primary" />
-                      Evidence Intake
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer group bg-white/5">
-                      <UploadCloud className="w-10 h-10 text-muted-foreground mx-auto mb-4 group-hover:text-primary transition-colors" />
-                      <p className="text-sm font-bold mb-1">Drag & Drop Evidence</p>
-                      <p className="text-xs text-muted-foreground">Screenshots, Statements, or Logs</p>
-                    </div>
-                    <div className="space-y-3 pt-4">
-                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Critical Assets:</p>
-                      <ul className="space-y-2">
-                        {[
-                          "Transaction Receipts",
-                          "Broker Chat Logs",
-                          "Email Correspondence",
-                          "Account Statements"
-                        ].map((item, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-foreground/70">
-                            <FileText className="w-3.5 h-3.5 text-primary" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="p-6 rounded-2xl bg-destructive/5 border border-destructive/10 flex gap-4">
-                  <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-xs font-bold text-destructive uppercase mb-1">Security Protocol</p>
-                    <p className="text-xs text-foreground/70 leading-relaxed">
-                      Do NOT upload private keys or seed phrases. Lazoronix will never ask for your wallet credentials.
-                    </p>
+                <Card className="glass-card border-white/5 p-6">
+                  <h4 className="font-bold flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-5 h-5" /> Evidence Intake</h4>
+                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center bg-white/5 mb-6">
+                    <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-xs font-bold">Drag & Drop Evidence</p>
                   </div>
-                </div>
+                  <ul className="space-y-3">
+                    {["Receipts", "Chat Logs", "Emails"].map((item, i) => (
+                      <li key={i} className="flex items-center gap-2 text-xs text-foreground/70"><FileText className="w-3.5 h-3.5 text-primary" /> {item}</li>
+                    ))}
+                  </ul>
+                </Card>
               </div>
             </div>
           </div>
@@ -461,353 +377,180 @@ ${description}
 
         {step === 'result' && result && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Investigation Dashboard Header */}
+            {/* Header / Meta */}
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
-              <div className="flex-grow p-8 glass-card rounded-[2rem] border-primary/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="flex-grow p-8 glass-card rounded-[2rem] border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
                  <div className="flex items-center gap-6">
-                   <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                   <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg">
                      <Activity className="w-8 h-8 text-white" />
                    </div>
                    <div>
-                     <div className="flex items-center gap-3 mb-1">
-                       <h2 className="text-2xl font-headline font-bold tracking-tight">Investigation Dashboard</h2>
-                       <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">Automated Forensic Scan</span>
-                     </div>
-                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                       <span className="text-muted-foreground flex items-center gap-1.5"><Info className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-mono font-bold">{caseId}</span></span>
-                       <span className="text-muted-foreground flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Initial Review</span></span>
-                       <span className="text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Generated: <span className="text-foreground font-bold">{new Date().toLocaleDateString()}</span></span>
+                     <h2 className="text-2xl font-headline font-bold mb-1">Investigation Dashboard</h2>
+                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                       <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> Case ID: <span className="text-foreground font-bold">{caseId}</span></span>
+                       <span className="flex items-center gap-1.5"><Activity className="w-3.5 h-3.5" /> Status: <span className="text-primary font-bold">Automated Review</span></span>
                      </div>
                    </div>
                  </div>
-                 <div className="flex items-center gap-3 w-full md:w-auto">
-                   <Button variant="outline" onClick={() => {
-                     setStep('type')
-                     setCaseId('')
-                     setResult(null)
-                   }} className="border-white/10 hover:bg-white/5 font-bold flex-grow md:flex-grow-0">
-                     New Assessment
-                   </Button>
-                   <Button className="bg-primary hover:bg-primary/90 font-bold flex-grow md:flex-grow-0">
-                     Download Forensic Report
-                   </Button>
+                 <div className="flex items-center gap-3">
+                   <Button variant="outline" onClick={() => setStep('type')}>New Intake</Button>
+                   <Button className="bg-primary font-bold">Download Report</Button>
                  </div>
               </div>
-
-              {/* Specialist Card */}
-              <Card className="glass-card border-white/5 p-6 flex flex-row items-center gap-4 min-w-[300px]">
-                <Avatar className="h-16 w-16 border-2 border-primary/20">
+              <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[300px]">
+                <Avatar className="h-12 w-12 border-2 border-primary/20">
                   <AvatarImage src={`https://picsum.photos/seed/${caseId}/100/100`} />
-                  <AvatarFallback className="bg-primary text-white font-bold">SN</AvatarFallback>
+                  <AvatarFallback className="bg-primary">SA</AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <p className="font-bold text-foreground">Senior Recovery Analyst</p>
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  </div>
-                  <p className="text-xs text-muted-foreground font-medium mb-2">Financial Fraud Division</p>
-                  <div className="flex items-center gap-2 px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-bold text-primary w-fit">
-                    <UserCheck className="w-3 h-3" />
-                    Assigned to LRX-{caseId.split('-')[1]}
-                  </div>
+                  <p className="font-bold text-sm">Senior Recovery Analyst</p>
+                  <p className="text-xs text-muted-foreground">Financial Fraud Division</p>
                 </div>
               </Card>
             </div>
 
-            {/* Investigation Timeline */}
+            {/* Timeline */}
             <Card className="glass-card border-white/5 p-8">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
                 {TIMELINE_STEPS.map((step, idx) => (
                   <div key={step.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
-                    <div className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all",
-                      step.status === 'completed' ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : 
-                      step.status === 'current' ? "bg-primary text-white shadow-lg shadow-primary/20 ring-4 ring-primary/10" : 
-                      "bg-muted text-muted-foreground border border-white/5"
-                    )}>
-                      <step.icon className="w-5 h-5" />
+                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", step.status === 'completed' ? "bg-emerald-500 text-white" : step.status === 'current' ? "bg-primary text-white" : "bg-muted text-muted-foreground border border-white/5")}>
+                      <step.icon className="w-4 h-4" />
                     </div>
                     <div className="text-left md:text-center">
-                      <p className={cn(
-                        "text-[10px] font-black uppercase tracking-widest",
-                        step.status === 'completed' ? "text-emerald-500" : step.status === 'current' ? "text-primary" : "text-muted-foreground"
-                      )}>{step.status === 'completed' ? 'Verified' : step.status === 'current' ? 'Processing' : 'Pending'}</p>
-                      <p className="text-xs font-bold text-foreground whitespace-nowrap">{step.label}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest opacity-50">{step.label}</p>
                     </div>
-                    {idx < TIMELINE_STEPS.length - 1 && (
-                      <div className="hidden md:block absolute top-5 left-[calc(50%+24px)] w-[calc(100%-48px)] h-[1px] bg-white/5 -z-0">
-                        <div className={cn(
-                          "h-full transition-all duration-1000",
-                          step.status === 'completed' ? "bg-emerald-500 w-full" : "bg-transparent w-0"
-                        )} />
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
             </Card>
 
-            {/* Assessment Dashboard Metrics */}
+            {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Forensic Risk Factor</span>
-                  <ShieldAlert className={cn("w-5 h-5", getRiskColor(result.riskLevel))} />
-                </div>
-                <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.riskLevel}</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">Risk level determined by time-lapse, complexity, and digital trail density.</p>
+              <Card className="glass-card border-white/5 p-6">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Risk Level</span>
+                <div className={cn("text-3xl font-headline font-bold", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-orange-500' : 'text-emerald-500')}>{riskLevel}</div>
+                <p className="text-xs text-muted-foreground mt-2">Calculated based on amount and platform status.</p>
               </Card>
-
-              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Evidence Integrity Score</span>
-                  <Database className="w-5 h-5 text-primary" />
-                </div>
-                <div className="text-3xl font-headline font-bold mb-2 tracking-tight">{result.evidenceCompletenessScore}%</div>
-                <Progress value={result.evidenceCompletenessScore} className="h-1.5 mb-2" />
-                <p className="text-xs text-muted-foreground leading-relaxed">System-calculated completeness based on verified transaction data.</p>
+              <Card className="glass-card border-white/5 p-6">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Score</span>
+                <div className="text-3xl font-headline font-bold">{evidenceMetrics.total}%</div>
+                <Progress value={evidenceMetrics.total} className="h-1.5 mt-2" />
               </Card>
-
-              <Card className="glass-card border-white/5 p-6 group hover:border-primary/20 transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recovery Probability</span>
-                  <Zap className="text-secondary w-5 h-5" />
-                </div>
-                <div className="text-3xl font-headline font-bold mb-1 tracking-tight">{result.overallCaseStrength}%</div>
-                <p className="text-xs text-muted-foreground leading-relaxed">Preliminary probability of successful retrieval via formal investigation.</p>
+              <Card className="glass-card border-white/5 p-6">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Readiness</span>
+                <div className="text-3xl font-headline font-bold">Qualified</div>
+                <p className="text-xs text-muted-foreground mt-2">Eligible for human specialist review.</p>
               </Card>
             </div>
 
-            {/* Preliminary Case Findings Section */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-headline font-semibold flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                  <ClipboardList className="w-5 h-5 text-primary" />
-                </div>
-                Preliminary Forensic Findings
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {[
-                  { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
-                  { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
-                  { label: "Evidence Strength", value: result.preliminaryCaseFindings.evidenceStrength, color: result.preliminaryCaseFindings.evidenceStrength === 'High' ? 'text-emerald-500' : result.preliminaryCaseFindings.evidenceStrength === 'Moderate' ? 'text-amber-500' : 'text-destructive' },
-                  { label: "Transaction Status", value: result.preliminaryCaseFindings.transactionRecordsStatus },
-                  { label: "Recovery Complexity", value: result.preliminaryCaseFindings.recoveryComplexity, color: getComplexityColor(result.preliminaryCaseFindings.recoveryComplexity) },
-                  { label: "Recommended Action", value: result.preliminaryCaseFindings.recommendedAction }
-                ].map((finding, idx) => (
-                  <Card key={idx} className="glass-card border-white/5 p-4 flex flex-col justify-center text-center hover:bg-white/5 transition-colors">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-2">{finding.label}</span>
-                    <span className={cn("text-xs font-bold leading-tight", finding.color || "text-foreground")}>{finding.value}</span>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
+            {/* Findings Dashboard */}
             <div className="grid lg:grid-cols-2 gap-8">
-              {/* Evidence Collection Tracker */}
-              <Card className="glass-card border-white/5 p-8 flex flex-col h-full">
-                <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-8">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Network className="w-5 h-5 text-primary" />
-                  </div>
-                  Evidence Collection Matrix
-                </h3>
-                <div className="space-y-8 flex-grow">
-                  {result.evidenceTracker.map((tracker, idx) => (
-                    <div key={idx} className="space-y-2">
-                      <div className="flex justify-between text-sm font-bold mb-1">
-                        <span className="text-foreground/80">{tracker.label}</span>
-                        <span className="text-primary">{tracker.score}%</span>
-                      </div>
-                      <Progress value={tracker.score} className="h-2 bg-white/5" />
+              <Card className="glass-card border-white/5 p-8">
+                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Preliminary Case Findings</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
+                    { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
+                    { label: "Evidence Strength", value: result.preliminaryCaseFindings.evidenceStrength },
+                    { label: "Recovery Complexity", value: result.preliminaryCaseFindings.recoveryComplexity },
+                    { label: "Transaction Status", value: result.preliminaryCaseFindings.transactionRecordsStatus },
+                    { label: "Recommended Action", value: result.preliminaryCaseFindings.recommendedAction }
+                  ].map((finding, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5">
+                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">{finding.label}</p>
+                      <p className="text-xs font-bold">{finding.value}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-10 pt-8 border-t border-white/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-lg font-headline font-bold">Overall Case Integrity</span>
-                    <span className="text-2xl font-black text-secondary">{result.overallCaseStrength}%</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">This metric represents the readiness of the digital trail for formal investigation.</p>
+                <div className="mt-8 p-6 bg-primary/5 rounded-2xl border border-primary/10 italic text-sm text-foreground/80 leading-relaxed">
+                  "{result.recoveryScenarioSummary}"
+                </div>
+                <div className="mt-6 flex gap-2 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-[10px] text-amber-500/80">
+                  <Info className="w-3.5 h-3.5 shrink-0" />
+                  <p>This assessment is generated automatically and is not a professional investigation. Final recommendations require review by a recovery specialist.</p>
                 </div>
               </Card>
 
-              {/* Automated Preliminary Findings Summary */}
-              <Card className="border-primary/20 bg-primary/5 relative overflow-hidden flex flex-col h-full">
-                <div className="absolute top-0 right-0 p-4 opacity-5">
-                  <Network className="w-32 h-32" />
-                </div>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-2xl font-headline tracking-tight">
-                    <div className="p-2 rounded-lg bg-primary/20">
-                      <Search className="w-6 h-6 text-primary" />
-                    </div>
-                    Automated Preliminary Findings
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-lg leading-relaxed text-foreground/90 font-medium italic border-l-2 border-primary/50 pl-6 py-2">
-                    "{result.recoveryScenarioSummary}"
-                  </p>
-                  
-                  <div className="mt-8 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-500/80 mb-6 italic">
-                    <div className="flex gap-2">
-                      <Info className="w-4 h-4 shrink-0" />
-                      <p>
-                        This assessment is generated automatically and is not a professional investigation. 
-                        Final recommendations require manual verification and review by a Lazoronix recovery specialist.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Forensic Probability Indicators</p>
-                    <div className="grid grid-cols-1 gap-3">
-                      {result.recoveryIndicators.map((indicator, idx) => (
-                        <div key={idx} className={cn("p-4 rounded-xl border-none flex items-center gap-4 transition-all hover:scale-[1.02]", getStatusBg(indicator.status))}>
-                          {getStatusIcon(indicator.status)}
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest">{indicator.label}</p>
-                            <p className="text-xs font-medium leading-snug">{indicator.description}</p>
-                          </div>
+              <div className="space-y-6">
+                <Card className="glass-card border-white/5 p-8">
+                  <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Network className="w-5 h-5 text-primary" /> Evidence Collection Matrix</h3>
+                  <div className="space-y-6">
+                    {evidenceMetrics.items.map((tracker, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="flex justify-between text-xs font-bold">
+                          <span className="text-foreground/70">{tracker.label}</span>
+                          <span className="text-primary">{tracker.score}%</span>
                         </div>
-                      ))}
-                    </div>
+                        <Progress value={tracker.score} className="h-1.5" />
+                      </div>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
+                </Card>
+
+                {/* Static Urgency Notice */}
+                <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
+                  <h4 className="text-sm font-bold text-destructive flex items-center gap-2 mb-4"><ShieldAlert className="w-4 h-4" /> Time-Sensitive Notice</h4>
+                  <p className="text-xs text-foreground/80 leading-relaxed mb-4">Recovery opportunities can become more difficult as time passes due to:</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {["Asset Movement", "Account Closure", "Data Loss", "Evidence Decay"].map((item, i) => (
+                      <div key={i} className="px-3 py-2 rounded-lg bg-background/40 border border-white/5 text-[9px] font-bold text-center">{item}</div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
             </div>
 
-            {/* Time-Sensitive Notice for Scam Cases */}
-            <Card className="border-destructive/20 bg-destructive/5 rounded-[2.5rem] overflow-hidden p-8 md:p-12 relative">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
-                  <Clock className="w-32 h-32 text-destructive" />
-                </div>
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                   <div className="w-16 h-16 rounded-2xl bg-destructive/10 flex items-center justify-center shrink-0">
-                     <ShieldAlert className="w-8 h-8 text-destructive" />
-                   </div>
-                   <div className="space-y-4">
-                     <h3 className="text-2xl font-headline font-bold text-destructive tracking-tight">Time-Sensitive Investigative Notice</h3>
-                     <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl">
-                       Recovery opportunities can become more difficult as time passes due to the technical nature of digital asset movements. We recommend preserving evidence immediately.
-                     </p>
-                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-                       {[
-                         { label: "Asset Movement", icon: Activity },
-                         { label: "Account Closure", icon: XCircle },
-                         { label: "Data Loss", icon: FileText },
-                         { label: "Evidence Decay", icon: ShieldAlert }
-                       ].map((item, i) => (
-                         <div key={i} className="flex flex-col items-center p-4 rounded-xl bg-background/40 border border-white/5 text-center">
-                           <item.icon className="w-5 h-5 text-destructive mb-2" />
-                           <span className="text-[9px] font-black uppercase tracking-widest opacity-80">{item.label}</span>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
-                </div>
-            </Card>
-
+            {/* Static Roadmap & Conversion */}
             <div className="grid lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <h3 className="text-xl font-headline font-semibold flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
-                    <Database className="w-5 h-5 text-secondary" />
-                  </div>
-                  Forensic Investigation Roadmap
-                </h3>
-                <Accordion type="single" collapsible className="w-full space-y-4">
-                  {result.informationCategoriesToGather.map((cat, idx) => (
-                    <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-2xl px-5 bg-card/60 border-white/5 overflow-hidden hover:border-white/10 transition-colors">
-                      <AccordionTrigger className="hover:no-underline py-5">
-                        <span className="text-left font-bold text-lg">{cat.categoryName}</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-6">
-                        <p className="mb-6 text-muted-foreground leading-relaxed">{cat.description}</p>
-                        <ul className="grid gap-3">
-                          {cat.specificItemsToGather.map((item, i) => (
-                            <li key={i} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 text-sm font-medium">
-                              <div className="w-6 h-6 rounded-lg bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                                <div className="w-2 h-2 rounded-full bg-primary" />
-                              </div>
-                              <span className="text-foreground/90">{item}</span>
-                            </li>
+              <Card className="glass-card border-white/5 p-8">
+                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Target className="w-5 h-5 text-primary" /> Investigation Roadmap</h3>
+                <Accordion type="single" collapsible className="space-y-4">
+                  {result.investigativeFocusAreas.map((cat, idx) => (
+                    <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-xl px-5 bg-card/60 border-white/5">
+                      <AccordionTrigger className="hover:no-underline font-bold text-sm">{cat.categoryName}</AccordionTrigger>
+                      <AccordionContent className="text-xs space-y-4 text-muted-foreground">
+                        <p>{cat.description}</p>
+                        <ul className="space-y-2">
+                          {cat.specificItems.map((item, i) => (
+                            <li key={i} className="flex items-center gap-2 text-foreground/80"><ChevronRight className="w-3 h-3 text-primary" /> {item}</li>
                           ))}
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
-              </div>
+              </Card>
 
               <div className="space-y-8">
-                <div>
-                  <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
-                      <ShieldAlert className="w-5 h-5 text-destructive" />
-                    </div>
-                    Critical Safety Protocols
-                  </h3>
-                  <Card className="border-destructive/20 bg-destructive/5 rounded-[2rem] overflow-hidden">
-                    <CardContent className="p-8 space-y-5">
-                      {result.importantConsiderations.map((con, idx) => (
-                        <div key={idx} className="flex items-start gap-4 text-sm leading-relaxed text-foreground/90 font-bold bg-background/40 p-4 rounded-xl border border-destructive/10">
-                          <ShieldAlert className="w-5 h-5 text-destructive shrink-0" />
-                          {con}
-                        </div>
+                <Card className="border-emerald-500/20 bg-emerald-500/5 p-8 rounded-[2rem]">
+                  <h4 className="text-2xl font-headline font-bold text-emerald-500 mb-4">Case Eligible For Review</h4>
+                  <p className="text-base text-foreground/80 mb-8 leading-relaxed">Our investigators recommend a detailed assessment. Final paths require manual verification by a specialist.</p>
+                  <div className="space-y-4 mb-10">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Next Steps:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {["Specialist Review", "Evidence Verification", "Feasibility Analysis", "Recovery Roadmap"].map((item, i) => (
+                        <div key={i} className="flex items-center gap-2 text-xs font-bold"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> {item}</div>
                       ))}
-                    </CardContent>
-                  </Card>
-                </div>
+                    </div>
+                  </div>
+                  <Button className="w-full h-16 text-lg font-bold" asChild>
+                    <a href="#contact">Continue To Secure Assessment <ArrowRight className="ml-2 w-5 h-5" /></a>
+                  </Button>
+                </Card>
 
-                <div>
-                  <h3 className="text-xl font-headline font-semibold flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                    </div>
-                    Professional Eligibility Status
-                  </h3>
-                  <Card className="border-emerald-500/20 bg-emerald-500/5 rounded-[2rem] overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-8 opacity-10">
-                      <ShieldCheck className="w-32 h-32 text-emerald-500" />
-                    </div>
-                    <CardContent className="p-8">
-                      <h4 className="text-2xl font-headline font-bold mb-4 text-emerald-500 tracking-tight">
-                        {result.overallCaseStrength > 40 
-                          ? "Case Eligible For Specialist Review" 
-                          : "Preliminary Intake Complete"}
-                      </h4>
-                      <p className="text-lg leading-relaxed mb-8 opacity-90 font-medium text-foreground/80">
-                        Based on the information provided, our investigators recommend a detailed assessment of your case. Final recommendations require review by a Lazoronix recovery specialist.
-                      </p>
-                      
-                      <div className="space-y-4 mb-10">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">What Happens Next?</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-                          {[
-                            "Specialist Review",
-                            "Evidence Verification",
-                            "Recovery Feasibility Analysis",
-                            "Investigation Roadmap"
-                          ].map((item, i) => (
-                            <div key={i} className="flex items-center gap-3 text-sm font-bold text-foreground/90">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                              {item}
-                            </div>
-                          ))}
-                        </div>
+                {/* Static Safety Protocols */}
+                <Card className="border-destructive/20 bg-destructive/5 p-6 rounded-2xl">
+                  <h4 className="text-xs font-black uppercase tracking-widest text-destructive mb-4">Critical Safety Protocols</h4>
+                  <div className="space-y-3">
+                    {SAFETY_PROTOCOLS.map((con, idx) => (
+                      <div key={idx} className="flex items-start gap-3 text-xs leading-relaxed font-bold bg-background/40 p-3 rounded-lg border border-destructive/10">
+                        <ShieldAlert className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+                        {con}
                       </div>
-
-                      <Button className="w-full h-16 text-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group font-bold transition-all hover:scale-[1.01]" asChild>
-                        <a href="#contact">
-                          Continue To Secure Assessment
-                          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
+                    ))}
+                  </div>
+                </Card>
               </div>
             </div>
           </div>

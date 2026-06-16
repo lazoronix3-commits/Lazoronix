@@ -1,9 +1,8 @@
-
 'use server';
 /**
- * @fileOverview A clinical digital asset recovery intake engine that evaluates digital trails and evidence density.
+ * @fileOverview A clinical digital asset recovery intake engine focused on preliminary case findings.
  *
- * - aiGuidedRecoveryPreparation - A function that handles the automated forensic scan process.
+ * - aiGuidedRecoveryPreparation - A function that generates technical findings based on intake data.
  * - AIGuidedRecoveryPreparationInput - The input type for the aiGuidedRecoveryPreparation function.
  * - AIGuidedRecoveryPreparationOutput - The return type for the aiGuidedRecoveryPreparation function.
  */
@@ -23,23 +22,6 @@ export type AIGuidedRecoveryPreparationInput = z.infer<
 >;
 
 const AIGuidedRecoveryPreparationOutputSchema = z.object({
-  riskLevel: z
-    .enum(['Low', 'Moderate', 'High', 'Critical'])
-    .describe('The investigative risk level associated with asset movement and time lapse.'),
-  evidenceCompletenessScore: z
-    .number()
-    .min(0)
-    .max(100)
-    .describe('Automated score (0-100) for the density of technical evidence provided.'),
-  overallCaseStrength: z
-    .number()
-    .min(0)
-    .max(100)
-    .describe('Forensic calculation of the probability of successful retrieval via formal investigation.'),
-  evidenceTracker: z.array(z.object({
-    label: z.string().describe('The forensic category (e.g., Transaction Records, Communication Logs).'),
-    score: z.number().min(0).max(100).describe('Completeness score for this specific category.'),
-  })).describe('Category-specific completeness scores.'),
   preliminaryCaseFindings: z.object({
     scamType: z.string().describe('Identified fraud category.'),
     estimatedLoss: z.string().describe('Total financial loss value.'),
@@ -51,48 +33,13 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
   recoveryScenarioSummary: z
     .string()
     .describe(
-      "A clinical forensic summary of the case scenario."
+      "A clinical forensic summary of the case scenario (max one sentence)."
     ),
-  recoveryIndicators: z
-    .array(
-      z.object({
-        label: z.string().describe('Factor name (e.g., Identity Verification, Fund Traceability).'),
-        status: z.enum(['positive', 'neutral', 'negative']).describe('Status of the recovery factor.'),
-        description: z.string().describe('Technical explanation for the status.'),
-      })
-    )
-    .describe('Technical indicators determining feasibility.'),
-  informationCategoriesToGather: z
-    .array(
-      z.object({
-        categoryName: z
-          .string()
-          .describe('Technical focus area (e.g., Fund Movement Analysis).'),
-        description: z
-          .string()
-          .describe(
-            'Technical reason why this area is critical.'
-          ),
-        specificItemsToGather: z
-          .array(z.string())
-          .describe(
-            'List of specific forensic items or technical requirements.'
-          ),
-      })
-    )
-    .describe(
-      'Structured list of investigation focus areas.'
-    ),
-  importantConsiderations: z
-    .array(z.string())
-    .describe(
-      'Critical safety and technical protocols for the user.'
-    ),
-  nextStepsRecommendation: z
-    .string()
-    .describe(
-      'Authoritative advice on the human specialist review process.'
-    ),
+  investigativeFocusAreas: z.array(z.object({
+    categoryName: z.string().describe('Technical focus area.'),
+    description: z.string().describe('Technical reason why this area is critical.'),
+    specificItems: z.array(z.string()).describe('Specific items to gather.')
+  })).describe('Category-specific investigation requirements.')
 });
 export type AIGuidedRecoveryPreparationOutput = z.infer<
   typeof AIGuidedRecoveryPreparationOutputSchema
@@ -106,18 +53,12 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
 
 Your task is to conduct an "Automated Case Intake Assessment" based on the user's data.
 
-Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler or empathy. You are a forensic engine processing data.
+Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler or empathy.
 
 Analysis Goals:
-1. **Risk Analysis**: Evaluate based on time elapsed, scam complexity, and asset traceability.
-2. **Evidence Density**: 
-   - Assign "Evidence Completeness Score".
-   - Assign "Overall Case Strength" percentage.
-   - Provide "Evidence Tracker" scores for: Transaction Records, Communication Logs, Identity Verification, Wallet Data, and Platform Evidence.
-3. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Strength, etc.
-4. **Forensic Focus**: Detail the technical trail analysis needed.
-5. **Scenario Summary**: A one-sentence technical summary of the incident.
-6. **Next Steps**: Always point towards "Specialist Approval" and "Formal Investigation".
+1. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Strength, etc.
+2. **Scenario Summary**: A one-sentence technical summary of the incident.
+3. **Investigative Focus**: Identify 3-4 specific technical areas that require focus based on the scam type provided.
 
 Input Data:
 {{{initialProblemDescription}}}

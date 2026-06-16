@@ -58,6 +58,7 @@ import {
   DialogContent, 
   DialogHeader, 
   DialogTitle, 
+  DialogDescription,
   DialogTrigger 
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -347,7 +348,7 @@ export default function AdminDashboard() {
             <DialogContent className="glass-card border-white/10 max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Case Resolutions Library</DialogTitle>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage public success stories and technical outcomes</p>
+                <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage public success stories and technical outcomes</DialogDescription>
               </DialogHeader>
               
               <div className="py-6 space-y-8">
@@ -422,7 +423,7 @@ export default function AdminDashboard() {
             <DialogContent className="glass-card border-white/10 max-w-md">
               <DialogHeader>
                 <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Branding Management</DialogTitle>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Update website logo icon</p>
+                <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Update website logo icon</DialogDescription>
               </DialogHeader>
               <div className="py-6 space-y-6">
                 <div className="flex flex-col items-center justify-center p-8 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer overflow-hidden">
@@ -474,7 +475,7 @@ export default function AdminDashboard() {
             <DialogContent className="glass-card border-white/10 max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Technical Asset Library</DialogTitle>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage website imagery and forensic personnel avatars</p>
+                <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Manage website imagery and forensic personnel avatars</DialogDescription>
               </DialogHeader>
               
               <div className="py-6 space-y-8">
@@ -665,18 +666,18 @@ export default function AdminDashboard() {
                           </DialogTrigger>
                           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
                             <DialogHeader className="p-8 border-b border-white/5 bg-card/50">
-                              <DialogTitle className="flex justify-between items-center">
+                              <div className="flex justify-between items-center w-full">
                                 <div className="flex items-center gap-4">
                                   <div className="p-3 bg-primary/10 rounded">
                                     <FileText className="w-6 h-6 text-primary" />
                                   </div>
                                   <div>
-                                    <h2 className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</h2>
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</p>
+                                    <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</DialogTitle>
+                                    <DialogDescription className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</DialogDescription>
                                   </div>
                                 </div>
                                 <Badge className="bg-primary text-black uppercase tracking-widest text-[10px] py-1.5 px-4">{c.status}</Badge>
-                              </DialogTitle>
+                              </div>
                             </DialogHeader>
                             <div className="p-8 space-y-12">
                               <div className="grid md:grid-cols-3 gap-8">

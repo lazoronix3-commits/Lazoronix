@@ -22,6 +22,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogTrigger,
   DialogClose
 } from '@/components/ui/dialog';
@@ -272,15 +273,17 @@ export default function Home() {
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
                       <div className="p-8 md:p-12 space-y-10">
-                        <div className="flex flex-col md:flex-row gap-8 items-start">
+                        <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
                           <div className="w-20 h-20 rounded-none bg-primary/10 flex items-center justify-center shrink-0">
                             <service.icon className="w-10 h-10 text-primary" />
                           </div>
                           <div className="space-y-4">
-                            <h2 className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</h2>
-                            <p className="text-primary text-sm font-black uppercase tracking-[0.2em]">{service.subtitle}</p>
+                            <DialogTitle className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</DialogTitle>
+                            <DialogDescription className="text-primary text-sm font-black uppercase tracking-[0.2em] opacity-100">
+                              {service.subtitle}
+                            </DialogDescription>
                           </div>
-                        </div>
+                        </DialogHeader>
 
                         <div className="grid lg:grid-cols-5 gap-12">
                           <div className="lg:col-span-3 space-y-8">

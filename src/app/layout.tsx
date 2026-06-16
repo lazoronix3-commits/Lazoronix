@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {MouseSpotlight} from '@/components/ui/mouse-spotlight';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Lazoronix | Institutional Forensic Intelligence & Digital Asset Investigation',
@@ -24,6 +25,22 @@ export default function RootLayout({
         <MouseSpotlight />
         {children}
         <Toaster />
+        
+        {/* Start of Tawk.to Script */}
+        <Script id="tawk-to-script" strategy="afterInteractive">
+          {`
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6a3186cd16fcef1d436f9c5b/1jr8nd581';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+          `}
+        </Script>
+        {/* End of Tawk.to Script */}
       </body>
     </html>
   );

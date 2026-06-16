@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect, useMemo } from 'react'
@@ -458,7 +457,7 @@ ${description}
                         onBlur={() => setIsInputFocused(false)}
                       />
                     </div>
-                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-lg font-black uppercase tracking-[0.2em] bg-primary text-black">
+                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-lg font-black uppercase tracking-[0.2em] bg-primary text-black premium-cta">
                       {loading ? (
                         <div className="flex items-center gap-3">
                           <Loader2 className="h-5 w-5 animate-spin" />
@@ -689,7 +688,7 @@ ${description}
                     </div>
                   </div>
 
-                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20">
+                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta">
                     Confirm Consultation 
                     <ArrowRight className="ml-2 w-6 h-6" />
                   </Button>
@@ -802,7 +801,7 @@ ${description}
                 <Button 
                   onClick={handleBooking} 
                   disabled={bookingLoading || !bookingValues.email || !bookingValues.name} 
-                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90"
+                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90 premium-cta"
                 >
                   {bookingLoading ? (
                     <div className="flex items-center gap-3">
@@ -851,7 +850,7 @@ ${description}
                   "Jurisdictional Feasibility Study",
                   "Strategy Briefing"
                 ].map((step, i) => (
-                  <li key={i} className="flex items-start gap-4 text-[11px] font-black uppercase tracking-widest text-foreground/80">
+                  <li key={i} className="flex items-start gap-4 text-[11px] font-black uppercase tracking widest text-foreground/80">
                     <div className="w-1 h-1 bg-primary shrink-0 mt-1.5" />
                     {step}
                   </li>

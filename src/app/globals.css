@@ -110,6 +110,11 @@
   to { stroke-dashoffset: 0; }
 }
 
+@keyframes cta-sweep {
+  0% { left: -100%; }
+  100% { left: 150%; }
+}
+
 /* Intelligence Motion Classes */
 .network-line {
   fill: none;
@@ -148,6 +153,23 @@
 
 .active .forensic-trace {
   animation: trace-draw 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Premium CTA Sweep */
+.premium-cta {
+  @apply relative overflow-hidden;
+}
+
+.premium-cta::before {
+  content: '';
+  @apply absolute top-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-[35deg];
+  left: -100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.premium-cta:hover::before {
+  animation: cta-sweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 /* Reveal Settle Glow */

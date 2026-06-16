@@ -69,9 +69,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" className="hidden sm:inline-flex border-primary/20 hover:bg-primary/5">
-            Client Portal
-          </Button>
           <Button className="bg-primary hover:bg-primary/90">
             Get Free Assessment
           </Button>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Shield, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,12 @@ const services = [
 ];
 
 export function Navbar() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
@@ -34,20 +41,26 @@ export function Navbar() {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
+          {mounted ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
+                Services <ChevronDown className="w-4 h-4 opacity-50" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 bg-card border-white/10 shadow-2xl">
+                {services.map((service) => (
+                  <DropdownMenuItem key={service} asChild>
+                    <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10">
+                      {service}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <button className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
               Services <ChevronDown className="w-4 h-4 opacity-50" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 bg-card border-white/10 shadow-2xl">
-              {services.map((service) => (
-                <DropdownMenuItem key={service} asChild>
-                  <Link href="#services" className="w-full cursor-pointer py-2.5 text-sm hover:bg-primary/10">
-                    {service}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </button>
+          )}
 
           <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
           <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Success Stories</Link>

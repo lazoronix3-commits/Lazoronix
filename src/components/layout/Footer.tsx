@@ -5,6 +5,7 @@ import { Shield } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
 
 export function Footer() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
@@ -14,12 +15,16 @@ export function Footer() {
   }, []);
 
   const fetchLogo = async () => {
-    const { data } = supabase.storage
-      .from('assets')
-      .getPublicUrl('logo.png');
-    
-    if (data?.publicUrl) {
-      setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+    try {
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('logo.png');
+      
+      if (data?.publicUrl) {
+        setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      setLogoUrl(null);
     }
   };
 
@@ -28,8 +33,11 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded bg-primary flex items-center justify-center overflow-hidden">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className={cn(
+                "w-10 h-10 rounded flex items-center justify-center transition-all overflow-hidden",
+                logoUrl ? "bg-transparent p-0.5" : "bg-primary shadow-lg"
+              )}>
                 {logoUrl ? (
                   <img 
                     src={logoUrl} 
@@ -38,7 +46,7 @@ export function Footer() {
                     onError={() => setLogoUrl(null)}
                   />
                 ) : (
-                  <Shield className="text-white w-5 h-5" />
+                  <Shield className="text-white w-6 h-6" />
                 )}
               </div>
               <span className="text-xl font-headline font-bold">LAZORONIX</span>

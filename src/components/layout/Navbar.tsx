@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { supabase } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
 
 const services = [
   "Forex Scam Recovery",
@@ -34,13 +35,11 @@ export function Navbar() {
 
   const fetchLogo = async () => {
     try {
-      // Small check to see if the custom logo exists in the assets bucket
       const { data } = supabase.storage
         .from('assets')
         .getPublicUrl('logo.png');
       
       if (data?.publicUrl) {
-        // We use cache busting to ensure the latest logo is always loaded
         setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
       }
     } catch (error) {
@@ -52,20 +51,20 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:bg-accent transition-colors overflow-hidden">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className={cn(
+            "w-12 h-12 rounded-lg flex items-center justify-center transition-all overflow-hidden",
+            logoUrl ? "bg-transparent p-0.5" : "bg-primary group-hover:bg-accent shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+          )}>
             {logoUrl ? (
               <img 
                 src={logoUrl} 
                 alt="Lazoronix Logo" 
                 className="w-full h-full object-contain"
-                onError={(e) => {
-                  // If the image fails to load (e.g. 404 or 400), reset to default
-                  setLogoUrl(null);
-                }}
+                onError={() => setLogoUrl(null)}
               />
             ) : (
-              <Shield className="text-white w-6 h-6" />
+              <Shield className="text-white w-7 h-7" />
             )}
           </div>
           <span className="text-2xl font-headline font-bold tracking-tight">

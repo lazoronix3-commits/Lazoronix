@@ -39,6 +39,53 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
+const UserCheck = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <polyline points="16 11 18 13 22 9" />
+  </svg>
+)
+
+const Database = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+    <path d="M3 12A9 3 0 0 0 21 12" />
+  </svg>
+)
+
+const TIMELINE_STEPS = [
+  { id: 'intake', label: 'Evidence Received', status: 'completed', icon: CheckCircle2 },
+  { id: 'review', label: 'Preliminary Review', status: 'current', icon: Clock },
+  { id: 'analysis', label: 'Forensic Analysis', status: 'pending', icon: Database },
+  { id: 'assignment', label: 'Investigator Assignment', status: 'pending', icon: UserCheck },
+  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Target },
+  { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
+]
+
 type CaseType = {
   id: string;
   title: string;
@@ -141,53 +188,6 @@ const CASE_TYPES: CaseType[] = [
   },
 ]
 
-const UserCheck = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <polyline points="16 11 18 13 22 9" />
-  </svg>
-)
-
-const Database = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <ellipse cx="12" cy="5" rx="9" ry="3" />
-    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-    <path d="M3 12A9 3 0 0 0 21 12" />
-  </svg>
-)
-
-const TIMELINE_STEPS = [
-  { id: 'intake', label: 'Evidence Received', status: 'completed', icon: CheckCircle2 },
-  { id: 'review', label: 'Preliminary Review', status: 'current', icon: Clock },
-  { id: 'analysis', label: 'Forensic Analysis', status: 'pending', icon: Database },
-  { id: 'assignment', label: 'Investigator Assignment', status: 'pending', icon: UserCheck },
-  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Target },
-  { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
-]
-
 const SAFETY_PROTOCOLS = [
   "Do NOT pay any 'upfront taxes' or 'activation fees' to unknown recovery services.",
   "Never share your private keys or 12/24-word seed phrase with anyone.",
@@ -225,7 +225,7 @@ export function AIGuidedTool() {
   }
 
   const evidenceMetrics = useMemo(() => {
-    if (!selectedType) return { total: 0, items: [] };
+    if (!selectedType) return { total: 0, items: [], status: 'Incomplete' };
     
     const items = [
       { label: "Transaction Records", score: Object.values(formValues).some(v => v.length > 5) ? 80 : 20 },
@@ -236,7 +236,9 @@ export function AIGuidedTool() {
     ];
     
     const total = Math.round(items.reduce((acc, curr) => acc + curr.score, 0) / items.length);
-    return { total, items };
+    const status = total > 70 ? 'Substantial' : total > 40 ? 'Partial' : 'Incomplete';
+    
+    return { total, items, status };
   }, [formValues, description, hasAccess, selectedType]);
 
   const riskLevel = useMemo(() => {
@@ -467,14 +469,14 @@ ${description}
                 <p className="text-xs text-muted-foreground mt-2">Calculated based on amount and platform status.</p>
               </Card>
               <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Score</span>
-                <div className="text-3xl font-headline font-bold">{evidenceMetrics.total}%</div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Status</span>
+                <div className="text-3xl font-headline font-bold">{evidenceMetrics.status}</div>
                 <Progress value={evidenceMetrics.total} className="h-1.5 mt-2" />
               </Card>
               <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Status</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Investigation Readiness</span>
                 <div className="text-3xl font-headline font-bold">Qualified</div>
-                <p className="text-xs text-muted-foreground mt-2">Awaiting human investigator review.</p>
+                <p className="text-xs text-muted-foreground mt-2">Ready for specialist analysis.</p>
               </Card>
             </div>
 
@@ -485,10 +487,10 @@ ${description}
                   {[
                     { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
                     { label: "Estimated Loss", value: result.preliminaryCaseFindings.estimatedLoss },
-                    { label: "Evidence Strength", value: result.preliminaryCaseFindings.evidenceStrength },
-                    { label: "Recovery Complexity", value: result.preliminaryCaseFindings.recoveryComplexity },
-                    { label: "Transaction Status", value: result.preliminaryCaseFindings.transactionRecordsStatus },
-                    { label: "Recommended Action", value: result.preliminaryCaseFindings.recommendedAction }
+                    { label: "Evidence Status", value: result.preliminaryCaseFindings.evidenceStatus },
+                    { label: "Case Complexity", value: result.preliminaryCaseFindings.caseComplexity },
+                    { label: "Investigation Readiness", value: result.preliminaryCaseFindings.investigationReadiness },
+                    { label: "Review Recommendation", value: result.preliminaryCaseFindings.reviewRecommendation }
                   ].map((finding, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/5">
                       <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">{finding.label}</p>
@@ -513,7 +515,7 @@ ${description}
                       <div key={idx} className="space-y-2">
                         <div className="flex justify-between text-xs font-bold">
                           <span className="text-foreground/70">{tracker.label}</span>
-                          <span className="text-primary">{tracker.score}%</span>
+                          <span className="text-primary">{tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Requires Data'}</span>
                         </div>
                         <Progress value={tracker.score} className="h-1.5" />
                       </div>
@@ -521,8 +523,8 @@ ${description}
                   </div>
                   <div className="mt-8 pt-6 border-t border-white/5">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-bold">Overall Case Strength</span>
-                      <span className="text-xl font-headline font-bold text-primary">{evidenceMetrics.total}%</span>
+                      <span className="text-sm font-bold">Evidence Integrity Profile</span>
+                      <span className="text-xl font-headline font-bold text-primary">{evidenceMetrics.status}</span>
                     </div>
                   </div>
                 </Card>

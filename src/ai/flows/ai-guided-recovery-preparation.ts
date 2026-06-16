@@ -25,11 +25,11 @@ const AIGuidedRecoveryPreparationOutputSchema = z.object({
   preliminaryCaseFindings: z.object({
     scamType: z.string().describe('Identified fraud category.'),
     estimatedLoss: z.string().describe('Total financial loss value.'),
-    evidenceStrength: z.enum(['Low', 'Moderate', 'High']).describe('Technical strength of evidence.'),
-    transactionRecordsStatus: z.string().describe('Current status of transaction hashes/logs.'),
-    recoveryComplexity: z.enum(['Low', 'Moderate', 'High', 'Extremely High']).describe('Technical difficulty level.'),
-    recommendedAction: z.string().describe('The definitive professional next step.'),
-  }).describe('Structured findings for quick dashboard scanning.'),
+    evidenceStatus: z.enum(['Incomplete', 'Partial', 'Substantial']).describe('Technical status of gathered evidence.'),
+    investigationReadiness: z.string().describe('Status of technical data required for investigation (e.g., Requires Additional Information).'),
+    caseComplexity: z.enum(['Moderate', 'High', 'Extremely High']).describe('Technical difficulty level.'),
+    reviewRecommendation: z.string().describe('The definitive professional next step (e.g., Professional Assessment Recommended).'),
+  }).describe('Structured findings for clinical dashboard scanning.'),
   recoveryScenarioSummary: z
     .string()
     .describe(
@@ -53,17 +53,18 @@ const aiGuidedRecoveryPreparationPrompt = ai.definePrompt({
 
 Your task is to conduct an "Automated Case Intake Assessment" based on the user's data.
 
-Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler or empathy.
+Tone: Clinical, authoritative, technical, and objective. Avoid all conversational filler, empathy, or promises of success.
 
 Analysis Goals:
-1. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Strength, etc.
+1. **Findings Dashboard**: Provide structured data for Scam Type, Loss, Evidence Status, Investigation Readiness, Complexity, and Review Recommendation.
 2. **Scenario Summary**: A one-sentence technical summary of the incident.
 3. **Investigative Focus**: Identify 3-4 specific technical areas that require focus based on the scam type provided.
 
 Input Data:
 {{{initialProblemDescription}}}
 
-Be Technical. Use terms like "Fund Obfuscation", "Blockchain Analysis", "Asset Tracing", and "Evidence Integrity".`,
+Be Technical. Use terms like "Fund Obfuscation", "Blockchain Analysis", "Asset Tracing", and "Evidence Integrity". 
+Do NOT use percentages or numeric probabilities for recovery outcomes. Use qualitative labels like "Moderate", "High", "Professional Assessment Recommended".`,
 });
 
 const aiGuidedRecoveryPreparationFlow = ai.defineFlow(

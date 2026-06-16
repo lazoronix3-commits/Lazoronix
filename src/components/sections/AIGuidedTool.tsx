@@ -61,28 +61,28 @@ const TIMELINE_STEPS = [
 ]
 
 const SecurityChecklist = ({ active = false }: { active?: boolean }) => (
-  <div className="pt-8 mt-8 border-t border-white/5">
+  <div className="pt-6 md:pt-8 mt-6 md:mt-8 border-t border-white/5">
     <div className={cn(
-      "mb-6 flex items-center gap-3 p-4 transition-all duration-500 border",
+      "mb-4 md:mb-6 flex items-center gap-3 p-3 md:p-4 transition-all duration-500 border",
       active ? "bg-primary/5 border-primary/30" : "bg-white/5 border-white/5"
     )}>
-      <Lock className={cn("w-4 h-4 transition-all", active ? "text-primary animate-breathing" : "text-muted-foreground")} />
+      <Lock className={cn("w-3.5 h-3.5 md:w-4 md:h-4 transition-all", active ? "text-primary animate-breathing" : "text-muted-foreground")} />
       <div>
-        <p className={cn("text-[10px] font-black uppercase tracking-[0.2em] transition-colors", active ? "text-primary" : "text-muted-foreground")}>
+        <p className={cn("text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-colors", active ? "text-primary" : "text-muted-foreground")}>
           Secure Encrypted Submission Active
         </p>
-        {active && <p className="text-[8px] font-bold text-foreground/50 uppercase tracking-widest mt-0.5">AES-256 Institutional Grade Protection</p>}
+        {active && <p className="text-[7px] md:text-[8px] font-bold text-foreground/50 uppercase tracking-widest mt-0.5">AES-256 Institutional Grade Protection</p>}
       </div>
     </div>
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
       {[
         "Encrypted submissions",
         "Secure document uploads",
         "Confidential consultations",
         "Restricted case access"
       ].map((item, i) => (
-        <div key={i} className="flex items-center gap-2 text-[9px] font-bold text-foreground/50 uppercase tracking-widest">
-          <CheckCircle2 className="w-3 h-3 text-primary" />
+        <div key={i} className="flex items-center gap-2 text-[8px] md:text-[9px] font-bold text-foreground/50 uppercase tracking-widest">
+          <CheckCircle2 className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary" />
           {item}
         </div>
       ))}
@@ -409,45 +409,45 @@ ${description}
   }
 
   return (
-    <section id="forensic-intake" className="py-24 bg-card/30 relative overflow-hidden border-y border-white/5">
+    <section id="forensic-intake" className="py-16 md:py-24 bg-card/30 relative overflow-hidden border-y border-white/5">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/[0.03] blur-[120px] -z-10" />
       
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="flex justify-center mb-16">
-          <div className="flex items-center gap-4">
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'type' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>01</div>
-            <div className={cn("w-12 h-px transition-colors", step !== 'type' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'details' ? "bg-primary border-primary text-black" : step === 'result' || step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>02</div>
-            <div className={cn("w-12 h-px transition-colors", step === 'result' || step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'result' ? "bg-primary border-primary text-black" : step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>03</div>
-            <div className={cn("w-12 h-px transition-colors", step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-black text-xs border transition-all", step === 'booking' || step === 'success' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>04</div>
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+        <div className="flex justify-center mb-10 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+            <div className={cn("w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-full flex items-center justify-center font-black text-[10px] md:text-xs border transition-all", step === 'type' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>01</div>
+            <div className={cn("w-6 md:w-12 h-px shrink-0 transition-colors", step !== 'type' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-full flex items-center justify-center font-black text-[10px] md:text-xs border transition-all", step === 'details' ? "bg-primary border-primary text-black" : step === 'result' || step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>02</div>
+            <div className={cn("w-6 md:w-12 h-px shrink-0 transition-colors", step === 'result' || step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-full flex items-center justify-center font-black text-[10px] md:text-xs border transition-all", step === 'result' ? "bg-primary border-primary text-black" : step === 'booking' || step === 'success' ? "bg-primary/10 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>03</div>
+            <div className={cn("w-6 md:w-12 h-px shrink-0 transition-colors", step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-full flex items-center justify-center font-black text-[10px] md:text-xs border transition-all", step === 'booking' || step === 'success' ? "bg-primary border-primary text-black" : "bg-transparent border-white/10 text-muted-foreground")}>04</div>
           </div>
         </div>
 
         {step === 'type' && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 tracking-tighter uppercase">Forensic Case Intake</h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-headline font-bold mb-4 md:mb-6 tracking-tighter uppercase">Forensic Case Intake</h2>
+              <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto leading-relaxed px-4">
                 Select the investigative division to initialize the formal intake process. All data is protected under institutional-grade encryption.
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {CASE_TYPES.map((type) => (
                 <Card 
                   key={type.id} 
                   className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 cursor-pointer group active:scale-[0.98]"
                   onClick={() => handleSelectType(type)}
                 >
-                  <CardContent className="p-8">
-                    <div className="w-14 h-14 rounded-full border border-primary/20 flex items-center justify-center mb-8 group-hover:bg-primary/5 transition-colors">
-                      <type.icon className="w-7 h-7 text-primary" />
+                  <CardContent className="p-6 md:p-8">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-primary/20 flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary/5 transition-colors">
+                      <type.icon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
                     </div>
-                    <h3 className="text-xl font-headline font-bold mb-3 uppercase tracking-tight">{type.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-8">{type.description}</p>
-                    <div className="flex items-center text-primary font-black text-[10px] uppercase tracking-widest">
-                      Initialize Case <ArrowRight className="ml-2 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <h3 className="text-lg md:text-xl font-headline font-bold mb-2 md:mb-3 uppercase tracking-tight">{type.title}</h3>
+                    <p className="text-muted-foreground text-[11px] md:text-sm leading-relaxed mb-6 md:mb-8">{type.description}</p>
+                    <div className="flex items-center text-primary font-black text-[9px] md:text-[10px] uppercase tracking-widest">
+                      Initialize Case <ArrowRight className="ml-2 w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
@@ -458,21 +458,21 @@ ${description}
 
         {step === 'details' && selectedType && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto">
-            <Button variant="ghost" className="mb-8 text-[10px] font-black uppercase tracking-widest" onClick={() => setStep('type')}>
+            <Button variant="ghost" className="mb-6 md:mb-8 text-[9px] md:text-[10px] font-black uppercase tracking-widest px-0 md:px-4" onClick={() => setStep('type')}>
               <ArrowLeft className="mr-2 w-3.5 h-3.5" /> Back to Divisions
             </Button>
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
+              <div className="lg:col-span-2 space-y-6 md:space-y-8">
                 <Card className="glass-card border-white/5">
-                  <CardContent className="p-8 space-y-8">
-                    <div className="grid sm:grid-cols-2 gap-6">
+                  <CardContent className="p-6 md:p-8 space-y-6 md:space-y-8">
+                    <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                       {selectedType.fields.map((field) => (
-                        <div key={field.key} className="space-y-3">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{field.label}</Label>
+                        <div key={field.key} className="space-y-2 md:space-y-3">
+                          <Label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-muted-foreground">{field.label}</Label>
                           <Input 
                             type={field.type || 'text'}
                             placeholder={field.placeholder}
-                            className="h-12 bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors"
+                            className="h-10 md:h-12 bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors text-xs md:text-sm"
                             onChange={(e) => handleInputChange(field.key, e.target.value)}
                             onFocus={() => setIsInputFocused(true)}
                             onBlur={() => setIsInputFocused(false)}
@@ -480,32 +480,32 @@ ${description}
                         </div>
                       ))}
                     </div>
-                    <div className="grid sm:grid-cols-2 gap-8 py-4 border-y border-white/5">
+                    <div className="grid sm:grid-cols-2 gap-6 md:gap-8 py-4 border-y border-white/5">
                       <div className="flex items-center justify-between gap-4">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Withdrawals Blocked?</Label>
+                        <Label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-muted-foreground">Withdrawals Blocked?</Label>
                         <Switch checked={isBlocked} onCheckedChange={setIsBlocked} />
                       </div>
                       <div className="flex items-center justify-between gap-4">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Account Access?</Label>
+                        <Label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-muted-foreground">Account Access?</Label>
                         <Switch checked={hasAccess} onCheckedChange={setHasAccess} />
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Narrative</Label>
+                    <div className="space-y-2 md:space-y-3">
+                      <Label className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Narrative</Label>
                       <Textarea 
                         placeholder="Provide specific technical details about the entities, transaction IDs, and communication methods involved."
-                        className="min-h-[160px] bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors"
+                        className="min-h-[120px] md:min-h-[160px] bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors text-xs md:text-sm"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         onFocus={() => setIsInputFocused(true)}
                         onBlur={() => setIsInputFocused(false)}
                       />
                     </div>
-                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-16 text-lg font-black uppercase tracking-[0.2em] bg-primary text-black premium-cta">
+                    <Button onClick={handleAssessment} disabled={loading} className="w-full h-14 md:h-16 text-sm md:text-lg font-black uppercase tracking-[0.2em] bg-primary text-black premium-cta">
                       {loading ? (
                         <div className="flex items-center gap-3">
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          <span>{scanStatus}</span>
+                          <Loader2 className="h-4 h-4 md:h-5 md:w-5 animate-spin" />
+                          <span className="text-xs md:text-base">{scanStatus}</span>
                         </div>
                       ) : 'Generate Intake Summary'}
                     </Button>
@@ -517,7 +517,7 @@ ${description}
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-6 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                   <h4 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-4 h-4" /> Evidence Portal</h4>
-                  <div className="relative border border-dashed border-white/10 rounded-none p-8 text-center bg-white/5 mb-6 group cursor-pointer hover:bg-white/[0.08] transition-colors">
+                  <div className="relative border border-dashed border-white/10 rounded-none p-6 md:p-8 text-center bg-white/5 mb-6 group cursor-pointer hover:bg-white/[0.08] transition-colors">
                     <input 
                       type="file" 
                       className="absolute inset-0 opacity-0 cursor-pointer z-10" 
@@ -525,11 +525,11 @@ ${description}
                       disabled={uploadingEvidence}
                     />
                     {uploadingEvidence ? (
-                      <Loader2 className="w-8 h-8 text-primary mx-auto mb-2 animate-spin" />
+                      <Loader2 className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2 animate-spin" />
                     ) : (
-                      <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
+                      <UploadCloud className="w-6 h-6 md:w-8 md:h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
                     )}
-                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                    <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground">
                       {uploadingEvidence ? 'Encrypting File...' : 'Encrypted Evidence Upload'}
                     </p>
                   </div>
@@ -539,16 +539,16 @@ ${description}
                     <ul className="space-y-2">
                       {evidenceFiles.length === 0 ? (
                         ["Transaction Hashes", "Chat Histories", "Email Logs"].map((item, i) => (
-                          <li key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/30 uppercase tracking-widest">
+                          <li key={i} className="flex items-center gap-2 text-[9px] md:text-[10px] font-bold text-foreground/30 uppercase tracking-widest">
                             <FileText className="w-3 h-3" /> {item}
                           </li>
                         ))
                       ) : (
                         evidenceFiles.map((file, i) => (
-                          <li key={i} className="flex items-center justify-between gap-2 p-2 bg-white/5 border border-white/5">
-                            <div className="flex items-center gap-2 overflow-hidden">
+                          <li key={i} className="flex items-center justify-between gap-2 p-2 bg-white/5 border border-white/5 overflow-hidden">
+                            <div className="flex items-center gap-2 min-w-0">
                               <ShieldCheck className="w-3 h-3 text-primary shrink-0" />
-                              <span className="text-[9px] font-bold text-foreground/80 truncate">{file.name}</span>
+                              <span className="text-[8px] md:text-[9px] font-bold text-foreground/80 truncate">{file.name}</span>
                             </div>
                             <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-destructive" onClick={() => removeEvidence(file.path)}>
                               <Trash2 className="w-3 h-3" />
@@ -565,56 +565,56 @@ ${description}
         )}
 
         {step === 'result' && result && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 active">
-            <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
-              <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
+          <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 active">
+            <div className="flex flex-col lg:flex-row justify-between items-stretch gap-4 md:gap-6">
+              <div className="flex-grow p-6 md:p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
                  <svg className="absolute inset-0 pointer-events-none opacity-20" width="100%" height="100%">
                     <path d="M 0 40 L 40 40 L 40 0" className="forensic-trace" />
                     <circle cx="40" cy="40" r="1.5" className="network-node" />
                  </svg>
                  
-                 <div className="flex items-center gap-6 relative z-10">
-                   <div className="w-16 h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg relative">
-                     <Activity className="w-8 h-8 text-primary" />
+                 <div className="flex items-center gap-4 md:gap-6 relative z-10 w-full md:w-auto">
+                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg relative shrink-0">
+                     <Activity className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                      <div className="absolute inset-0 rounded-full bg-primary/20 animate-breathing -z-10" />
                    </div>
-                   <div>
-                     <h2 className="text-2xl font-headline font-bold mb-1 uppercase tracking-tight">Case Dashboard</h2>
-                     <div className="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                       <span className="flex items-center gap-1.5"><Fingerprint className="w-3.5 h-3.5" /> ID: <span className="text-foreground font-black">{caseId}</span></span>
+                   <div className="min-w-0">
+                     <h2 className="text-xl md:text-2xl font-headline font-bold mb-1 uppercase tracking-tight truncate">Case Dashboard</h2>
+                     <div className="flex flex-wrap gap-x-4 md:gap-x-6 gap-y-2 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                       <span className="flex items-center gap-1.5"><Fingerprint className="w-3 h-3 md:w-3.5 md:h-3.5" /> ID: <span className="text-foreground font-black">{caseId}</span></span>
                        <span className="flex items-center gap-1.5">
-                         <Activity className="w-3.5 h-3.5" /> 
-                         Status: 
+                         <Activity className="w-3 h-3 md:w-3.5 md:h-3.5" /> 
+                         <span className="hidden sm:inline">Status:</span> 
                          <span className="flex items-center gap-1.5 text-primary">
-                           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+                           <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-primary animate-breathing" />
                            Verification Active
                          </span>
                        </span>
                      </div>
                    </div>
                  </div>
-                 <div className="flex items-center gap-3">
-                   <Button variant="outline" className="opacity-50 cursor-not-allowed border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-widest">Download Brief</Button>
+                 <div className="flex items-center gap-3 w-full md:w-auto relative z-10">
+                   <Button variant="outline" className="w-full md:w-auto opacity-50 cursor-not-allowed border-white/10 bg-white/5 text-[8px] md:text-[9px] font-black uppercase tracking-widest h-9">Download Brief</Button>
                  </div>
               </div>
-              <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[320px]">
-                <Avatar className="h-12 w-12 border border-primary/20">
+              <Card className="glass-card border-white/5 p-4 md:p-6 flex items-center gap-4 min-w-0 md:min-w-[320px]">
+                <Avatar className="h-10 w-10 md:h-12 md:w-12 border border-primary/20">
                   <AvatarImage src={`https://picsum.photos/seed/${caseId}/100/100`} />
                   <AvatarFallback className="bg-primary text-black">SA</AvatarFallback>
                 </Avatar>
-                <div>
-                  <p className="font-black text-[10px] uppercase tracking-widest text-white">Senior Recovery Analyst</p>
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest">Forensic Hub Assigned</p>
+                <div className="min-w-0">
+                  <p className="font-black text-[9px] md:text-[10px] uppercase tracking-widest text-white truncate">Senior Recovery Analyst</p>
+                  <p className="text-[8px] md:text-[9px] text-muted-foreground uppercase tracking-widest truncate">Forensic Hub Assigned</p>
                 </div>
               </Card>
             </div>
 
-            <Card className="glass-card border-white/5 p-8">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
+            <Card className="glass-card border-white/5 p-6 md:p-8 overflow-x-auto hide-scrollbar">
+              <div className="flex flex-row md:flex-row justify-between items-center gap-8 md:gap-4 min-w-[700px] md:min-w-0">
                 {TIMELINE_STEPS.map((timelineStep, idx) => (
-                  <div key={timelineStep.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
+                  <div key={timelineStep.id} className="flex flex-col items-center gap-2 flex-1 relative">
                     <div className={cn(
-                      "w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all relative", 
+                      "w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center z-10 transition-all relative", 
                       timelineStep.status === 'completed' ? "bg-primary text-black" : 
                       timelineStep.status === 'current' ? "border border-primary text-primary" : 
                       "bg-muted text-muted-foreground border border-white/5"
@@ -622,11 +622,11 @@ ${description}
                       {timelineStep.status === 'current' && (
                         <div className="absolute inset-0 rounded-full border border-primary animate-breathing" />
                       )}
-                      <timelineStep.icon className="w-4 h-4" />
+                      <timelineStep.icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
                     </div>
-                    <div className="text-left md:text-center">
+                    <div className="text-center">
                       <p className={cn(
-                        "text-[8px] font-black uppercase tracking-[0.25em]",
+                        "text-[7px] md:text-[8px] font-black uppercase tracking-[0.25em]",
                         timelineStep.status === 'current' ? "text-primary opacity-100" : "opacity-50"
                       )}>
                         {timelineStep.label}
@@ -637,35 +637,35 @@ ${description}
               </div>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Complexity</span>
-                <div className={cn("text-3xl font-headline font-bold uppercase tracking-tighter", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-primary/70' : 'text-primary')}>{riskLevel}</div>
-                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Based on technical loss parameters.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              <Card className="glass-card border-white/5 p-6 md:p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-3 md:mb-4 block">Case Complexity</span>
+                <div className={cn("text-2xl md:text-3xl font-headline font-bold uppercase tracking-tighter", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-primary/70' : 'text-primary')}>{riskLevel}</div>
+                <p className="text-[9px] md:text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Based on technical loss parameters.</p>
               </Card>
-              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Integrity</span>
-                <div className="text-3xl font-headline font-bold uppercase tracking-tighter">{evidenceMetrics.status}</div>
+              <Card className="glass-card border-white/5 p-6 md:p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-3 md:mb-4 block">Evidence Integrity</span>
+                <div className="text-2xl md:text-3xl font-headline font-bold uppercase tracking-tighter">{evidenceMetrics.status}</div>
                 <Progress value={evidenceMetrics.total} className="h-1 mt-2 bg-white/5" />
               </Card>
-              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">System Status</span>
-                <div className="text-3xl font-headline font-bold text-primary uppercase tracking-tighter flex items-center gap-3">
-                   <span className="w-2.5 h-2.5 rounded-full bg-primary animate-breathing" />
+              <Card className="glass-card border-white/5 p-6 md:p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 sm:col-span-2 lg:col-span-1">
+                <span className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-3 md:mb-4 block">System Status</span>
+                <div className="text-2xl md:text-3xl font-headline font-bold text-primary uppercase tracking-tighter flex items-center gap-3">
+                   <span className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-primary animate-breathing" />
                    Qualified
                 </div>
-                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting verification phase completion.</p>
+                <p className="text-[9px] md:text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting verification phase completion.</p>
               </Card>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              <Card className="glass-card border-white/5 p-8 relative overflow-hidden">
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+              <Card className="glass-card border-white/5 p-6 md:p-8 relative overflow-hidden">
                 <svg className="absolute inset-0 pointer-events-none opacity-10" width="100%" height="100%">
                   <path d="M 0 100 L 100 100 L 100 0" className="forensic-trace" />
                 </svg>
                 
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary relative z-10"><Search className="w-4 h-4" /> Forensic Intake Findings</h3>
-                <div className="grid grid-cols-2 gap-4 relative z-10">
+                <h3 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-6 md:mb-8 text-primary relative z-10"><Search className="w-3.5 h-3.5 md:w-4 md:h-4" /> Forensic Intake Findings</h3>
+                <div className="grid grid-cols-2 gap-3 md:gap-4 relative z-10">
                   {[
                     { label: "Asset Type", value: result.preliminaryCaseFindings.scamType },
                     { label: "Estimated Value", value: result.preliminaryCaseFindings.estimatedLoss },
@@ -674,24 +674,24 @@ ${description}
                     { label: "Status", value: result.preliminaryCaseFindings.investigationReadiness },
                     { label: "Action", value: result.preliminaryCaseFindings.reviewRecommendation }
                   ].map((finding, idx) => (
-                    <div key={idx} className="p-4 bg-white/5 border border-white/5">
-                      <p className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">{finding.label}</p>
-                      <p className="text-[10px] font-bold text-white uppercase tracking-wider">{finding.value}</p>
+                    <div key={idx} className="p-3 md:p-4 bg-white/5 border border-white/5">
+                      <p className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">{finding.label}</p>
+                      <p className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-wider">{finding.value}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 p-6 bg-primary/[0.03] border border-primary/10 italic text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary relative z-10">
+                <div className="mt-6 md:mt-8 p-4 md:p-6 bg-primary/[0.03] border border-primary/10 italic text-[10px] md:text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary relative z-10">
                   "{result.recoveryScenarioSummary}"
                 </div>
               </Card>
 
-              <div className="space-y-6">
-                <Card className="glass-card border-white/5 p-8 hover:border-primary/50 transition-all duration-300">
-                  <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Network className="w-4 h-4" /> Evidence Lifecycle Status</h3>
-                  <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
+                <Card className="glass-card border-white/5 p-6 md:p-8 hover:border-primary/50 transition-all duration-300">
+                  <h3 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-6 md:mb-8 text-primary"><Network className="w-3.5 h-3.5 md:w-4 md:h-4" /> Evidence Lifecycle Status</h3>
+                  <div className="space-y-4 md:space-y-6">
                     {evidenceMetrics.items.map((tracker, idx) => (
                       <div key={idx} className="space-y-2">
-                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                        <div className="flex justify-between text-[9px] md:text-[10px] font-black uppercase tracking-widest">
                           <span className="text-foreground/70">{tracker.label}</span>
                           <span className={cn(tracker.score > 70 ? 'text-primary' : tracker.score > 40 ? 'text-primary/70' : 'text-muted-foreground')}>
                             {tracker.score > 70 ? 'Verified' : tracker.score > 40 ? 'Sufficient' : 'Pending'}
@@ -705,18 +705,18 @@ ${description}
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Target className="w-4 h-4" /> Investigation Roadmap</h3>
-                <Accordion type="single" collapsible className="space-y-4">
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+              <Card className="glass-card border-white/5 p-6 md:p-8">
+                <h3 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-6 md:mb-8 text-primary"><Target className="w-3.5 h-3.5 md:w-4 md:h-4" /> Investigation Roadmap</h3>
+                <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
                   {result.investigativeFocusAreas.map((cat, idx) => (
-                    <AccordionItem key={idx} value={`item-${idx}`} className="border border-white/5 px-5 bg-white/5">
-                      <AccordionTrigger className="hover:no-underline font-bold text-[11px] tracking-[0.1em] uppercase">{cat.categoryName}</AccordionTrigger>
-                      <AccordionContent className="text-[10px] space-y-4 text-muted-foreground leading-relaxed uppercase tracking-widest">
+                    <AccordionItem key={idx} value={`item-${idx}`} className="border border-white/5 px-4 md:px-5 bg-white/5">
+                      <AccordionTrigger className="hover:no-underline font-bold text-[10px] md:text-[11px] tracking-[0.1em] uppercase py-3 md:py-4">{cat.categoryName}</AccordionTrigger>
+                      <AccordionContent className="text-[9px] md:text-[10px] space-y-3 md:space-y-4 text-muted-foreground leading-relaxed uppercase tracking-widest pb-4">
                         <p>{cat.description}</p>
                         <ul className="space-y-2">
                           {cat.specificItems.map((item, i) => (
-                            <li key={i} className="flex items-center gap-2 text-foreground/80"><ChevronRight className="w-3 h-3 text-primary" /> {item}</li>
+                            <li key={i} className="flex items-center gap-2 text-foreground/80"><ChevronRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary" /> {item}</li>
                           ))}
                         </ul>
                       </AccordionContent>
@@ -725,17 +725,17 @@ ${description}
                 </Accordion>
               </Card>
 
-              <div className="space-y-8">
-                <Card className="border-primary/40 bg-primary/[0.03] p-8 shadow-2xl border-2 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -mr-16 -mt-16" />
-                  <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter uppercase">Specialist Briefing Required</h4>
-                  <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">
+              <div className="space-y-6 md:space-y-8">
+                <Card className="border-primary/40 bg-primary/[0.03] p-6 md:p-8 shadow-2xl border-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-primary/5 blur-3xl -mr-12 md:-mr-16 -mt-12 md:-mt-16" />
+                  <h4 className="text-2xl md:text-3xl font-headline font-bold text-primary mb-3 md:mb-4 tracking-tighter uppercase">Specialist Briefing Required</h4>
+                  <p className="text-base md:text-lg text-foreground/90 mb-6 md:mb-8 leading-relaxed font-medium">
                     Intake parameters indicate a viable investigation lifecycle.
                   </p>
                   
-                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta rounded-none">
+                  <Button onClick={() => setStep('booking')} className="w-full h-16 md:h-20 text-base md:text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta rounded-none">
                     Confirm Consultation 
-                    <ArrowRight className="ml-2 w-6 h-6" />
+                    <ArrowRight className="ml-2 w-5 h-5 md:w-6 md:h-6" />
                   </Button>
                 </Card>
               </div>
@@ -744,21 +744,21 @@ ${description}
         )}
 
         {step === 'booking' && (
-          <div className="animate-in fade-in zoom-in-95 duration-500 max-w-2xl mx-auto">
+          <div className="animate-in fade-in zoom-in-95 duration-500 max-w-2xl mx-auto px-4 md:px-0">
             <Card className="glass-card border-primary/20 shadow-2xl overflow-hidden">
-              <div className="bg-primary p-10 text-black text-center">
-                <Calendar className="w-12 h-12 mx-auto mb-4 opacity-70" />
-                <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Register Case Lifecycle</h2>
+              <div className="bg-primary p-6 md:p-10 text-black text-center">
+                <Calendar className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 md:mb-4 opacity-70" />
+                <h2 className="text-2xl md:text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Register Case Lifecycle</h2>
               </div>
-              <CardContent className="p-10 space-y-6">
-                <div className="grid sm:grid-cols-2 gap-6">
+              <CardContent className="p-6 md:p-10 space-y-4 md:space-y-6">
+                <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <User className="w-3 h-3" /> Full Name
                     </Label>
                     <Input 
                       placeholder="e.g. John Doe" 
-                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm" 
                       value={bookingValues.name}
                       onChange={(e) => setBookingValues({...bookingValues, name: e.target.value})}
                       onFocus={() => setIsInputFocused(true)}
@@ -766,13 +766,13 @@ ${description}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Mail className="w-3 h-3" /> Email Address
                     </Label>
                     <Input 
                       type="email" 
                       placeholder="e.g. john@example.com" 
-                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm" 
                       value={bookingValues.email}
                       onChange={(e) => setBookingValues({...bookingValues, email: e.target.value})}
                       onFocus={() => setIsInputFocused(true)}
@@ -780,14 +780,14 @@ ${description}
                     />
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-6">
+                <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Phone className="w-3 h-3" /> Phone Number
                     </Label>
                     <Input 
                       placeholder="+1 (555) 000-0000" 
-                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm" 
                       value={bookingValues.phone}
                       onChange={(e) => setBookingValues({...bookingValues, phone: e.target.value})}
                       onFocus={() => setIsInputFocused(true)}
@@ -795,12 +795,12 @@ ${description}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Globe className="w-3 h-3" /> Country
                     </Label>
                     <Input 
                       placeholder="e.g. United States" 
-                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors" 
+                      className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm" 
                       value={bookingValues.country}
                       onChange={(e) => setBookingValues({...bookingValues, country: e.target.value})}
                       onFocus={() => setIsInputFocused(true)}
@@ -808,13 +808,13 @@ ${description}
                     />
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-6">
+                <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <Clock className="w-3 h-3" /> Best Contact Time
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, bestTime: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm">
                         <SelectValue placeholder="Select timeframe" />
                       </SelectTrigger>
                       <SelectContent>
@@ -825,11 +825,11 @@ ${description}
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                       <MessageSquare className="w-3 h-3" /> Preferred Method
                     </Label>
                     <Select onValueChange={(val) => setBookingValues({...bookingValues, method: val})}>
-                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors">
+                      <SelectTrigger className="bg-background/50 border-white/10 rounded-none focus:border-primary/50 focus:ring-0 transition-colors h-10 md:h-12 text-xs md:text-sm">
                         <SelectValue placeholder="Select method" />
                       </SelectTrigger>
                       <SelectContent>
@@ -845,17 +845,17 @@ ${description}
                 <Button 
                   onClick={handleBooking} 
                   disabled={bookingLoading || !bookingValues.email || !bookingValues.name} 
-                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90 premium-cta rounded-none"
+                  className="w-full h-16 md:h-20 text-sm md:text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90 premium-cta rounded-none"
                 >
                   {bookingLoading ? (
                     <div className="flex items-center gap-3">
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      <span>Transmitting Technical Data...</span>
+                      <Loader2 className="h-4 h-4 md:h-5 md:w-5 animate-spin" />
+                      <span className="text-xs md:text-base">Transmitting Technical Data...</span>
                     </div>
                   ) : (
                     <>
                       Verify Case Registration
-                      <ArrowRight className="ml-2 w-5 h-5" />
+                      <ArrowRight className="ml-2 w-4 md:w-5 h-4 md:w-5" />
                     </>
                   )}
                 </Button>
@@ -867,17 +867,17 @@ ${description}
         )}
 
         {step === 'success' && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-xl mx-auto text-center">
-            <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mx-auto mb-8 relative">
-              <CheckCircle2 className="w-12 h-12 text-primary" />
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-xl mx-auto text-center px-4">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mx-auto mb-6 md:mb-8 relative">
+              <CheckCircle2 className="w-10 h-10 md:w-12 md:h-12 text-primary" />
               <div className="absolute inset-0 rounded-full bg-primary/10 animate-breathing" />
             </div>
-            <h2 className="text-4xl font-headline font-bold mb-4 tracking-tighter uppercase">Intake Registered</h2>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4 tracking-tighter uppercase">Intake Registered</h2>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
               Your forensic lifecycle has been initialized. <br/>
               Reference ID: <span className="text-primary font-black">{caseId}</span>. <br/>
             </p>
-            <Button size="lg" variant="outline" className="border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12 rounded-none" onClick={() => window.location.reload()}>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12 rounded-none" onClick={() => window.location.reload()}>
               Return
             </Button>
           </div>

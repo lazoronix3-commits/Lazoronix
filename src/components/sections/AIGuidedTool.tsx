@@ -475,10 +475,16 @@ ${description}
         )}
 
         {step === 'result' && result && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 active">
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
-              <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6">
-                 <div className="flex items-center gap-6">
+              <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                 {/* Gold Trace Accents */}
+                 <svg className="absolute inset-0 pointer-events-none opacity-20" width="100%" height="100%">
+                    <path d="M 0 40 L 40 40 L 40 0" className="forensic-trace" />
+                    <circle cx="40" cy="40" r="1.5" className="network-node" />
+                 </svg>
+                 
+                 <div className="flex items-center gap-6 relative z-10">
                    <div className="w-16 h-16 rounded-full border border-primary/40 flex items-center justify-center shadow-lg relative">
                      <Activity className="w-8 h-8 text-primary" />
                      <div className="absolute inset-0 rounded-full bg-primary/20 animate-breathing -z-10" />
@@ -564,9 +570,14 @@ ${description}
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
-              <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Search className="w-4 h-4" /> Forensic Intake Findings</h3>
-                <div className="grid grid-cols-2 gap-4">
+              <Card className="glass-card border-white/5 p-8 relative overflow-hidden">
+                {/* Background Trace Accents */}
+                <svg className="absolute inset-0 pointer-events-none opacity-10" width="100%" height="100%">
+                  <path d="M 0 100 L 100 100 L 100 0" className="forensic-trace" />
+                </svg>
+                
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary relative z-10"><Search className="w-4 h-4" /> Forensic Intake Findings</h3>
+                <div className="grid grid-cols-2 gap-4 relative z-10">
                   {[
                     { label: "Asset Type", value: result.preliminaryCaseFindings.scamType },
                     { label: "Estimated Value", value: result.preliminaryCaseFindings.estimatedLoss },
@@ -581,10 +592,10 @@ ${description}
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 p-6 bg-primary/[0.03] border border-primary/10 italic text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary">
+                <div className="mt-8 p-6 bg-primary/[0.03] border border-primary/10 italic text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary relative z-10">
                   "{result.recoveryScenarioSummary}"
                 </div>
-                <div className="mt-6 flex gap-2 p-3 bg-secondary/5 border border-secondary/20 text-[9px] text-secondary/80 uppercase tracking-widest">
+                <div className="mt-6 flex gap-2 p-3 bg-secondary/5 border border-secondary/20 text-[9px] text-secondary/80 uppercase tracking-widest relative z-10">
                   <Info className="w-3.5 h-3.5 shrink-0" />
                   <p>System Assessment Complete. Final qualification requires specialist manual audit.</p>
                 </div>

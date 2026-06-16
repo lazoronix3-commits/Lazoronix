@@ -1,5 +1,6 @@
 import { Database, TrendingUp, Lock, Search, ShieldCheck, UserCheck, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { SectionReveal } from '@/components/ui/section-reveal';
 
 const features = [
   {
@@ -42,26 +43,36 @@ export function WhyChooseUs() {
       
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="max-w-4xl mx-auto mb-24">
-          <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-4">Institutional Credibility</h2>
-          <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8 text-white uppercase tracking-tighter">Why Clients Choose Lazoronix</h3>
-          <p className="text-muted-foreground text-xl max-w-2xl mx-auto leading-relaxed font-medium">
-            Our firm bridges the gap between digital asset complexity and professional investigative rigor, providing structured pathways to case resolution.
-          </p>
+          <SectionReveal>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-4">Institutional Credibility</h2>
+            <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8 text-white uppercase tracking-tighter">Why Clients Choose Lazoronix</h3>
+            <p className="text-muted-foreground text-xl max-w-2xl mx-auto leading-relaxed font-medium">
+              Our firm bridges the gap between digital asset complexity and professional investigative rigor, providing structured pathways to case resolution.
+            </p>
+          </SectionReveal>
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {features.map((feature, idx) => (
-            <Card key={idx} className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group bg-card/40 border-white/5">
-              <CardContent className="p-12 text-left">
-                <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center mb-10 group-hover:bg-primary/5 transition-all duration-500">
-                  <feature.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h4 className="text-xl font-headline font-bold mb-4 tracking-tight uppercase text-white">{feature.title}</h4>
-                <p className="text-muted-foreground text-base leading-relaxed">
-                  {feature.description}
-                </p>
-              </CardContent>
-            </Card>
+            <SectionReveal key={idx} delay={idx * 100} className="active">
+              <Card className="glass-card h-full hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group bg-card/40 border-white/5 relative overflow-hidden">
+                {/* Gold Trace Accent on Card */}
+                <svg className="absolute bottom-0 right-0 opacity-10 pointer-events-none" width="80" height="80">
+                  <path d="M 0 80 L 80 80 L 80 0" className="forensic-trace" />
+                  <circle cx="80" cy="80" r="1.5" className="network-node" />
+                </svg>
+                
+                <CardContent className="p-12 text-left h-full">
+                  <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center mb-10 group-hover:bg-primary/5 transition-all duration-500">
+                    <feature.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h4 className="text-xl font-headline font-bold mb-4 tracking-tight uppercase text-white">{feature.title}</h4>
+                  <p className="text-muted-foreground text-base leading-relaxed">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </SectionReveal>
           ))}
         </div>
 

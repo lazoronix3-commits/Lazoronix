@@ -23,6 +23,17 @@ export function Hero() {
           <path d="M 400 0 Q 600 300 400 800" className="network-line" style={{ animationDuration: '100s' }} />
           <path d="M 800 0 Q 600 500 800 800" className="network-line" style={{ animationDuration: '120s' }} />
           
+          {/* Forensic Trace Signature Lines */}
+          <g className="active">
+            <path d="M 100 100 L 150 100 L 150 200" className="forensic-trace" style={{ animationDelay: '0.5s' }} />
+            <circle cx="100" cy="100" r="1.5" className="network-node" />
+            <circle cx="150" cy="200" r="1.5" className="network-node" />
+            
+            <path d="M 1000 600 L 1050 600 L 1050 500 L 1150 500" className="forensic-trace" style={{ animationDelay: '1.2s' }} />
+            <circle cx="1000" cy="600" r="1.5" className="network-node" />
+            <circle cx="1150" cy="500" r="1.5" className="network-node" />
+          </g>
+          
           {/* Traveling Pulses - High Precision */}
           <path d="M 0 150 Q 300 100 600 400 T 1200 650" className="pulse-line" />
           <path d="M 1200 200 Q 900 350 600 400 T 0 600" className="pulse-line" style={{ animationDelay: '-25s' }} />

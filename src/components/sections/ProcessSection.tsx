@@ -54,13 +54,25 @@ export function ProcessSection() {
           </SectionReveal>
         </div>
         
-        <div className="max-w-5xl mx-auto space-y-0">
+        <div className="max-w-5xl mx-auto space-y-0 relative">
+          {/* Main Gold Connection Path - Progressing through all nodes */}
+          <svg className="absolute left-8 top-10 h-full w-full pointer-events-none hidden md:block" style={{ width: 'calc(100% - 2rem)' }}>
+            {steps.map((_, idx) => idx < steps.length - 1 && (
+              <path 
+                key={idx}
+                d={`M 0 ${idx * 160 + 10} L 0 ${(idx + 1) * 160 + 10}`} 
+                className="forensic-trace" 
+                style={{ animationDelay: `${idx * 0.4}s`, opacity: 0.3 }}
+              />
+            ))}
+          </svg>
+
           {steps.map((step, idx) => (
             <SectionReveal 
               key={idx} 
               delay={idx * 150} 
               threshold={0.3}
-              className="group relative pb-16 last:pb-0"
+              className="group relative pb-16 last:pb-0 active"
             >
               {/* Vertical Connector Line */}
               {idx !== steps.length - 1 && (
@@ -85,7 +97,12 @@ export function ProcessSection() {
                 </div>
 
                 <div className="md:col-span-3">
-                  <div className="p-6 bg-white/[0.03] border border-white/5 space-y-3 hover:border-primary/20 transition-colors">
+                  <div className="p-6 bg-white/[0.03] border border-white/5 space-y-3 hover:border-primary/20 transition-colors relative">
+                    {/* Subtle Trace Accent on detail card */}
+                    <svg className="absolute top-0 right-0 opacity-10" width="40" height="40">
+                      <path d="M 40 10 L 10 10 L 10 40" className="forensic-trace" />
+                    </svg>
+                    
                     {step.details.map((detail, dIdx) => (
                       <div key={dIdx} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/50">
                         <CheckCircle2 className="w-3.5 h-3.5 text-primary" />

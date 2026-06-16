@@ -383,7 +383,7 @@ ${description}
               {CASE_TYPES.map((type) => (
                 <Card 
                   key={type.id} 
-                  className="glass-card hover:border-primary/50 transition-all cursor-pointer group active:scale-[0.98]"
+                  className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 cursor-pointer group active:scale-[0.98]"
                   onClick={() => handleSelectType(type)}
                 >
                   <CardContent className="p-8">
@@ -457,7 +457,7 @@ ${description}
                 </Card>
               </div>
               <div className="space-y-6">
-                <Card className="glass-card border-white/5 p-6">
+                <Card className="glass-card border-white/5 p-6 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                   <h4 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-4 h-4" /> Evidence Portal</h4>
                   <div className="border border-dashed border-white/10 rounded-none p-8 text-center bg-white/5 mb-6">
                     <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
@@ -543,17 +543,17 @@ ${description}
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="glass-card border-white/5 p-8">
+              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                 <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Complexity</span>
                 <div className={cn("text-3xl font-headline font-bold uppercase tracking-tighter", riskLevel === 'Critical' ? 'text-destructive' : riskLevel === 'High' ? 'text-primary/70' : 'text-primary')}>{riskLevel}</div>
                 <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Based on technical loss parameters.</p>
               </Card>
-              <Card className="glass-card border-white/5 p-8">
+              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                 <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Evidence Integrity</span>
                 <div className="text-3xl font-headline font-bold uppercase tracking-tighter">{evidenceMetrics.status}</div>
                 <Progress value={evidenceMetrics.total} className="h-1 mt-2 bg-white/5" />
               </Card>
-              <Card className="glass-card border-white/5 p-8">
+              <Card className="glass-card border-white/5 p-8 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                 <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">System Status</span>
                 <div className="text-3xl font-headline font-bold text-primary uppercase tracking-tighter flex items-center gap-3">
                    <span className="w-2.5 h-2.5 rounded-full bg-primary animate-breathing" />
@@ -591,7 +591,7 @@ ${description}
               </Card>
 
               <div className="space-y-6">
-                <Card className="glass-card border-white/5 p-8">
+                <Card className="glass-card border-white/5 p-8 hover:border-primary/50 transition-all duration-300">
                   <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Network className="w-4 h-4" /> Evidence Tracker</h3>
                   <div className="space-y-6">
                     {evidenceMetrics.items.map((tracker, idx) => (

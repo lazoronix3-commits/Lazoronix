@@ -101,7 +101,7 @@ export function ProcessSection() {
 
         <div className="mt-24 text-center">
           <SectionReveal>
-            <div className="inline-block p-12 glass-card border-white/5 shadow-2xl relative overflow-hidden group">
+            <div className="inline-block p-12 glass-card border-white/5 shadow-2xl relative overflow-hidden group hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
               <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <div className="relative z-10">
                 <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Initialize Case Review</h4>

@@ -174,7 +174,7 @@ export default function Home() {
               },
             ].map((service, idx) => (
               <SectionReveal key={idx} delay={idx * 100} duration={500} className="h-full">
-                <div className="p-10 md:p-12 rounded-[2.5rem] bg-card border border-white/5 hover:border-primary/40 transition-all flex flex-col h-full group relative overflow-hidden shadow-2xl shadow-black/20">
+                <div className="p-10 md:p-12 rounded-[2.5rem] bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full group relative overflow-hidden shadow-2xl shadow-black/20">
                   <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
                     <service.icon className="w-40 h-40" />
                   </div>
@@ -329,7 +329,7 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
-          <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-[3rem]">
+          <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-[3rem] hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
             <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight">Start Your Recovery Journey Today</h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
               Whether you've been affected by a forex scam, investment fraud, romance scam, fake job offer, loan scam, wallet access issue, or another asset recovery challenge, our specialists are ready to review your case.

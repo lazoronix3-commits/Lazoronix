@@ -57,7 +57,7 @@ export function SuccessStories() {
           <div className="flex-grow">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {expertise.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-4 p-6 bg-card border border-white/5 hover:border-primary/30 transition-colors">
+                <div key={idx} className="flex items-center gap-4 p-6 bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
                   <div className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center">
                     <item.icon className="w-5 h-5 text-primary" />
                   </div>
@@ -72,7 +72,7 @@ export function SuccessStories() {
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-8 text-center lg:text-left">Example Case Resolutions</h4>
           <div className="grid md:grid-cols-3 gap-8">
             {stories.map((story, idx) => (
-              <Card key={idx} className="glass-card hover:border-primary/40 transition-all group relative overflow-hidden">
+              <Card key={idx} className="glass-card hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-3xl -mr-16 -mt-16" />
                 <CardContent className="p-10">
                   <div className="flex justify-between items-start mb-8">

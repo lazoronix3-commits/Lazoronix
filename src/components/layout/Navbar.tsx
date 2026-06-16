@@ -33,14 +33,19 @@ export function Navbar() {
   }, []);
 
   const fetchLogo = async () => {
-    // Note: Assumes an 'assets' bucket exists and is public
-    const { data } = supabase.storage
-      .from('assets')
-      .getPublicUrl('logo.png');
-    
-    if (data?.publicUrl) {
-      // Small check to see if file exists (optional, otherwise handles 404 internally)
-      setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+    try {
+      // Small check to see if the custom logo exists in the assets bucket
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('logo.png');
+      
+      if (data?.publicUrl) {
+        // We use cache busting to ensure the latest logo is always loaded
+        setLogoUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      console.warn('Custom logo not found, falling back to default icon.');
+      setLogoUrl(null);
     }
   };
 
@@ -54,7 +59,10 @@ export function Navbar() {
                 src={logoUrl} 
                 alt="Lazoronix Logo" 
                 className="w-full h-full object-contain"
-                onError={() => setLogoUrl(null)}
+                onError={(e) => {
+                  // If the image fails to load (e.g. 404 or 400), reset to default
+                  setLogoUrl(null);
+                }}
               />
             ) : (
               <Shield className="text-white w-6 h-6" />
@@ -94,8 +102,10 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button className="bg-primary hover:bg-primary/90">
-            Get Free Assessment
+          <Button asChild className="bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest h-11 px-6">
+            <Link href="#forensic-intake">
+              Get Free Assessment
+            </Link>
           </Button>
         </div>
       </div>

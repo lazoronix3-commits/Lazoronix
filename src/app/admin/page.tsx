@@ -26,7 +26,8 @@ import {
   Network,
   Upload,
   Image as ImageIcon,
-  Settings
+  Settings,
+  Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -56,6 +57,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type CaseRecord = {
   id: string;
@@ -139,26 +141,33 @@ export default function AdminDashboard() {
     setUploadingLogo(true);
 
     try {
-      // Note: Assumes a bucket named 'assets' exists and is public
-      const { error } = await supabase.storage
+      // Diagnostic check: Ensure bucket 'assets' exists before uploading
+      // Note: upload will return a 400 if bucket is missing or RLS fails
+      const { data, error } = await supabase.storage
         .from('assets')
         .upload('logo.png', logoFile, {
           upsert: true,
           contentType: logoFile.type
         });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('not found')) {
+          throw new Error("Storage bucket 'assets' not found. Please create a public bucket named 'assets' in your Supabase project.");
+        }
+        throw error;
+      }
 
       toast({
-        title: "Logo Updated",
-        description: "The website branding has been successfully updated.",
+        title: "Branding Updated",
+        description: "The website logo has been successfully synchronized.",
       });
       setLogoFile(null);
+      setLogoPreview(null);
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Upload Failed",
-        description: error.message || "Ensure an 'assets' bucket exists in Supabase Storage.",
+        title: "Deployment Error (400)",
+        description: error.message || "Failed to upload logo. Ensure the 'assets' bucket exists and is set to Public.",
       });
     } finally {
       setUploadingLogo(false);
@@ -191,11 +200,11 @@ export default function AdminDashboard() {
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Update website logo icon</p>
               </DialogHeader>
               <div className="py-6 space-y-6">
-                <div className="flex flex-col items-center justify-center p-8 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer">
+                <div className="flex flex-col items-center justify-center p-8 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer overflow-hidden">
                   <input 
                     type="file" 
                     accept="image/*" 
-                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    className="absolute inset-0 opacity-0 cursor-pointer z-20"
                     onChange={handleLogoChange}
                   />
                   {logoPreview ? (
@@ -204,24 +213,28 @@ export default function AdminDashboard() {
                     <ImageIcon className="w-12 h-12 text-muted-foreground opacity-30 mb-4" />
                   )}
                   <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
-                    {logoFile ? logoFile.name : 'Select Logo Image'}
+                    {logoFile ? logoFile.name : 'Select Logo (PNG/SVG Preferred)'}
                   </p>
                 </div>
-                <div className="p-4 bg-primary/5 border border-primary/10">
+                
+                <div className="p-4 bg-primary/5 border border-primary/20 space-y-3">
                   <p className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-2">
-                    <AlertCircle className="w-3 h-3" /> Storage Note
+                    <Info className="w-3.5 h-3.5" /> Project Configuration Required
                   </p>
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest mt-1">
-                    Uploads to 'assets/logo.png' in Supabase Storage. Ensure the bucket is public.
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest leading-relaxed">
+                    1. Go to Supabase > Storage<br />
+                    2. Create a bucket named <span className="text-primary font-bold">assets</span><br />
+                    3. Set the bucket to <span className="text-primary font-bold">Public</span>
                   </p>
                 </div>
+
                 <Button 
                   onClick={uploadLogo} 
                   disabled={!logoFile || uploadingLogo}
-                  className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest"
+                  className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest premium-cta"
                 >
                   {uploadingLogo ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
-                  Save Changes
+                  Deploy Branding
                 </Button>
               </div>
             </DialogContent>

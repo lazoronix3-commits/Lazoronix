@@ -34,7 +34,8 @@ import {
   TrendingUp,
   Landmark,
   Wallet,
-  Briefcase
+  Briefcase,
+  Download
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -84,6 +85,7 @@ type CaseRecord = {
   description: string;
   result_data: any;
   form_values: any;
+  evidence_files: {name: string, path: string, url: string}[];
   best_contact_time?: string;
   preferred_method?: string;
 };
@@ -711,16 +713,39 @@ export default function AdminDashboard() {
                                 </div>
                               </div>
 
-                              <div className="space-y-6">
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Technical Narrative</h4>
-                                <div className="p-8 bg-card border border-white/10 italic text-sm text-foreground/80 leading-relaxed border-l-2 border-l-primary">
-                                  "{c.description}"
-                                </div>
-                                {c.result_data?.recoveryScenarioSummary && (
-                                  <div className="p-8 bg-primary/5 border border-primary/20 text-xs font-bold uppercase tracking-widest text-primary leading-relaxed">
-                                    AI Summary: {c.result_data.recoveryScenarioSummary}
+                              <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                  <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Technical Narrative</h4>
+                                  <div className="p-6 bg-card border border-white/10 italic text-sm text-foreground/80 leading-relaxed border-l-2 border-l-primary">
+                                    "{c.description}"
                                   </div>
-                                )}
+                                </div>
+                                <div className="space-y-4">
+                                  <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> Encrypted Evidence</h4>
+                                  <div className="grid gap-2">
+                                    {c.evidence_files && c.evidence_files.length > 0 ? (
+                                      c.evidence_files.map((file, i) => (
+                                        <a 
+                                          key={i} 
+                                          href={file.url} 
+                                          target="_blank" 
+                                          rel="noopener noreferrer"
+                                          className="flex items-center justify-between p-3 bg-white/5 border border-white/5 hover:border-primary/50 transition-colors group"
+                                        >
+                                          <div className="flex items-center gap-3">
+                                            <FileText className="w-4 h-4 text-primary" />
+                                            <span className="text-[11px] font-bold uppercase tracking-tight">{file.name}</span>
+                                          </div>
+                                          <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary" />
+                                        </a>
+                                      ))
+                                    ) : (
+                                      <div className="p-4 border border-dashed border-white/5 text-center">
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-50">No Evidence Files Uploaded</p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
 
                               {c.result_data?.preliminaryCaseFindings && (

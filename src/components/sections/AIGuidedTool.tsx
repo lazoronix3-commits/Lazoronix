@@ -43,7 +43,8 @@ import {
   User,
   MessageSquare,
   Lock,
-  Shield
+  Shield,
+  Trash2
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
@@ -242,6 +243,11 @@ export function AIGuidedTool() {
   const [scanStatus, setScanStatus] = useState('Initializing...')
   const [isInputFocused, setIsInputFocused] = useState(false)
   
+  // Evidence Upload State
+  const [evidenceFiles, setEvidenceFiles] = useState<{name: string, path: string, url: string}[]>([])
+  const [uploadingEvidence, setUploadingEvidence] = useState(false)
+  const [sessionId] = useState(() => `sess_${Math.random().toString(36).substr(2, 9)}`)
+
   const [bookingValues, setBookingValues] = useState({
     name: '',
     email: '',
@@ -264,6 +270,44 @@ export function AIGuidedTool() {
     setFormValues(prev => ({ ...prev, [key]: value }))
   }
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return
+    setUploadingEvidence(true)
+
+    const file = e.target.files[0]
+    const filePath = `${sessionId}/${Date.now()}_${file.name}`
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from('evidence')
+        .upload(filePath, file)
+
+      if (uploadError) throw uploadError
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('evidence')
+        .getPublicUrl(filePath)
+
+      setEvidenceFiles(prev => [...prev, { name: file.name, path: filePath, url: publicUrl }])
+      toast({ title: "Evidence Ingested", description: `${file.name} is now encrypted in the vault.` })
+    } catch (error: any) {
+      toast({ 
+        variant: "destructive", 
+        title: "Upload Failed", 
+        description: error.message || "Ensure 'evidence' bucket exists in Supabase." 
+      })
+    } finally {
+      setUploadingEvidence(false)
+    }
+  }
+
+  const removeEvidence = async (path: string) => {
+    const { error } = await supabase.storage.from('evidence').remove([path])
+    if (!error) {
+      setEvidenceFiles(prev => prev.filter(f => f.path !== path))
+    }
+  }
+
   const evidenceMetrics = useMemo(() => {
     if (!selectedType) return { total: 0, items: [], status: 'Incomplete' };
     
@@ -272,14 +316,14 @@ export function AIGuidedTool() {
       { label: "Communication Logs", score: description.length > 50 ? 90 : 30 },
       { label: "Platform Evidence", score: hasAccess ? 70 : 40 },
       { label: "Identity Verification", score: formValues.brokerName || formValues.platformName ? 60 : 20 },
-      { label: "Asset Path History", score: formValues.walletAddress || formValues.cryptoWallet ? 85 : 15 }
+      { label: "Asset Path History", score: (formValues.walletAddress || formValues.cryptoWallet || evidenceFiles.length > 0) ? 85 : 15 }
     ];
     
     const total = Math.round(items.reduce((acc, curr) => acc + curr.score, 0) / items.length);
     const status = total > 70 ? 'Substantial' : total > 40 ? 'Partial' : 'Incomplete';
     
     return { total, items, status };
-  }, [formValues, description, hasAccess, selectedType]);
+  }, [formValues, description, hasAccess, selectedType, evidenceFiles]);
 
   const riskLevel = useMemo(() => {
     const amount = parseInt(formValues.amount || "0");
@@ -323,6 +367,7 @@ STRUCTURED DATA:
 ${structuredDetails}
 WITHDRAWALS BLOCKED: ${isBlocked ? 'YES' : 'NO'}
 STILL HAVE ACCESS: ${hasAccess ? 'YES' : 'NO'}
+EVIDENCE FILES UPLOADED: ${evidenceFiles.length}
 NARRATIVE:
 ${description}
       `.trim()
@@ -361,7 +406,6 @@ ${description}
     setBookingValuesLoading(true)
     
     try {
-      // Ensure we have a valid case payload
       const payload = {
         case_id: caseId,
         case_type: selectedType?.title,
@@ -378,10 +422,10 @@ ${description}
         preferred_method: bookingValues.method,
         status: 'Review Pending',
         risk_level: riskLevel,
-        evidence_integrity: evidenceMetrics.status
+        evidence_integrity: evidenceMetrics.status,
+        evidence_files: evidenceFiles
       };
 
-      // Persist to Supabase Database
       const { error } = await supabase
         .from('cases')
         .insert([payload]);
@@ -396,7 +440,7 @@ ${description}
       toast({
         variant: "destructive",
         title: "Registration Failed",
-        description: error.message || "Could not register your case. Please check your connection and try again."
+        description: error.message || "Could not register your case."
       });
     } finally {
       setBookingValuesLoading(false)
@@ -512,15 +556,47 @@ ${description}
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-6 hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
                   <h4 className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4 text-primary"><UploadCloud className="w-4 h-4" /> Evidence Portal</h4>
-                  <div className="border border-dashed border-white/10 rounded-none p-8 text-center bg-white/5 mb-6">
-                    <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
-                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Encrypted Evidence Upload</p>
+                  <div className="relative border border-dashed border-white/10 rounded-none p-8 text-center bg-white/5 mb-6 group cursor-pointer hover:bg-white/[0.08] transition-colors">
+                    <input 
+                      type="file" 
+                      className="absolute inset-0 opacity-0 cursor-pointer z-10" 
+                      onChange={handleFileUpload}
+                      disabled={uploadingEvidence}
+                    />
+                    {uploadingEvidence ? (
+                      <Loader2 className="w-8 h-8 text-primary mx-auto mb-2 animate-spin" />
+                    ) : (
+                      <UploadCloud className="w-8 h-8 text-muted-foreground mx-auto mb-2 opacity-50" />
+                    )}
+                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                      {uploadingEvidence ? 'Encrypting File...' : 'Encrypted Evidence Upload'}
+                    </p>
                   </div>
-                  <ul className="space-y-3">
-                    {["Transaction Hashes", "Chat Histories", "Email Logs"].map((item, i) => (
-                      <li key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/50 uppercase tracking-widest"><FileText className="w-3 h-3 text-primary" /> {item}</li>
-                    ))}
-                  </ul>
+                  
+                  <div className="space-y-4">
+                    <h5 className="text-[8px] font-black uppercase tracking-widest text-primary/70">Verified Submissions:</h5>
+                    <ul className="space-y-2">
+                      {evidenceFiles.length === 0 ? (
+                        ["Transaction Hashes", "Chat Histories", "Email Logs"].map((item, i) => (
+                          <li key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/30 uppercase tracking-widest">
+                            <FileText className="w-3 h-3" /> {item}
+                          </li>
+                        ))
+                      ) : (
+                        evidenceFiles.map((file, i) => (
+                          <li key={i} className="flex items-center justify-between gap-2 p-2 bg-white/5 border border-white/5">
+                            <div className="flex items-center gap-2 overflow-hidden">
+                              <ShieldCheck className="w-3 h-3 text-primary shrink-0" />
+                              <span className="text-[9px] font-bold text-foreground/80 truncate">{file.name}</span>
+                            </div>
+                            <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground hover:text-destructive" onClick={() => removeEvidence(file.path)}>
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </li>
+                        ))
+                      )}
+                    </ul>
+                  </div>
                 </Card>
               </div>
             </div>
@@ -531,7 +607,6 @@ ${description}
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 active">
             <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6">
               <div className="flex-grow p-8 glass-card border-primary/20 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
-                 {/* Gold Trace Accents */}
                  <svg className="absolute inset-0 pointer-events-none opacity-20" width="100%" height="100%">
                     <path d="M 0 40 L 40 40 L 40 0" className="forensic-trace" />
                     <circle cx="40" cy="40" r="1.5" className="network-node" />
@@ -624,7 +699,6 @@ ${description}
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8 relative overflow-hidden">
-                {/* Background Trace Accents */}
                 <svg className="absolute inset-0 pointer-events-none opacity-10" width="100%" height="100%">
                   <path d="M 0 100 L 100 100 L 100 0" className="forensic-trace" />
                 </svg>
@@ -648,10 +722,6 @@ ${description}
                 <div className="mt-8 p-6 bg-primary/[0.03] border border-primary/10 italic text-[11px] text-foreground/80 leading-relaxed border-l-2 border-l-primary relative z-10">
                   "{result.recoveryScenarioSummary}"
                 </div>
-                <div className="mt-6 flex gap-2 p-3 bg-secondary/5 border border-secondary/20 text-[9px] text-secondary/80 uppercase tracking-widest relative z-10">
-                  <Info className="w-3.5 h-3.5 shrink-0" />
-                  <p>System Assessment Complete. Final qualification requires specialist manual audit.</p>
-                </div>
               </Card>
 
               <div className="space-y-6">
@@ -670,14 +740,6 @@ ${description}
                       </div>
                     ))}
                   </div>
-                </Card>
-
-                <Card className="border-destructive/20 bg-destructive/5 p-6">
-                  <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-destructive flex items-center gap-2 mb-4">
-                    <ShieldAlert className={cn("w-4 h-4", riskLevel === 'Critical' && "animate-breathing")} /> 
-                    Critical Notice
-                  </h4>
-                  <p className="text-[10px] text-foreground/80 leading-relaxed mb-4 uppercase font-bold tracking-widest">Asset movement detected within target networks. Immediate specialist engagement recommended.</p>
                 </Card>
               </div>
             </div>
@@ -707,26 +769,9 @@ ${description}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -mr-16 -mt-16" />
                   <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter uppercase">Specialist Review Required</h4>
                   <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">
-                    Intake parameters indicate a viable recovery scenario. <br/>
-                    <span className="text-muted-foreground text-sm uppercase tracking-widest">Formal verification must be completed by a Senior Investigator.</span>
+                    Intake parameters indicate a viable recovery scenario.
                   </p>
                   
-                  <div className="space-y-6 mb-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {[
-                        "Specialist Verification", 
-                        "Blockchain Path Audit", 
-                        "Feasibility Study", 
-                        "Strategy Briefing"
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest bg-black/40 p-4 border border-white/5">
-                          <CheckCircle2 className="w-4 h-4 text-primary shrink-0" /> 
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
                   <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta">
                     Confirm Consultation 
                     <ArrowRight className="ml-2 w-6 h-6" />
@@ -743,7 +788,6 @@ ${description}
               <div className="bg-primary p-10 text-black text-center">
                 <Calendar className="w-12 h-12 mx-auto mb-4 opacity-70" />
                 <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Initialize Specialist Review</h2>
-                <p className="text-[11px] font-bold uppercase tracking-widest opacity-80 leading-relaxed">Secure your formal investigation slot with a Senior Recovery Specialist.</p>
               </div>
               <CardContent className="p-10 space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
@@ -856,10 +900,6 @@ ${description}
                 </Button>
                 
                 <SecurityChecklist active={isInputFocused} />
-                
-                <p className="text-[8px] text-center text-muted-foreground uppercase tracking-[0.4em] mt-4">
-                  Encrypted SSL Submission | Professional Registry
-                </p>
               </CardContent>
             </Card>
           </div>
@@ -875,27 +915,7 @@ ${description}
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               Your forensic intake has been confirmed. <br/>
               Reference ID: <span className="text-primary font-black">{caseId}</span>. <br/>
-              A Senior Recovery Analyst will contact you within 24-48 business hours.
             </p>
-            <Card className="glass-card p-10 border-white/5 mb-10 text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] blur-3xl -mr-16 -mt-16" />
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-2 mb-8">
-                <Target className="w-4 h-4 text-primary" /> Investigative Protocol:
-              </h4>
-              <ul className="space-y-6">
-                {[
-                  "Manual Evidence Audit",
-                  "Blockchain Path Finalization",
-                  "Jurisdictional Feasibility Study",
-                  "Strategy Briefing"
-                ].map((step, i) => (
-                  <li key={i} className="flex items-start gap-4 text-[11px] font-black uppercase tracking widest text-foreground/80">
-                    <div className="w-1 h-1 bg-primary shrink-0 mt-1.5" />
-                    {step}
-                  </li>
-                ))}
-              </ul>
-            </Card>
             <Button size="lg" variant="outline" className="border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12" onClick={() => window.location.reload()}>
               Return
             </Button>
@@ -905,3 +925,4 @@ ${description}
     </section>
   )
 }
+

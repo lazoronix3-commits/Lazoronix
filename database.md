@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS cases (
   description text,
   result_data jsonb,
   form_values jsonb,
+  evidence_files jsonb DEFAULT '[]', -- Store array of {name, path, url}
   is_blocked boolean DEFAULT false,
   has_access boolean DEFAULT true,
   best_contact_time text,
@@ -77,19 +78,16 @@ CREATE POLICY "Allow authenticated all stories" ON success_stories
 FOR ALL TO authenticated USING (true);
 ```
 
-## Table: `cases`
-Used for secure forensic intake submissions.
-
-## Table: `success_stories`
-Used for marketing and social proof on the homepage.
-
----
-
 ## Storage Buckets
 
 ### `assets` (Public)
 1. Go to **Storage** in Supabase.
 2. Create a bucket named `assets`.
 3. Set the bucket to **Public**.
-4. Upload `logo.png` for branding.
-5. Upload `{member-id}.png` for team avatars (e.g., `team-1.png`).
+4. This stores `logo.png` and `{member-id}.png` (e.g., `team-1.png`).
+
+### `evidence` (Private)
+1. Go to **Storage** in Supabase.
+2. Create a bucket named `evidence`.
+3. Keep this bucket **Private** for investigative security.
+4. This stores victim-submitted evidence (transaction hashes, chat logs, etc.).

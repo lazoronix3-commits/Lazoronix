@@ -33,11 +33,18 @@ import {
   Clock,
   Target,
   Network,
-  ChevronRight
+  ChevronRight,
+  Calendar,
+  Mail,
+  Phone,
+  Globe,
+  User,
+  MessageSquare
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 const UserCheck = ({ className }: { className?: string }) => (
   <svg 
@@ -196,7 +203,7 @@ const SAFETY_PROTOCOLS = [
 ]
 
 export function AIGuidedTool() {
-  const [step, setStep] = useState<'type' | 'details' | 'result'>('type')
+  const [step, setStep] = useState<'type' | 'details' | 'result' | 'booking' | 'success'>('type')
   const [selectedType, setSelectedType] = useState<CaseType | null>(null)
   const [formValues, setFormValues] = useState<Record<string, string>>({})
   const [description, setDescription] = useState('')
@@ -206,6 +213,18 @@ export function AIGuidedTool() {
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
   const [scanStatus, setScanStatus] = useState('Initializing...')
+  
+  // Booking state
+  const [bookingValues, setBookingValues] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    country: '',
+    bestTime: '',
+    method: ''
+  })
+  const [bookingLoading, setBookingValuesLoading] = useState(false)
+  
   const { toast } = useToast()
 
   useEffect(() => {
@@ -299,6 +318,14 @@ ${description}
     }
   }
 
+  const handleBooking = async () => {
+    setBookingValuesLoading(true)
+    // Simulate API call to register lead
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    setBookingValuesLoading(false)
+    setStep('success')
+  }
+
   return (
     <section id="ai-tool" className="py-24 bg-muted/30 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] -z-10" />
@@ -308,9 +335,11 @@ ${description}
           <div className="flex items-center gap-4">
             <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'type' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>1</div>
             <div className={cn("w-12 h-0.5 transition-colors", step !== 'type' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'details' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : step === 'result' ? "bg-primary/20 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>2</div>
-            <div className={cn("w-12 h-0.5 transition-colors", step === 'result' ? "bg-primary" : "bg-white/10")} />
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'result' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>3</div>
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'details' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : step === 'result' || step === 'booking' || step === 'success' ? "bg-primary/20 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>2</div>
+            <div className={cn("w-12 h-0.5 transition-colors", step === 'result' || step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'result' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : step === 'booking' || step === 'success' ? "bg-primary/20 border-primary text-primary" : "bg-transparent border-white/10 text-muted-foreground")}>3</div>
+            <div className={cn("w-12 h-0.5 transition-colors", step === 'booking' || step === 'success' ? "bg-primary" : "bg-white/10")} />
+            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all", step === 'booking' || step === 'success' ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-transparent border-white/10 text-muted-foreground")}>4</div>
           </div>
         </div>
 
@@ -587,11 +616,9 @@ ${description}
                     </div>
                   </div>
 
-                  <Button className="w-full h-20 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]" asChild>
-                    <a href="#contact">
-                      Continue To Secure Assessment 
-                      <ArrowRight className="ml-2 w-6 h-6" />
-                    </a>
+                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]">
+                    Continue To Secure Assessment 
+                    <ArrowRight className="ml-2 w-6 h-6" />
                   </Button>
                 </Card>
 
@@ -608,6 +635,158 @@ ${description}
                 </Card>
               </div>
             </div>
+          </div>
+        )}
+
+        {step === 'booking' && (
+          <div className="animate-in fade-in zoom-in-95 duration-500 max-w-2xl mx-auto">
+            <Card className="glass-card border-primary/20 shadow-2xl overflow-hidden">
+              <div className="bg-primary p-8 text-white text-center">
+                <Calendar className="w-12 h-12 mx-auto mb-4 opacity-80" />
+                <h2 className="text-3xl font-headline font-bold mb-2">Schedule Specialist Review</h2>
+                <p className="opacity-80">Connect with a Senior Recovery Analyst to verify your forensic data and determine recovery viability.</p>
+              </div>
+              <CardContent className="p-8 space-y-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <User className="w-3 h-3" /> Full Name
+                    </Label>
+                    <Input 
+                      placeholder="e.g. John Doe" 
+                      className="bg-background/50" 
+                      value={bookingValues.name}
+                      onChange={(e) => setBookingValues({...bookingValues, name: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <Mail className="w-3 h-3" /> Email Address
+                    </Label>
+                    <Input 
+                      type="email" 
+                      placeholder="e.g. john@example.com" 
+                      className="bg-background/50" 
+                      value={bookingValues.email}
+                      onChange={(e) => setBookingValues({...bookingValues, email: e.target.value})}
+                    />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <Phone className="w-3 h-3" /> Phone Number
+                    </Label>
+                    <Input 
+                      placeholder="+1 (555) 000-0000" 
+                      className="bg-background/50" 
+                      value={bookingValues.phone}
+                      onChange={(e) => setBookingValues({...bookingValues, phone: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <Globe className="w-3 h-3" /> Country
+                    </Label>
+                    <Input 
+                      placeholder="e.g. United States" 
+                      className="bg-background/50" 
+                      value={bookingValues.country}
+                      onChange={(e) => setBookingValues({...bookingValues, country: e.target.value})}
+                    />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <Clock className="w-3 h-3" /> Best Contact Time
+                    </Label>
+                    <Select onValueChange={(val) => setBookingValues({...bookingValues, bestTime: val})}>
+                      <SelectTrigger className="bg-background/50">
+                        <SelectValue placeholder="Select timeframe" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="morning">Morning (8am - 12pm)</SelectItem>
+                        <SelectItem value="afternoon">Afternoon (12pm - 5pm)</SelectItem>
+                        <SelectItem value="evening">Evening (5pm - 9pm)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                      <MessageSquare className="w-3 h-3" /> Preferred Method
+                    </Label>
+                    <Select onValueChange={(val) => setBookingValues({...bookingValues, method: val})}>
+                      <SelectTrigger className="bg-background/50">
+                        <SelectValue placeholder="Select method" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="phone">Phone Call</SelectItem>
+                        <SelectItem value="email">Email</SelectItem>
+                        <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                        <SelectItem value="telegram">Telegram</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                
+                <Button 
+                  onClick={handleBooking} 
+                  disabled={bookingLoading || !bookingValues.email || !bookingValues.name} 
+                  className="w-full h-16 text-lg font-bold shadow-xl shadow-primary/20"
+                >
+                  {bookingLoading ? (
+                    <div className="flex items-center gap-3">
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <span>Transmitting Case Data...</span>
+                    </div>
+                  ) : (
+                    <>
+                      Confirm Secure Assessment
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </>
+                  )}
+                </Button>
+                
+                <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest">
+                  Encrypted SSL Submission | Confidential Case Registration
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {step === 'success' && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-xl mx-auto text-center">
+            <div className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-8 border-4 border-emerald-500/20">
+              <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+            </div>
+            <h2 className="text-4xl font-headline font-bold mb-4">Case Transmitted</h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              Your forensic intake has been registered under Case ID: <span className="text-primary font-bold">{caseId}</span>. 
+              A Senior Recovery Analyst will contact you within 24-48 business hours using your preferred communication method.
+            </p>
+            <Card className="glass-card p-6 border-white/5 mb-10 text-left">
+              <h4 className="font-bold mb-4 text-primary flex items-center gap-2">
+                <Target className="w-4 h-4" /> Next Investigative Steps:
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  "Specialist manual evidence verification",
+                  "Blockchain path finalization",
+                  "Jurisdictional recovery feasibility study",
+                  "Initial client strategy briefing"
+                ].map((step, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-foreground/80">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+            <Button size="lg" variant="outline" onClick={() => window.location.reload()}>
+              Return to Homepage
+            </Button>
           </div>
         )}
       </div>

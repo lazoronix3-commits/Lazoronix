@@ -50,43 +50,43 @@ export function Footer() {
               </div>
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>
-            <p className="text-muted-foreground text-[11px] leading-relaxed mb-6 uppercase tracking-wider opacity-70">
-              Institutional digital asset intelligence and blockchain forensics firm. Providing specialized investigative rigor for complex financial fraud and asset resolution.
+            <p className="text-muted-foreground text-[10px] leading-relaxed mb-6 uppercase tracking-wider opacity-70 font-bold">
+              Institutional Digital Asset Intelligence & Investigation Firm. Specialized forensic rigor for complex financial fraud and asset resolution.
             </p>
           </div>
           
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
-            <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#services" className="hover:text-primary transition-colors">Financial Trading Fraud</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Institutional Investment Fraud</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Fraud</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Employment Fraud</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Access Recovery</Link></li>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
+            <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+              <li><Link href="#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Tracing Division</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Access Recovery Division</Link></li>
             </ul>
           </div>
           
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Company</h5>
-            <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">About Us</Link></li>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Integrity</h5>
+            <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+              <li><Link href="#preservation" className="hover:text-primary transition-colors">Preservation Protocols</Link></li>
               <li><Link href="#process" className="hover:text-primary transition-colors">Methodology</Link></li>
-              <li><Link href="#contact" className="hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="#forensic-intake" className="hover:text-primary transition-colors">Evidence Portal</Link></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Intelligence</h5>
-            <ul className="space-y-4 text-xs text-muted-foreground font-medium">
-              <li><Link href="#" className="hover:text-primary transition-colors">Investigation Guides</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Technical Analysis</Link></li>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Intelligence</h5>
+            <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><Link href="#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
+              <li><Link href="#success-stories" className="hover:text-primary transition-colors">Forensic Records</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Technical Briefs</Link></li>
             </ul>
           </div>
           
           <div>
-            <h5 className="text-xs font-headline font-bold mb-6 text-foreground uppercase tracking-[0.3em]">Compliance</h5>
-            <ul className="space-y-4 text-xs text-muted-foreground font-medium">
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Compliance</h5>
+            <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><Link href="#" className="hover:text-primary transition-colors">Privacy Protocols</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Institutional Terms</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Legal Disclaimer</Link></li>
@@ -99,8 +99,8 @@ export function Footer() {
             © {new Date().getFullYear()} Lazoronix Intelligence. All rights reserved. 
           </p>
           <div className="flex gap-6">
-            <p className="text-[9px] text-muted-foreground max-w-md text-left md:text-right leading-relaxed italic uppercase tracking-[0.1em] opacity-50">
-              Technical Note: Digital asset investigation involves inherent jurisdictional complexity. Every lifecycle requires a formal forensic review phase prior to departmental engagement.
+            <p className="text-[9px] text-muted-foreground max-w-md text-left md:text-right leading-relaxed italic uppercase tracking-[0.1em] opacity-50 font-bold">
+              Technical Note: Digital asset investigation involves inherent jurisdictional complexity. Every lifecycle requires formal forensic review prior to departmental engagement.
             </p>
           </div>
         </div>

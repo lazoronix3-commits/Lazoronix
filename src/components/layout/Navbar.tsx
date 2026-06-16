@@ -73,8 +73,8 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {mounted ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
-                Divisions <ChevronDown className="w-4 h-4 opacity-50" />
+              <DropdownMenuTrigger className="flex items-center gap-1 text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors outline-none">
+                Divisions <ChevronDown className="w-3 h-3 opacity-50" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-72 bg-card border-white/10 shadow-2xl">
                 {divisions.map((division) => (
@@ -87,19 +87,19 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <button className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors outline-none">
-              Divisions <ChevronDown className="w-4 h-4 opacity-50" />
+            <button className="flex items-center gap-1 text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors outline-none">
+              Divisions <ChevronDown className="w-3 h-3 opacity-50" />
             </button>
           )}
 
-          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Methodology</Link>
-          <Link href="#success-stories" className="text-sm font-medium hover:text-primary transition-colors">Forensic Records</Link>
-          <Link href="#faq" className="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-[11px] font-black">Knowledge Base</Link>
-          <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
+          <Link href="#preservation" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Preservation Protocols</Link>
+          <Link href="#process" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Methodology</Link>
+          <Link href="#success-stories" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Forensic Records</Link>
+          <Link href="#faq" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Knowledge Base</Link>
         </div>
 
         <div className="flex items-center gap-4">
-          <Button asChild className="bg-primary hover:bg-primary/90 text-black font-bold uppercase tracking-widest h-11 px-6">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-black font-black uppercase tracking-widest h-11 px-6 rounded-none">
             <Link href="#forensic-intake">
               Commence Assessment
             </Link>

@@ -14,6 +14,7 @@ import { AIGuidedTool } from '@/components/sections/AIGuidedTool';
 import { SuccessStories } from '@/components/sections/SuccessStories';
 import { TeamSection } from '@/components/sections/TeamSection';
 import { GlobalIntelligence } from '@/components/sections/GlobalIntelligence';
+import { EvidencePreservation } from '@/components/sections/EvidencePreservation';
 import { Button } from '@/components/ui/button';
 import { SectionReveal } from '@/components/ui/section-reveal';
 import { 
@@ -51,7 +52,7 @@ const SERVICE_DETAILS = [
   { 
     id: "forex",
     title: "Financial Trading Fraud Division", 
-    subtitle: "Lost money to a broker or trading platform?",
+    subtitle: "Investigating broker malfeasance and platform manipulation.",
     icon: TrendingUp, 
     markers: [
       "Withdrawal restrictions",
@@ -70,7 +71,7 @@ const SERVICE_DETAILS = [
   { 
     id: "investment",
     title: "Institutional Investment Fraud Division", 
-    subtitle: "Victim of a fraudulent investment scheme?",
+    subtitle: "Technical analysis of institutional and DeFi schemes.",
     icon: BarChart, 
     markers: [
       "Crypto Ponzi schemes",
@@ -89,7 +90,7 @@ const SERVICE_DETAILS = [
   { 
     id: "romance",
     title: "Social Engineering Fraud Division", 
-    subtitle: "Sent funds to someone you met online?",
+    subtitle: "Specialized investigation for emotional grooming schemes.",
     icon: Heart, 
     markers: [
       "Crypto transfers",
@@ -108,7 +109,7 @@ const SERVICE_DETAILS = [
   { 
     id: "wallet",
     title: "Digital Asset Access & Recovery Division", 
-    subtitle: "Lost access to your digital holdings?",
+    subtitle: "Forensic bypass and seed phrase reconstruction.",
     icon: Wallet, 
     markers: [
       "Hardware wallet corruption",
@@ -127,7 +128,7 @@ const SERVICE_DETAILS = [
   { 
     id: "job",
     title: "Employment & Recruitment Fraud Division", 
-    subtitle: "Targeted through a fake employment offer?",
+    subtitle: "Investigating fake onboarding and recruitment scams.",
     icon: Briefcase, 
     markers: [
       "Upfront training fees",
@@ -146,7 +147,7 @@ const SERVICE_DETAILS = [
   { 
     id: "tracing",
     title: "Blockchain Intelligence & Tracing Division", 
-    subtitle: "Require institutional-grade blockchain analysis?",
+    subtitle: "Institutional-grade multi-chain asset tracing.",
     icon: ShieldCheck, 
     markers: [
       "Blockchain path history",
@@ -177,45 +178,39 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-headline font-bold mb-8 leading-tight">
-              We Understand What's At Stake
+              Investigation First. Resolution Second.
             </h2>
             <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
-              <p className="text-foreground font-medium">
-                Financial fraud can leave victims feeling overwhelmed, uncertain, and unsure where to turn.
+              <p className="text-foreground font-medium italic">
+                We investigate financial fraud, trace digital assets, and identify recovery pathways using institutional methodologies.
               </p>
               <p>
-                Our role is to help you understand your situation, preserve critical evidence, and determine whether viable recovery pathways may exist through rigorous forensic investigation.
+                Our role is to help you understand the technical parameters of your case, preserve critical evidence, and determine whether viable recovery pathways exist through rigorous forensic investigation.
               </p>
               <div className="pt-8 flex flex-col items-center gap-4">
                 <div className="w-12 h-px bg-primary/30" />
                 <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary flex items-center gap-3">
                   <Shield className="w-4 h-4" />
-                  Confidential & Professional
-                </p>
-                <p className="text-base italic">
-                  Every case is reviewed confidentially and treated with the highest level of investigative professionalism.
+                  Forensic Integrity Protected
                 </p>
               </div>
             </div>
           </SectionReveal>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(70,123,224,0.03)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       {/* Trust Bar */}
       <div className="py-12 bg-white/5 border-y border-white/5">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-8">Specialized Investigative Tools for Blockchain & Digital Assets</p>
+          <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Investigative Divisions for Digital Assets</p>
           <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 opacity-40 grayscale contrast-125">
-             <span className="text-2xl font-bold tracking-widest font-headline">BLOCKCHAIN</span>
-             <span className="text-2xl font-bold tracking-widest font-headline">FORENSICS</span>
-             <span className="text-2xl font-bold tracking-widest font-headline">INTELLIGENCE</span>
-             <span className="text-2xl font-bold tracking-widest font-headline">RECOVERY</span>
-             <span className="text-2xl font-bold tracking-widest font-headline">SECURITY</span>
+             <span className="text-2xl font-bold tracking-[0.3em] font-headline">FORENSICS</span>
+             <span className="text-2xl font-bold tracking-[0.3em] font-headline">INTELLIGENCE</span>
+             <span className="text-2xl font-bold tracking-[0.3em] font-headline">ANALYSIS</span>
+             <span className="text-2xl font-bold tracking-[0.3em] font-headline">TRACING</span>
+             <span className="text-2xl font-bold tracking-[0.3em] font-headline">RESOLUTION</span>
           </div>
-          <p className="mt-12 text-foreground/70 max-w-4xl mx-auto leading-relaxed">
-            We help victims of digital fraud navigate the complex path to resolution using blockchain intelligence, wallet analysis, and investigative methodologies to evaluate every case with technical precision.
-          </p>
         </div>
       </div>
 
@@ -223,14 +218,16 @@ export default function Home() {
       
       <SignsSection />
       
+      <EvidencePreservation />
+
       {/* Services Highlight Section */}
       <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
           <SectionReveal className="text-center mb-20">
-            <h2 className="text-sm font-semibold text-primary uppercase tracking-[0.2em] mb-4">Investigative Divisions</h2>
-            <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6">Departmental Expertise for Complex Fraud</h3>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Our specialized divisions provide technical support and clinical evidence analysis for a range of institutional and digital asset fraud scenarios.
+            <h2 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4">Investigative Divisions</h2>
+            <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Departmental Expertise</h3>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
+              Lazoronix operates through specialized divisions, each utilizing distinct forensic protocols for institutional and digital asset fraud scenarios.
             </p>
           </SectionReveal>
           
@@ -247,16 +244,16 @@ export default function Home() {
                       <service.icon className="w-8 h-8 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-2xl font-headline font-bold">{service.title}</h4>
-                      <p className="text-primary text-sm font-medium">{service.subtitle}</p>
+                      <h4 className="text-2xl font-headline font-bold uppercase tracking-tight">{service.title}</h4>
+                      <p className="text-primary text-[10px] font-black uppercase tracking-widest">{service.subtitle}</p>
                     </div>
                   </div>
                   
                   <div className="space-y-4 mb-10 flex-grow">
-                     <p className="text-muted-foreground leading-relaxed">{service.desc}</p>
+                     <p className="text-muted-foreground text-sm uppercase leading-relaxed tracking-wide font-medium">{service.desc}</p>
                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 pt-6 border-t border-white/5">
                        {service.markers.map((marker, mIdx) => (
-                         <div key={mIdx} className="flex items-center gap-2 text-sm font-bold text-foreground/80">
+                         <div key={mIdx} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground/50">
                            <ChevronRight className="w-3.5 h-3.5 text-primary" />
                            {marker}
                          </div>
@@ -266,8 +263,8 @@ export default function Home() {
 
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="outline" size="lg" className="h-14 px-8 rounded-none border-white/10 hover:bg-primary hover:text-white transition-all w-fit font-bold uppercase tracking-widest">
-                        Departmental Briefing <ArrowRight className="ml-2 w-5 h-5" />
+                      <Button variant="outline" size="lg" className="h-14 px-8 rounded-none border-white/10 hover:bg-primary hover:text-black transition-all w-fit font-bold uppercase tracking-widest">
+                        Technical Briefing <ArrowRight className="ml-2 w-5 h-5" />
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
@@ -278,7 +275,7 @@ export default function Home() {
                           </div>
                           <div className="space-y-4">
                             <DialogTitle className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</DialogTitle>
-                            <DialogDescription className="text-primary text-sm font-black uppercase tracking-[0.2em] opacity-100">
+                            <DialogDescription className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-100">
                               {service.subtitle}
                             </DialogDescription>
                           </div>
@@ -325,7 +322,7 @@ export default function Home() {
                                </div>
                                <div className="pt-6 border-t border-white/10">
                                  <p className="text-[9px] text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
-                                   Technical recovery path is determined by the integrity of the evidence preservation phase.
+                                   Technical resolution is determined by the preservation of high-integrity digital evidence.
                                  </p>
                                </div>
                              </div>
@@ -333,13 +330,13 @@ export default function Home() {
                              <div className="space-y-4">
                                 <Link href="#forensic-intake" className="block w-full">
                                   <DialogClose asChild>
-                                    <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta">
+                                    <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta rounded-none">
                                       Commence Intake
                                     </Button>
                                   </DialogClose>
                                 </Link>
                                 <p className="text-[9px] text-center font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-2">
-                                  <Lock className="w-3 h-3" /> Secure Port Active
+                                  <Lock className="w-3 h-3" /> Secure Lifecycle Active
                                 </p>
                              </div>
                           </div>
@@ -366,53 +363,34 @@ export default function Home() {
           <SectionReveal className="max-w-5xl mx-auto glass-card rounded-none overflow-hidden">
             <div className="grid md:grid-cols-5 items-stretch">
               <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
-                <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Not Sure If Recovery Is Possible?</h2>
+                <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Investigative Feasibility</h2>
                 <p className="text-xl text-foreground/80 mb-8 leading-relaxed font-medium">
-                  Every case is unique. Before making recommendations, our specialists review available evidence, transaction records, communications, and technical circumstances to determine whether a definitive recovery pathway exists.
+                  Every scenario is unique. Prior to formal engagement, our specialists review transaction records, platform infrastructure, and technical meta-data to determine if a viable resolution pathway exists.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                   {[
-                    { icon: FileText, text: "Transaction records" },
-                    { icon: Wallet, text: "Wallet information" },
-                    { icon: MessageSquare, text: "Broker communications" },
-                    { icon: Globe, text: "Platform details" },
-                    { icon: CreditCard, text: "Payment evidence" },
-                    { icon: TrendingUp, text: "Recovery possibilities" }
+                    { icon: FileText, text: "Transaction Meta-Data" },
+                    { icon: Wallet, text: "Wallet Path History" },
+                    { icon: MessageSquare, text: "Communication Logs" },
+                    { icon: Globe, text: "Platform Infrastructure" },
+                    { icon: CreditCard, text: "Evidence Integrity" },
+                    { icon: TrendingUp, text: "Resolution Feasibility" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                         <item.icon className="w-4 h-4 text-primary" />
                       </div>
-                      <span className="font-bold text-xs uppercase tracking-widest text-foreground/80">{item.text}</span>
+                      <span className="font-bold text-[10px] uppercase tracking-widest text-foreground/80">{item.text}</span>
                     </div>
                   ))}
                 </div>
                 <div className="space-y-8">
                   <Link href="#forensic-intake">
                     <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
-                      Start With A Confidential Assessment
+                      Commence Confidential Assessment
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
-                  
-                  <div className="pt-6 border-t border-white/5">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
-                      <Lock className="w-3.5 h-3.5" /> Your Information Is Protected
-                    </p>
-                    <div className="flex flex-wrap gap-x-8 gap-y-3">
-                      {[
-                        "Encrypted submissions",
-                        "Secure document uploads",
-                        "Confidential consultations",
-                        "Restricted case access"
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-2 text-[10px] font-bold text-foreground/60">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
               <div className="md:col-span-2 p-8 md:p-16 bg-primary text-primary-foreground flex flex-col justify-center">
@@ -420,22 +398,22 @@ export default function Home() {
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">100% Confidential</h4>
-                      <p className="opacity-80 text-sm font-medium">All information shared is protected under strict investigative privacy protocols.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">100% Clinical</h4>
+                      <p className="opacity-80 text-sm font-medium">All assessments are conducted using objective forensic methodologies.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">No Obligation</h4>
-                      <p className="opacity-80 text-sm font-medium">Our feasibility assessment is designed to provide you with facts, not a sales pitch.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Technical Data Only</h4>
+                      <p className="opacity-80 text-sm font-medium">We lead with evidence-based intelligence, avoiding speculative recovery claims.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Evidence-Based</h4>
-                      <p className="opacity-80 text-sm font-medium">We only proceed if the technical trail indicates a legitimate path for recovery.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Restricted Access</h4>
+                      <p className="opacity-80 text-sm font-medium">Case details are stored in encrypted vaults with senior-tier analyst access only.</p>
                     </div>
                   </div>
                 </div>
@@ -455,13 +433,10 @@ export default function Home() {
       <section className="py-24 bg-primary text-primary-foreground overflow-hidden relative">
          <div className="container mx-auto px-6 relative z-10 text-center">
             <SectionReveal>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Our Commitment</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Institutional Commitment</h2>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12 font-medium">
-                We understand that financial losses caused by scams can be devastating. <br/>
-                <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">That's why every case is evaluated using technical analysis and institutional investigative methodologies.</span>
-              </p>
-              <p className="max-w-2xl mx-auto text-lg opacity-80 leading-relaxed font-medium">
-                Our investigative protocols are designed to identify legitimate recovery opportunities while maintaining complete confidentiality.
+                We bridge the gap between complex digital asset fraud and professional investigative rigor.<br/>
+                <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">Every case is evaluated using rigorous forensic analysis.</span>
               </p>
             </SectionReveal>
          </div>
@@ -474,41 +449,17 @@ export default function Home() {
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
           <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-none hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Commence Your Investigation Today</h2>
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Initialize Your Investigation Lifecycle</h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-              Whether you've been affected by institutional trading fraud, social engineering, or a digital asset access issue, our specialists are ready to review your case.
+              Whether you've been affected by institutional trading fraud, social engineering, or digital asset access challenges, our specialists are ready to review your evidence.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
                <Link href="#forensic-intake">
-                 <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none">
-                   Request Confidential Assessment
+                 <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
+                   Request Forensic Assessment
                    <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                  </Button>
                </Link>
-               <Link href="#forensic-intake">
-                 <Button size="lg" variant="outline" className="h-16 px-10 text-lg border-white/10 hover:bg-white/5 rounded-none font-bold uppercase tracking-widest">
-                   Consult with Specialists
-                 </Button>
-               </Link>
-            </div>
-            
-            <div className="pt-8 border-t border-white/5 max-w-2xl mx-auto">
-               <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-6 flex items-center justify-center gap-2">
-                 <Lock className="w-3.5 h-3.5" /> Your Information Is Protected
-               </p>
-               <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
-                  {[
-                    "Encrypted submissions",
-                    "Secure document uploads",
-                    "Confidential consultations",
-                    "Restricted case access"
-                  ].map((note, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs font-bold text-foreground/60">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span className="uppercase tracking-widest text-[10px]">{note}</span>
-                    </div>
-                  ))}
-               </div>
             </div>
           </SectionReveal>
         </div>
@@ -518,4 +469,3 @@ export default function Home() {
     </main>
   );
 }
-

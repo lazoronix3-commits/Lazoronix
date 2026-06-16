@@ -43,58 +43,21 @@ import {
   MessageSquare,
   Lock,
   Shield,
-  Trash2
+  Trash2,
+  Database
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-const UserCheck = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <polyline points="16 11 18 13 22 9" />
-  </svg>
-)
-
-const Database = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <ellipse cx="12" cy="5" rx="9" ry="3" />
-    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-    <path d="M3 12A9 3 0 0 0 21 12" />
-  </svg>
-)
-
 const TIMELINE_STEPS = [
-  { id: 'intake', label: 'Evidence Received', status: 'completed', icon: CheckCircle2 },
-  { id: 'review', label: 'Preliminary Review', status: 'current', icon: Clock },
-  { id: 'analysis', label: 'Forensic Analysis', status: 'pending', icon: Database },
-  { id: 'assignment', label: 'Investigator Assignment', status: 'pending', icon: UserCheck },
-  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Target },
-  { id: 'resolution', label: 'Case Resolution', status: 'pending', icon: ShieldCheck },
+  { id: 'intake', label: 'Intake & Preservation', status: 'completed', icon: FileText },
+  { id: 'verification', label: 'Evidence Verification', status: 'current', icon: ShieldCheck },
+  { id: 'forensic', label: 'Forensic Analysis', status: 'pending', icon: Search },
+  { id: 'intelligence', label: 'Intelligence Development', status: 'pending', icon: Database },
+  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Network },
+  { id: 'resolution', label: 'Resolution Support', status: 'pending', icon: CheckCircle2 },
 ]
 
 const SecurityChecklist = ({ active = false }: { active?: boolean }) => (
@@ -336,7 +299,6 @@ export function AIGuidedTool() {
     if (!selectedType) return
     setLoading(true)
 
-    // Pre-generate case ID for the technical dashboard
     const generatedId = `LRX-${Math.floor(10000 + Math.random() * 90000)}`;
     setCaseId(generatedId);
     
@@ -625,14 +587,14 @@ ${description}
                          Status: 
                          <span className="flex items-center gap-1.5 text-primary">
                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
-                           Review Pending
+                           Verification Active
                          </span>
                        </span>
                      </div>
                    </div>
                  </div>
                  <div className="flex items-center gap-3">
-                   <Button variant="outline" className="opacity-50 cursor-not-allowed border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-widest">Download Report</Button>
+                   <Button variant="outline" className="opacity-50 cursor-not-allowed border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-widest">Download Brief</Button>
                  </div>
               </div>
               <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[320px]">
@@ -642,7 +604,7 @@ ${description}
                 </Avatar>
                 <div>
                   <p className="font-black text-[10px] uppercase tracking-widest text-white">Senior Recovery Analyst</p>
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest">Financial Fraud Division</p>
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest">Forensic Hub Assigned</p>
                 </div>
               </Card>
             </div>
@@ -692,7 +654,7 @@ ${description}
                    <span className="w-2.5 h-2.5 rounded-full bg-primary animate-breathing" />
                    Qualified
                 </div>
-                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting specialist verification.</p>
+                <p className="text-[10px] text-muted-foreground mt-2 leading-relaxed uppercase tracking-widest">Awaiting verification phase completion.</p>
               </Card>
             </div>
 
@@ -725,14 +687,14 @@ ${description}
 
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-8 hover:border-primary/50 transition-all duration-300">
-                  <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Network className="w-4 h-4" /> Evidence Tracker</h3>
+                  <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Network className="w-4 h-4" /> Evidence Lifecycle Status</h3>
                   <div className="space-y-6">
                     {evidenceMetrics.items.map((tracker, idx) => (
                       <div key={idx} className="space-y-2">
                         <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                           <span className="text-foreground/70">{tracker.label}</span>
                           <span className={cn(tracker.score > 70 ? 'text-primary' : tracker.score > 40 ? 'text-primary/70' : 'text-muted-foreground')}>
-                            {tracker.score > 70 ? 'Optimal' : tracker.score > 40 ? 'Sufficient' : 'Required'}
+                            {tracker.score > 70 ? 'Verified' : tracker.score > 40 ? 'Sufficient' : 'Pending'}
                           </span>
                         </div>
                         <Progress value={tracker.score} className="h-1 bg-white/5" />
@@ -745,7 +707,7 @@ ${description}
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Target className="w-4 h-4" /> Recovery Roadmap</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3 mb-8 text-primary"><Target className="w-4 h-4" /> Investigation Roadmap</h3>
                 <Accordion type="single" collapsible className="space-y-4">
                   {result.investigativeFocusAreas.map((cat, idx) => (
                     <AccordionItem key={idx} value={`item-${idx}`} className="border border-white/5 px-5 bg-white/5">
@@ -766,12 +728,12 @@ ${description}
               <div className="space-y-8">
                 <Card className="border-primary/40 bg-primary/[0.03] p-8 shadow-2xl border-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl -mr-16 -mt-16" />
-                  <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter uppercase">Specialist Review Required</h4>
+                  <h4 className="text-3xl font-headline font-bold text-primary mb-4 tracking-tighter uppercase">Specialist Briefing Required</h4>
                   <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">
-                    Intake parameters indicate a viable recovery scenario.
+                    Intake parameters indicate a viable investigation lifecycle.
                   </p>
                   
-                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta">
+                  <Button onClick={() => setStep('booking')} className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] bg-primary text-black hover:bg-primary/90 shadow-xl shadow-primary/20 premium-cta rounded-none">
                     Confirm Consultation 
                     <ArrowRight className="ml-2 w-6 h-6" />
                   </Button>
@@ -786,7 +748,7 @@ ${description}
             <Card className="glass-card border-primary/20 shadow-2xl overflow-hidden">
               <div className="bg-primary p-10 text-black text-center">
                 <Calendar className="w-12 h-12 mx-auto mb-4 opacity-70" />
-                <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Initialize Specialist Review</h2>
+                <h2 className="text-3xl font-headline font-bold mb-2 tracking-tighter uppercase">Register Case Lifecycle</h2>
               </div>
               <CardContent className="p-10 space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
@@ -883,12 +845,12 @@ ${description}
                 <Button 
                   onClick={handleBooking} 
                   disabled={bookingLoading || !bookingValues.email || !bookingValues.name} 
-                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90 premium-cta"
+                  className="w-full h-20 text-lg font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 bg-primary text-black hover:bg-primary/90 premium-cta rounded-none"
                 >
                   {bookingLoading ? (
                     <div className="flex items-center gap-3">
                       <Loader2 className="h-5 w-5 animate-spin" />
-                      <span>Transmitting Case Data...</span>
+                      <span>Transmitting Technical Data...</span>
                     </div>
                   ) : (
                     <>
@@ -912,10 +874,10 @@ ${description}
             </div>
             <h2 className="text-4xl font-headline font-bold mb-4 tracking-tighter uppercase">Intake Registered</h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Your forensic intake has been confirmed. <br/>
+              Your forensic lifecycle has been initialized. <br/>
               Reference ID: <span className="text-primary font-black">{caseId}</span>. <br/>
             </p>
-            <Button size="lg" variant="outline" className="border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12" onClick={() => window.location.reload()}>
+            <Button size="lg" variant="outline" className="border-white/10 bg-white/5 uppercase font-black tracking-widest h-14 px-12 rounded-none" onClick={() => window.location.reload()}>
               Return
             </Button>
           </div>

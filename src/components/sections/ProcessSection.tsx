@@ -1,43 +1,50 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2, Shield, Search, FileText, Activity, UserCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Shield, Search, FileText, Activity, UserCheck, Database, Network } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
 
 const steps = [
   {
     number: "01",
-    title: "Case Review",
-    description: "Initial assessment of your situation to understand the scope and technical entities involved.",
-    icon: Shield,
-    details: ["Jurisdictional check", "Entity identification", "Risk assessment"]
+    title: "Intake & Preservation",
+    description: "Initial case ingestion and immediate preservation of volatile digital evidence including server logs and communications.",
+    icon: FileText,
+    details: ["Evidence hashing", "Metadata logging", "Chain of custody initialization"]
   },
   {
     number: "02",
-    title: "Evidence Collection",
-    description: "Identification and secure intake of documentation, transaction records, and communication logs.",
-    icon: FileText,
-    details: ["Hash retrieval", "Log preservation", "Platform audit"]
+    title: "Evidence Verification",
+    description: "Rigorous technical verification of submitted transaction hashes and platform credentials across multi-jurisdictional nodes.",
+    icon: Shield,
+    details: ["Hash validation", "Entity verification", "Jurisdiction mapping"]
   },
   {
     number: "03",
-    title: "Forensic Investigation",
-    description: "Deep-dive analysis of blockchain movements, fund patterns, and communications.",
+    title: "Forensic Analysis",
+    description: "Deep-dive blockchain analytics and fund obfuscation tracing using high-compute forensic workstations.",
     icon: Search,
-    details: ["Cluster analysis", "Path history", "Intercession data"]
+    details: ["Cluster analysis", "Mixer tracing", "Wallet attribution"]
   },
   {
     number: "04",
-    title: "Recovery Strategy",
-    description: "Development of a customized roadmap outlining the most viable technical and legal pathways.",
-    icon: Activity,
-    details: ["Feasibility reporting", "Strategy briefing", "Freezing protocols"]
+    title: "Intelligence Development",
+    description: "Synthesis of technical data into a formal investigative brief, identifying final asset destination points.",
+    icon: Database,
+    details: ["Beneficiary identification", "Exchange node mapping", "Intelligence reporting"]
   },
   {
     number: "05",
-    title: "Ongoing Support",
-    description: "Dedicated investigative guidance throughout the entire resolution process.",
+    title: "Recovery Strategy",
+    description: "Development of a specialized roadmap for asset intercession, including technical and jurisdictional interdiction protocols.",
+    icon: Network,
+    details: ["Intercession protocols", "Roadmap finalization", "Legal-Technical alignment"]
+  },
+  {
+    number: "06",
+    title: "Resolution Support",
+    description: "Direct technical guidance through the final resolution phase, providing expert reporting and case monitoring.",
     icon: UserCheck,
-    details: ["Case management", "Specialist consultations", "Resolution monitoring"]
+    details: ["Case monitoring", "Resolution tracking", "Expert reporting"]
   }
 ];
 
@@ -48,15 +55,15 @@ export function ProcessSection() {
         <div className="max-w-4xl mx-auto text-center mb-24">
           <SectionReveal>
             <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-4">Methodology</h2>
-            <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8 uppercase tracking-tighter">What Happens After Contact</h3>
+            <h3 className="text-4xl md:text-6xl font-headline font-bold mb-8 uppercase tracking-tighter">Investigation Lifecycle</h3>
             <p className="text-muted-foreground text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-              Our structured 5-step investigative process is designed to eliminate uncertainty and build a factual foundation for your case.
+              Our clinical 6-phase investigative lifecycle is designed to identify definitive technical resolution points for complex fraud.
             </p>
           </SectionReveal>
         </div>
         
         <div className="max-w-5xl mx-auto space-y-0 relative">
-          {/* Main Gold Connection Path - Progressing through all nodes */}
+          {/* Main Gold Connection Path */}
           <svg className="absolute left-8 top-10 h-full w-full pointer-events-none hidden md:block" style={{ width: 'calc(100% - 2rem)' }}>
             {steps.map((_, idx) => idx < steps.length - 1 && (
               <path 
@@ -85,7 +92,7 @@ export function ProcessSection() {
               <div className="grid md:grid-cols-12 gap-8 items-start">
                 <div className="md:col-span-2 flex flex-col items-center">
                   <div className="timeline-node w-16 h-16 rounded-full border border-white/10 bg-black flex items-center justify-center text-primary-foreground transition-all duration-700 shadow-xl relative z-20 overflow-hidden group-hover:scale-110">
-                    <step.icon className="w-6 h-6 transition-transform duration-500" />
+                    <step.icon className="w-6 h-6 transition-transform duration-500 text-primary" />
                   </div>
                   <span className="mt-4 text-[10px] font-black text-muted-foreground uppercase tracking-widest">{step.number}</span>
                 </div>
@@ -99,7 +106,6 @@ export function ProcessSection() {
 
                 <div className="md:col-span-3">
                   <div className="p-6 bg-white/[0.03] border border-white/5 space-y-3 hover:border-primary/20 transition-colors relative">
-                    {/* Subtle Trace Accent on detail card */}
                     <svg className="absolute top-0 right-0 opacity-10" width="40" height="40">
                       <path d="M 40 10 L 10 10 L 10 40" className="forensic-trace" />
                     </svg>
@@ -122,15 +128,15 @@ export function ProcessSection() {
             <div className="inline-block p-12 glass-card border-white/5 shadow-2xl relative overflow-hidden group hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
               <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <div className="relative z-10">
-                <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Initialize Case Review</h4>
+                <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Commence Lifecycle Phase 01</h4>
                 <Link href="#forensic-intake">
-                  <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group">
-                    Begin Step 1 Now
+                  <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
+                    Initialize Intake
                     <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
                 <p className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
-                  Protected under non-disclosure protocols.
+                  Restricted Access Protocols Active
                 </p>
               </div>
             </div>

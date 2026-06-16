@@ -4,7 +4,7 @@ import {Toaster} from '@/components/ui/toaster';
 import {MouseSpotlight} from '@/components/ui/mouse-spotlight';
 
 export const metadata: Metadata = {
-  title: 'Lazoronix | Professional Digital Asset & Scam Recovery Specialists',
+  title: 'Lazoronix | Institutional Forensic Intelligence & Asset Resolution',
   description: 'Specialized recovery assistance for victims of forex scams, investment fraud, romance scams, and locked crypto wallets. Get a confidential forensic assessment.',
 };
 

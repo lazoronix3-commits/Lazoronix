@@ -14,13 +14,16 @@ import {
   Clock, 
   LogOut, 
   Search,
-  ArrowUpDown,
   Filter,
-  Eye,
   Trash2,
   MoreVertical,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Loader2,
+  Fingerprint,
+  Target,
+  ShieldCheck,
+  Network
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -46,6 +49,7 @@ import {
   DialogTitle, 
   DialogTrigger 
 } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 type CaseRecord = {
   id: string;
@@ -53,6 +57,7 @@ type CaseRecord = {
   case_type: string;
   user_name: string;
   user_email: string;
+  user_phone?: string;
   user_country: string;
   risk_level: string;
   evidence_integrity: string;
@@ -61,12 +66,13 @@ type CaseRecord = {
   description: string;
   result_data: any;
   form_values: any;
+  best_contact_time?: string;
+  preferred_method?: string;
 };
 
 export default function AdminDashboard() {
   const [cases, setCases] = useState<CaseRecord[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCase, setSelectedCase] = useState<CaseRecord | null>(null);
   const router = useRouter();
 
   useEffect(() => {

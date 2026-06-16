@@ -7,11 +7,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { useToast } from '@/hooks/use-toast'
 import { 
-  Sparkles, 
   Loader2, 
   CheckCircle2, 
   ShieldAlert, 
@@ -28,19 +27,12 @@ import {
   UploadCloud,
   FileText,
   ShieldCheck,
-  AlertCircle,
   Activity,
-  XCircle,
-  MinusCircle,
   Fingerprint,
   Info,
   Clock,
-  ClipboardList,
   Target,
-  UserCheck,
-  Zap,
   Network,
-  Database,
   ChevronRight
 } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
@@ -148,6 +140,44 @@ const CASE_TYPES: CaseType[] = [
     ]
   },
 ]
+
+const UserCheck = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <polyline points="16 11 18 13 22 9" />
+  </svg>
+)
+
+const Database = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+    <path d="M3 12A9 3 0 0 0 21 12" />
+  </svg>
+)
 
 const TIMELINE_STEPS = [
   { id: 'intake', label: 'Evidence Received', status: 'completed', icon: CheckCircle2 },
@@ -400,8 +430,7 @@ ${description}
                    </div>
                  </div>
                  <div className="flex items-center gap-3">
-                   <Button variant="outline" onClick={() => setStep('type')}>New Intake</Button>
-                   <Button className="bg-primary font-bold">Download Report</Button>
+                   <Button variant="outline" className="opacity-50 cursor-not-allowed">Download Report</Button>
                  </div>
               </div>
               <Card className="glass-card border-white/5 p-6 flex items-center gap-4 min-w-[300px]">
@@ -418,13 +447,13 @@ ${description}
 
             <Card className="glass-card border-white/5 p-8">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4">
-                {TIMELINE_STEPS.map((step, idx) => (
-                  <div key={step.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
-                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", step.status === 'completed' ? "bg-emerald-500 text-white" : step.status === 'current' ? "bg-primary text-white" : "bg-muted text-muted-foreground border border-white/5")}>
-                      <step.icon className="w-4 h-4" />
+                {TIMELINE_STEPS.map((timelineStep, idx) => (
+                  <div key={timelineStep.id} className="flex flex-row md:flex-col items-center gap-4 md:gap-2 flex-1 relative">
+                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all", timelineStep.status === 'completed' ? "bg-emerald-500 text-white" : timelineStep.status === 'current' ? "bg-primary text-white" : "bg-muted text-muted-foreground border border-white/5")}>
+                      <timelineStep.icon className="w-4 h-4" />
                     </div>
                     <div className="text-left md:text-center">
-                      <p className="text-[10px] font-black uppercase tracking-widest opacity-50">{step.label}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest opacity-50">{timelineStep.label}</p>
                     </div>
                   </div>
                 ))}
@@ -443,15 +472,15 @@ ${description}
                 <Progress value={evidenceMetrics.total} className="h-1.5 mt-2" />
               </Card>
               <Card className="glass-card border-white/5 p-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Readiness</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Case Status</span>
                 <div className="text-3xl font-headline font-bold">Qualified</div>
-                <p className="text-xs text-muted-foreground mt-2">Eligible for human specialist review.</p>
+                <p className="text-xs text-muted-foreground mt-2">Awaiting human investigator review.</p>
               </Card>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
               <Card className="glass-card border-white/5 p-8">
-                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Preliminary Case Findings</h3>
+                <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Search className="w-5 h-5 text-primary" /> Automated Preliminary Findings</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { label: "Scam Type", value: result.preliminaryCaseFindings.scamType },
@@ -470,7 +499,7 @@ ${description}
                 <div className="mt-8 p-6 bg-primary/5 rounded-2xl border border-primary/10 italic text-sm text-foreground/80 leading-relaxed">
                   "{result.recoveryScenarioSummary}"
                 </div>
-                <div className="mt-6 flex gap-2 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-[10px] text-amber-500/80">
+                <div className="mt-6 flex gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-500/80">
                   <Info className="w-3.5 h-3.5 shrink-0" />
                   <p>This assessment is generated automatically and is not a professional investigation. Final recommendations require review by a recovery specialist.</p>
                 </div>
@@ -478,7 +507,7 @@ ${description}
 
               <div className="space-y-6">
                 <Card className="glass-card border-white/5 p-8">
-                  <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Network className="w-5 h-5 text-primary" /> Evidence Collection Matrix</h3>
+                  <h3 className="text-xl font-headline font-bold flex items-center gap-3 mb-8"><Network className="w-5 h-5 text-primary" /> Evidence Collection Tracker</h3>
                   <div className="space-y-6">
                     {evidenceMetrics.items.map((tracker, idx) => (
                       <div key={idx} className="space-y-2">
@@ -489,6 +518,12 @@ ${description}
                         <Progress value={tracker.score} className="h-1.5" />
                       </div>
                     ))}
+                  </div>
+                  <div className="mt-8 pt-6 border-t border-white/5">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-bold">Overall Case Strength</span>
+                      <span className="text-xl font-headline font-bold text-primary">{evidenceMetrics.total}%</span>
+                    </div>
                   </div>
                 </Card>
 
@@ -525,19 +560,36 @@ ${description}
               </Card>
 
               <div className="space-y-8">
-                <Card className="border-emerald-500/20 bg-emerald-500/5 p-8 rounded-[2rem]">
-                  <h4 className="text-2xl font-headline font-bold text-emerald-500 mb-4">Case Eligible For Review</h4>
-                  <p className="text-base text-foreground/80 mb-8 leading-relaxed">Our investigators recommend a detailed assessment. Final paths require manual verification by a specialist.</p>
-                  <div className="space-y-4 mb-10">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Next Steps:</p>
+                {/* HARD STOP SECTION */}
+                <Card className="border-primary/20 bg-primary/5 p-8 rounded-[2rem] shadow-2xl shadow-primary/10 border-2">
+                  <h4 className="text-3xl font-headline font-bold text-primary mb-4">Professional Review Required</h4>
+                  <p className="text-lg text-foreground/90 mb-8 leading-relaxed font-medium">
+                    Our automated intake has identified a potential recovery scenario. <br/>
+                    <span className="text-muted-foreground text-base">Further analysis requires review by a recovery specialist.</span>
+                  </p>
+                  
+                  <div className="space-y-6 mb-10">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Immediate Next Steps:</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {["Specialist Review", "Evidence Verification", "Feasibility Analysis", "Recovery Roadmap"].map((item, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs font-bold"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> {item}</div>
+                      {[
+                        "Specialist Review", 
+                        "Evidence Verification", 
+                        "Recovery Feasibility Assessment", 
+                        "Investigation Roadmap"
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-3 text-sm font-bold bg-background/40 p-3 rounded-xl border border-white/5">
+                          <CheckCircle2 className="w-5 h-5 text-primary shrink-0" /> 
+                          {item}
+                        </div>
                       ))}
                     </div>
                   </div>
-                  <Button className="w-full h-16 text-lg font-bold" asChild>
-                    <a href="#contact">Continue To Secure Assessment <ArrowRight className="ml-2 w-5 h-5" /></a>
+
+                  <Button className="w-full h-20 text-xl font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]" asChild>
+                    <a href="#contact">
+                      Continue To Secure Assessment 
+                      <ArrowRight className="ml-2 w-6 h-6" />
+                    </a>
                   </Button>
                 </Card>
 

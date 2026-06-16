@@ -15,6 +15,7 @@ import { SuccessStories } from '@/components/sections/SuccessStories';
 import { TeamSection } from '@/components/sections/TeamSection';
 import { GlobalIntelligence } from '@/components/sections/GlobalIntelligence';
 import { EvidencePreservation } from '@/components/sections/EvidencePreservation';
+import { IntelligenceReports } from '@/components/sections/IntelligenceReports';
 import { Button } from '@/components/ui/button';
 import { SectionReveal } from '@/components/ui/section-reveal';
 import { 
@@ -427,6 +428,8 @@ export default function Home() {
 
       <AIGuidedTool />
       
+      <IntelligenceReports />
+
       <ProcessSection />
       
       {/* Our Commitment Section */}

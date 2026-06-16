@@ -93,9 +93,9 @@ export function Navbar() {
           )}
 
           <Link href="#preservation" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Preservation Protocols</Link>
+          <Link href="#intelligence" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Intelligence Reports</Link>
           <Link href="#process" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Methodology</Link>
           <Link href="#success-stories" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Forensic Records</Link>
-          <Link href="#faq" className="text-[11px] font-black uppercase tracking-widest hover:text-primary transition-colors">Knowledge Base</Link>
         </div>
 
         <div className="flex items-center gap-4">

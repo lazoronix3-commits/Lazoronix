@@ -5,25 +5,34 @@ import { Footer } from '@/components/layout/Footer';
 import { SectionReveal } from '@/components/ui/section-reveal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { 
   Mail, 
-  Globe, 
   ShieldCheck, 
-  Clock, 
-  MapPin, 
-  ArrowRight, 
-  Lock, 
-  Activity,
-  MessageSquare,
-  Building,
-  Loader2
+  Building, 
+  Loader2,
+  Lock
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const DIVISIONS = [
+  "Financial Trading Fraud",
+  "Institutional Investment Fraud",
+  "Social Engineering Fraud",
+  "Digital Asset Access & Recovery",
+  "Employment & Recruitment Fraud",
+  "Blockchain Intelligence & Tracing"
+];
 
 export default function ContactPage() {
   const { toast } = useToast();
@@ -31,13 +40,23 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    location: '',
-    department: '',
-    abstract: ''
+    phone: '',
+    service: '',
+    country: '',
+    message: ''
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.email || !formData.service) {
+      toast({
+        variant: 'destructive',
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+      });
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -45,11 +64,12 @@ export default function ContactPage() {
       
       const payload = {
         case_id: generatedId,
-        case_type: formData.department || 'General Inquiry',
+        case_type: formData.service,
         user_name: formData.name,
         user_email: formData.email,
-        user_country: formData.location,
-        description: formData.abstract,
+        user_phone: formData.phone,
+        user_country: formData.country,
+        description: formData.message,
         status: 'Review Pending',
         risk_level: 'Initial Inquiry',
         evidence_integrity: 'Pending Review',
@@ -64,15 +84,16 @@ export default function ContactPage() {
 
       toast({
         title: "Transmission Secure",
-        description: "Your investigative brief has been encrypted and sent to the duty analyst.",
+        description: "Your inquiry has been encrypted and sent to the duty analyst.",
       });
 
       setFormData({
         name: '',
         email: '',
-        location: '',
-        department: '',
-        abstract: ''
+        phone: '',
+        service: '',
+        country: '',
+        message: ''
       });
     } catch (error: any) {
       toast({
@@ -89,7 +110,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
       
-      {/* Hero Header */}
       <section className="relative pt-32 pb-20 border-b border-white/5 bg-card/30 overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="text-center max-w-4xl mx-auto">
@@ -101,23 +121,17 @@ export default function ContactPage() {
               Establish <br />
               <span className="gradient-text italic font-medium gold-glow">Confidential Connection.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium">
-              Initialize communication with our Senior Investigative Analysts. All technical briefs are handled within restricted jurisdictional protocols.
-            </p>
           </SectionReveal>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-5 gap-12">
+          <div className="grid lg:grid-cols-5 gap-12 max-w-6xl mx-auto">
             
-            {/* Contact Information */}
             <div className="lg:col-span-2 space-y-8">
               <SectionReveal>
                 <h2 className="text-3xl font-headline font-bold mb-8 uppercase tracking-tighter">Investigative Hubs</h2>
-                
                 <div className="space-y-6">
                   <Card className="glass-card border-white/5 p-8 hover:border-primary/30 transition-all group">
                     <div className="flex items-start gap-6">
@@ -131,12 +145,11 @@ export default function ContactPage() {
                     </div>
                   </Card>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     {[
                       { city: "Zurich", region: "DACH / EU Hub", icon: Building },
                       { city: "London", region: "UK / International", icon: Building },
-                      { city: "Singapore", region: "APAC Intelligence", icon: Building },
-                      { city: "Dubai", region: "MENA Corridor", icon: Building }
+                      { city: "Singapore", region: "APAC Intelligence", icon: Building }
                     ].map((hub, idx) => (
                       <Card key={idx} className="glass-card border-white/5 p-6 hover:border-primary/20 transition-all">
                         <div className="flex items-center gap-4">
@@ -149,130 +162,100 @@ export default function ContactPage() {
                       </Card>
                     ))}
                   </div>
-
-                  <Card className="glass-card border-white/5 p-8">
-                    <div className="flex items-center gap-4 mb-6">
-                      <Activity className="w-5 h-5 text-primary" />
-                      <h4 className="text-sm font-black uppercase tracking-widest">Operational Status</h4>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center py-2 border-b border-white/5">
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Intake System</span>
-                        <span className="text-[10px] font-black text-emerald-500 uppercase flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" /> Active
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-white/5">
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Encryption Node</span>
-                        <span className="text-[10px] font-black text-emerald-500 uppercase flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" /> AES-256 Verified
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase">Specialist Availability</span>
-                        <span className="text-[10px] font-black text-primary uppercase">24/7 Forensic Coverage</span>
-                      </div>
-                    </div>
-                  </Card>
                 </div>
               </SectionReveal>
             </div>
 
-            {/* Contact Form */}
             <div className="lg:col-span-3">
               <SectionReveal delay={200}>
-                <Card className="glass-card border-primary/10 overflow-hidden rounded-none">
-                  <div className="p-8 md:p-12 space-y-10">
-                    <div className="flex items-center justify-between gap-6 pb-8 border-b border-white/5">
-                      <div>
-                        <h3 className="text-2xl font-headline font-bold uppercase tracking-tight">Technical Inquiry Portal</h3>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1">Submit high-integrity case data for review</p>
-                      </div>
-                      <Lock className="w-8 h-8 text-primary opacity-20" />
+                <Card className="glass-card border-white/10 overflow-hidden rounded-none p-8 md:p-12">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Input 
+                        placeholder="Your Name*" 
+                        className="bg-white/5 border-white/10 rounded-none h-14 text-base placeholder:text-muted-foreground/50" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        required 
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Input 
+                        type="email" 
+                        placeholder="Your Email Address" 
+                        className="bg-white/5 border-white/10 rounded-none h-14 text-base placeholder:text-muted-foreground/50" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        required 
+                      />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                      <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Name / Entity</Label>
-                          <Input 
-                            placeholder="Identifying Name" 
-                            className="bg-white/5 border-white/10 rounded-none h-12" 
-                            value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
-                            required 
-                          />
-                        </div>
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Encryption-Safe Email</Label>
-                          <Input 
-                            type="email" 
-                            placeholder="Preferred Email" 
-                            className="bg-white/5 border-white/10 rounded-none h-12" 
-                            value={formData.email}
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
-                            required 
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Jurisdiction / Location</Label>
-                          <Input 
-                            placeholder="Primary Location" 
-                            className="bg-white/5 border-white/10 rounded-none h-12" 
-                            value={formData.location}
-                            onChange={(e) => setFormData({...formData, location: e.target.value})}
-                            required 
-                          />
-                        </div>
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Inquiry Department</Label>
-                          <Input 
-                            placeholder="e.g. Trading Fraud" 
-                            className="bg-white/5 border-white/10 rounded-none h-12" 
-                            value={formData.department}
-                            onChange={(e) => setFormData({...formData, department: e.target.value})}
-                            required 
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Brief Abstract</Label>
-                        <Textarea 
-                          placeholder="Provide a clinical summary of the technical parameters of your case..." 
-                          className="min-h-[160px] bg-white/5 border-white/10 rounded-none" 
-                          value={formData.abstract}
-                          onChange={(e) => setFormData({...formData, abstract: e.target.value})}
-                          required 
-                        />
-                      </div>
-
-                      <div className="pt-4">
-                        <Button disabled={loading} className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.3em] premium-cta rounded-none">
-                          {loading ? (
-                            <div className="flex items-center gap-2">
-                              <Loader2 className="w-5 h-5 animate-spin" />
-                              Transmitting Brief...
-                            </div>
-                          ) : (
-                            <>
-                              Transmit Encrypted Brief
-                              <ArrowRight className="ml-3 w-5 h-5" />
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </form>
-
-                    <div className="pt-8 mt-8 border-t border-white/5 text-center">
-                      <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-3">
-                        <ShieldCheck className="w-3.5 h-3.5" /> Data Sovereignty Protected | AES-256 Terminal Encryption
-                      </p>
+                    <div className="space-y-2">
+                      <Input 
+                        type="tel" 
+                        placeholder="Your Phone Number" 
+                        className="bg-white/5 border-white/10 rounded-none h-14 text-base placeholder:text-muted-foreground/50" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      />
                     </div>
-                  </div>
+
+                    <div className="space-y-2">
+                      <Select 
+                        value={formData.service} 
+                        onValueChange={(val) => setFormData({...formData, service: val})}
+                      >
+                        <SelectTrigger className="bg-white/5 border-white/10 rounded-none h-14 text-base text-muted-foreground/50">
+                          <SelectValue placeholder="Select Services You're interested in:" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-white/10">
+                          {DIVISIONS.map((service) => (
+                            <SelectItem key={service} value={service} className="text-sm font-bold uppercase tracking-widest">
+                              {service}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Input 
+                        placeholder="Country" 
+                        className="bg-white/5 border-white/10 rounded-none h-14 text-base placeholder:text-muted-foreground/50" 
+                        value={formData.country}
+                        onChange={(e) => setFormData({...formData, country: e.target.value})}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Textarea 
+                        placeholder="Your Message" 
+                        className="min-h-[140px] bg-white/5 border-white/10 rounded-none text-base placeholder:text-muted-foreground/50" 
+                        value={formData.message}
+                        onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      />
+                    </div>
+
+                    <div className="pt-4">
+                      <Button 
+                        disabled={loading} 
+                        className="bg-[#0056b3] hover:bg-[#004494] text-white font-bold h-12 px-10 rounded-sm transition-all"
+                      >
+                        {loading ? (
+                          <div className="flex items-center gap-2">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Sending...
+                          </div>
+                        ) : 'Submit'}
+                      </Button>
+                    </div>
+
+                    <div className="pt-8 mt-8 border-t border-white/5 flex items-center justify-center gap-3 opacity-40">
+                      <Lock className="w-3.5 h-3.5" />
+                      <p className="text-[9px] font-black uppercase tracking-[0.3em]">AES-256 Terminal Encryption Active</p>
+                    </div>
+                  </form>
                 </Card>
               </SectionReveal>
             </div>

@@ -98,7 +98,7 @@ export function SuccessStories() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {expertise.map((item, idx) => (
                 <SectionReveal key={idx} delay={idx * 50} className="active">
-                  <div className="flex items-center gap-4 p-6 bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                  <div className="flex items-center gap-4 p-6 bg-card border border-white/5 hover:border-primary/50 transition-all duration-300">
                     <div className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center">
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
@@ -130,14 +130,14 @@ export function SuccessStories() {
                 const Icon = iconMap[story.icon_name] || TrendingUp;
                 return (
                   <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
-                    <Card className="glass-card h-full hover:border-primary/50 hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden flex flex-col bg-card/60">
+                    <Card className="glass-card h-full transition-all duration-500 group relative overflow-hidden flex flex-col bg-card/60 border-white/5 hover:bg-card/80 hover:border-primary/40">
                       <svg className="absolute top-0 right-0 opacity-10 pointer-events-none" width="60" height="60">
                         <path d="M 60 10 L 50 10 L 50 0" className="forensic-trace" />
                       </svg>
                       
                       <CardContent className="p-10 flex flex-col h-full">
                         <div className="flex justify-between items-start mb-8">
-                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10">
+                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10 transition-all duration-500 group-hover:rotate-[5deg] group-hover:border-primary/50">
                             <Icon className="w-6 h-6 text-primary" />
                           </div>
                           <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px] animate-status-settle relative z-10">
@@ -146,7 +146,7 @@ export function SuccessStories() {
                         </div>
                         
                         <div className="mb-4 relative z-10">
-                          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">Case #{story.case_id}</p>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1 transition-all duration-500 group-hover:text-primary group-hover:gold-glow">Case #{story.case_id}</p>
                           <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight text-white leading-tight">{story.case_type} Division</h4>
                           <p className="text-3xl font-headline font-bold text-primary tracking-tighter">{story.amount}</p>
                         </div>
@@ -186,7 +186,7 @@ export function SuccessStories() {
 
                              <div className="relative pt-2">
                                <div className="absolute left-[-23px] top-[14px] w-2 h-2 rounded-full border border-white/20 bg-background z-20 group-hover:border-emerald-500 group-hover:shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-all duration-300 delay-600" />
-                               <div className="p-5 bg-white/[0.03] border border-white/5 outcome-box group-hover:border-emerald-500/30 transition-colors duration-700 delay-600">
+                               <div className="p-5 bg-white/[0.03] border border-white/5 outcome-box group-hover:border-emerald-500/50 group-hover:bg-emerald-500/[0.05] transition-all duration-500 delay-600">
                                  <div className="outcome-content">
                                    <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
                                      <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome

@@ -206,8 +206,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       
-      {/* Human Reassurance Section */}
-      <section className="py-20 bg-background relative overflow-hidden">
+      {/* About Us Section / Human Reassurance */}
+      <section id="about" className="py-20 bg-background relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-headline font-bold mb-8 leading-tight">

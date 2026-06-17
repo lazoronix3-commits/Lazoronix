@@ -31,8 +31,8 @@ const divisions = [
 ];
 
 const navLinks = [
+  { href: "/#about", label: "About Us" },
   { href: "/#preservation", label: "Protocols" },
-  { href: "/#intelligence", label: "Intelligence Reports" },
   { href: "/#process", label: "Process" },
   { href: "/contact", label: "Contact" },
 ];

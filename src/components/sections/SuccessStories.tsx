@@ -131,6 +131,12 @@ export function SuccessStories() {
                 return (
                   <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
                     <Card className="glass-card h-full transition-all duration-500 group relative overflow-hidden flex flex-col bg-card/60 border-white/5 hover:bg-card/80 hover:border-primary/40">
+                      {/* Clinical Evidence Scan Line */}
+                      <div 
+                        className="evidence-scan-line" 
+                        style={{ animationDelay: `${(idx * 3.5) % 12}s` }}
+                      />
+                      
                       <svg className="absolute top-0 right-0 opacity-10 pointer-events-none" width="60" height="60">
                         <path d="M 60 10 L 50 10 L 50 0" className="forensic-trace" />
                       </svg>

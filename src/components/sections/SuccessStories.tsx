@@ -14,7 +14,8 @@ import {
   Activity, 
   Loader2, 
   Briefcase,
-  Target
+  Target,
+  ChevronDown
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -136,49 +137,67 @@ export function SuccessStories() {
                       
                       <CardContent className="p-10 flex flex-col h-full">
                         <div className="flex justify-between items-start mb-8">
-                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40">
+                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10">
                             <Icon className="w-6 h-6 text-primary" />
                           </div>
-                          <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px] animate-status-settle">
+                          <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px] animate-status-settle relative z-10">
                             {story.status}
                           </Badge>
                         </div>
                         
-                        <div className="mb-8">
+                        <div className="mb-4 relative z-10">
                           <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">Case #{story.case_id}</p>
                           <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight text-white leading-tight">{story.case_type} Division</h4>
                           <p className="text-3xl font-headline font-bold text-primary tracking-tighter">{story.amount}</p>
                         </div>
-                        
-                        <div className="space-y-6 flex-grow">
-                           <div className="space-y-3">
-                             <p className="text-[8px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                               <ShieldCheck className="w-3.5 h-3.5" /> Technical Challenge
-                             </p>
-                             <p className="text-[11px] text-foreground/80 font-bold uppercase tracking-wide leading-relaxed pl-5 border-l border-white/10">
-                               {story.challenge}
-                             </p>
-                           </div>
 
-                           <div className="space-y-3">
-                             <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                               <Target className="w-3.5 h-3.5" /> Investigative Focus
-                             </p>
-                             <p className="text-[11px] text-foreground/60 font-medium uppercase tracking-wide leading-relaxed pl-5 border-l border-white/10">
-                               {story.focus}
-                             </p>
-                           </div>
+                        {/* Investigation Path Visualizer */}
+                        <div className="relative flex flex-col gap-6 flex-grow pt-4">
+                          {/* Sequential Vertical Trace Line */}
+                          <div className="absolute left-[7px] top-0 bottom-10 w-px bg-white/5 pointer-events-none">
+                            <div className="absolute top-0 left-0 w-full bg-primary h-0 group-hover:h-full transition-all duration-1000 ease-in-out opacity-0 group-hover:opacity-100" />
+                          </div>
 
-                           <div className="space-y-3 p-5 bg-white/[0.03] border border-white/5 outcome-box">
-                             <div className="outcome-content">
-                               <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
-                                 <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome
+                          {/* CASE to CHALLENGE connector */}
+                          <div className="absolute left-[7px] top-[-10px] h-4 w-px bg-white/5 overflow-hidden">
+                             <div className="w-full h-full bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out delay-100" />
+                          </div>
+
+                          <div className="space-y-6 relative pl-6">
+                             <div className="space-y-2 relative">
+                               <div className="absolute left-[-23px] top-[6px] w-2 h-2 rounded-full border border-white/20 bg-background z-20 group-hover:border-primary group-hover:shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all duration-300 delay-200" />
+                               <p className="text-[8px] font-black uppercase tracking-widest text-primary flex items-center gap-2 group-hover:gold-glow transition-all duration-500 delay-200">
+                                 <ShieldCheck className="w-3.5 h-3.5" /> Technical Challenge
                                </p>
-                               <p className="text-[11px] text-white font-black uppercase tracking-widest leading-relaxed">
-                                 {story.outcome}
+                               <p className="text-[11px] text-foreground/80 font-bold uppercase tracking-wide leading-relaxed">
+                                 {story.challenge}
                                </p>
                              </div>
-                           </div>
+
+                             <div className="space-y-2 relative">
+                               <div className="absolute left-[-23px] top-[6px] w-2 h-2 rounded-full border border-white/20 bg-background z-20 group-hover:border-primary group-hover:shadow-[0_0_8px_rgba(212,175,55,0.6)] transition-all duration-300 delay-400" />
+                               <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2 group-hover:text-primary transition-colors duration-500 delay-400">
+                                 <Target className="w-3.5 h-3.5" /> Investigative Focus
+                               </p>
+                               <p className="text-[11px] text-foreground/60 font-medium uppercase tracking-wide leading-relaxed">
+                                 {story.focus}
+                               </p>
+                             </div>
+
+                             <div className="relative pt-2">
+                               <div className="absolute left-[-23px] top-[14px] w-2 h-2 rounded-full border border-white/20 bg-background z-20 group-hover:border-emerald-500 group-hover:shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-all duration-300 delay-600" />
+                               <div className="p-5 bg-white/[0.03] border border-white/5 outcome-box group-hover:border-emerald-500/30 transition-colors duration-700 delay-600">
+                                 <div className="outcome-content">
+                                   <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
+                                     <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome
+                                   </p>
+                                   <p className="text-[11px] text-white font-black uppercase tracking-widest leading-relaxed">
+                                     {story.outcome}
+                                   </p>
+                                 </div>
+                               </div>
+                             </div>
+                          </div>
                         </div>
 
                         <div className="mt-8 pt-6 border-t border-white/5 relative overflow-hidden">

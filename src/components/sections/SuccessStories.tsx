@@ -144,6 +144,9 @@ export function SuccessStories() {
     <section id="success-stories" className="py-24 bg-background overflow-hidden border-t border-white/5 relative">
       {/* Intelligence Network Background */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
+        {/* Resolution Probability Wave (Radar Sweep) */}
+        <div className="absolute top-0 bottom-0 w-[1px] bg-primary/40 animate-radar-pulse shadow-[0_0_40px_rgba(212,175,55,0.4)] z-20" />
+        
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="network-pattern" width="240" height="240" patternUnits="userSpaceOnUse">
@@ -235,7 +238,7 @@ export function SuccessStories() {
                       
                       <CardContent className="p-10 flex flex-col h-full relative z-10">
                         <div className="flex justify-between items-start mb-8">
-                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10 transition-all duration-700 group-hover:border-primary/50 overflow-hidden">
+                          <div className="w-12 h-12 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-700 relative overflow-hidden">
                             {/* Tactical Rotating Ring */}
                             <div className="absolute inset-[-4px] border border-dashed border-primary/0 group-hover:border-primary/30 group-hover:rotate-180 transition-all duration-1000 ease-in-out" />
                             <Icon className="w-6 h-6 text-primary relative z-10" />

@@ -4,9 +4,6 @@ import { SectionReveal } from '@/components/ui/section-reveal';
 import { 
   FileText, 
   ChevronRight, 
-  Search, 
-  Database, 
-  ShieldAlert, 
   ArrowRight,
   Download,
   Calendar,
@@ -88,8 +85,8 @@ export function IntelligenceReports() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {REPORTS.map((report, idx) => (
-            <SectionReveal key={report.id} delay={idx * 150} className="h-full">
-              <Card className="glass-card h-full rounded-none border-white/5 hover:border-primary/50 transition-all duration-500 group flex flex-col relative overflow-hidden">
+            <SectionReveal key={report.id} delay={idx * 100} className="h-full">
+              <Card className="glass-card h-full rounded-none border-white/5 hover:border-primary/50 transition-all duration-500 group flex flex-col relative overflow-hidden bg-card/60">
                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
                   <FileText className="w-32 h-32" />
                 </div>
@@ -137,7 +134,7 @@ export function IntelligenceReports() {
           <div className="absolute inset-0 bg-primary/[0.02] pointer-events-none" />
           <div className="flex items-center gap-6 relative z-10">
             <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center relative">
-              <ShieldAlert className="w-8 h-8 text-primary" />
+              <Lock className="w-8 h-8 text-primary" />
               <div className="absolute inset-0 rounded-full border border-primary animate-breathing opacity-30" />
             </div>
             <div>

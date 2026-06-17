@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -13,17 +12,13 @@ import {
   Lock, 
   Fingerprint, 
   Activity, 
-  FileSearch, 
   Loader2, 
   Briefcase,
-  Network,
-  ChevronRight,
   Target
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
-import { cn } from '@/lib/utils';
 import { SectionReveal } from '@/components/ui/section-reveal';
 
 const iconMap: Record<string, any> = {
@@ -101,7 +96,7 @@ export function SuccessStories() {
           <div className="flex-grow">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {expertise.map((item, idx) => (
-                <SectionReveal key={idx} delay={idx * 100} className="active">
+                <SectionReveal key={idx} delay={idx * 50} className="active">
                   <div className="flex items-center gap-4 p-6 bg-card border border-white/5 hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
                     <div className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center">
                       <item.icon className="w-5 h-5 text-primary" />
@@ -133,13 +128,16 @@ export function SuccessStories() {
               {stories.map((story, idx) => {
                 const Icon = iconMap[story.icon_name] || TrendingUp;
                 return (
-                  <SectionReveal key={story.id} delay={idx * 150} className="active h-full">
-                    <Card className="glass-card h-full hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group relative overflow-hidden flex flex-col">
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/[0.03] rounded-full blur-3xl -mr-16 -mt-16" />
+                  <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
+                    <Card className="glass-card h-full hover:border-primary/50 hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden flex flex-col bg-card/60">
+                      {/* Institutional corner accent instead of blurry blob */}
+                      <svg className="absolute top-0 right-0 opacity-10 pointer-events-none" width="60" height="60">
+                        <path d="M 60 10 L 50 10 L 50 0" className="forensic-trace" />
+                      </svg>
                       
                       <CardContent className="p-10 flex flex-col h-full">
                         <div className="flex justify-between items-start mb-8">
-                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40">
                             <Icon className="w-6 h-6 text-primary" />
                           </div>
                           <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px]">

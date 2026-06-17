@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -13,11 +12,21 @@ interface SectionRevealProps {
   once?: boolean;
 }
 
+/**
+ * SectionReveal Component
+ * 
+ * Provides a clinical, institutional reveal animation for sections and elements.
+ * Adheres to the "Mission Control" motion principles:
+ * - 30px translateY to 0
+ * - 500ms duration (default)
+ * - Controlled stagger via delay
+ * - No soft blurs or bouncy easing
+ */
 export function SectionReveal({ 
   children, 
   className, 
   delay = 0, 
-  duration = 400, // 0.4s Duration as requested
+  duration = 500,
   threshold = 0.1,
   once = true
 }: SectionRevealProps) {
@@ -55,13 +64,14 @@ export function SectionReveal({
     <div
       ref={domRef}
       className={cn(
-        'opacity-0 translate-y-4 transition-all ease-out filter blur-[1px]',
-        isVisible && 'opacity-100 translate-y-0 filter-none reveal-glow active',
+        'opacity-0 translate-y-8 transition-all', // 30px is approx translate-y-8
+        isVisible && 'opacity-100 translate-y-0 active',
         className
       )}
       style={{ 
         transitionDelay: `${delay}ms`,
-        transitionDuration: `${duration}ms`
+        transitionDuration: `${duration}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' // Clinical terminal easing
       }}
     >
       {children}

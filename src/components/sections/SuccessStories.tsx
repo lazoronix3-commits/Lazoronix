@@ -146,25 +146,18 @@ export function SuccessStories() {
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="network-pattern" width="240" height="240" patternUnits="userSpaceOnUse">
-              {/* Nodes representing the connected intelligence grid */}
               <circle cx="20" cy="20" r="1.5" className="network-node" />
               <circle cx="220" cy="20" r="1.5" className="network-node" />
               <circle cx="220" cy="220" r="1.5" className="network-node" />
               <circle cx="20" cy="220" r="1.5" className="network-node" />
               <circle cx="120" cy="120" r="1.5" className="network-node" />
-              
-              {/* Network connection lines */}
               <path d="M 20 20 L 220 20 M 220 20 L 220 220 M 220 220 L 20 220 M 20 220 L 20 20" className="network-line" />
               <path d="M 20 20 L 120 120 L 220 220" className="network-line" />
               <path d="M 220 20 L 120 120 L 20 220" className="network-line" />
-              
-              {/* Vertical technical paths */}
               <path d="M 120 0 L 120 240" className="network-line" strokeDasharray="5 15" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#network-pattern)" />
-          
-          {/* Drifting intelligence traces */}
           <path d="M -100 300 Q 500 150 1100 300" className="pulse-line" />
           <path d="M 1200 200 Q 700 450 -100 200" className="pulse-line" style={{ animationDelay: '-15s' }} />
         </svg>
@@ -223,7 +216,7 @@ export function SuccessStories() {
                   <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
                     <Card className="glass-card h-full transition-all duration-500 group relative overflow-hidden flex flex-col bg-card/60 border-white/5 hover:bg-card/80 hover:border-primary/40">
                       
-                      {/* Investigation Heat Signature: Subtle Moving Gradients */}
+                      {/* Investigation Heat Signature */}
                       <div className="absolute inset-0 pointer-events-none opacity-[0.02] overflow-hidden -z-10">
                         <div className="absolute -top-[20%] -left-[10%] w-[120%] h-[120%] bg-primary/20 rounded-full blur-[100px] animate-slow-float" />
                         <div className="absolute -bottom-[20%] -right-[10%] w-[100%] h-[100%] bg-primary/10 rounded-full blur-[120px] animate-slow-float" style={{ animationDirection: 'reverse', animationDuration: '30s' }} />
@@ -287,11 +280,22 @@ export function SuccessStories() {
 
                              <div className="relative pt-2">
                                <div className="absolute left-[-23px] top-[14px] w-2 h-2 rounded-full border border-white/20 bg-background z-20 group-hover:border-emerald-500 group-hover:shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-all duration-300 delay-600" />
-                               <div className="p-5 bg-white/[0.03] border border-white/5 outcome-box group-hover:border-emerald-500/50 group-hover:bg-emerald-500/[0.05] transition-all duration-500 delay-600">
+                               <div className="p-5 bg-white/[0.03] border border-white/5 outcome-box group-hover:border-emerald-500/50 group-hover:bg-emerald-500/[0.05] transition-all duration-500">
                                  <div className="outcome-content">
-                                   <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
-                                     <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome
-                                   </p>
+                                   <div className="flex items-center gap-2 mb-1">
+                                      <svg 
+                                        viewBox="0 0 24 24" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        strokeWidth="3" 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        className="w-3.5 h-3.5 text-emerald-500 verified-check-svg"
+                                      >
+                                        <polyline points="20 6 9 17 4 12" />
+                                      </svg>
+                                      <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500">VERIFIED RESOLUTION</p>
+                                   </div>
                                    <p className="text-[11px] text-white font-black uppercase tracking-widest leading-relaxed">
                                      {story.outcome}
                                    </p>

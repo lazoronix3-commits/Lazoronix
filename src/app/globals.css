@@ -157,6 +157,11 @@
   100% { top: 100%; opacity: 0; }
 }
 
+@keyframes draw-check {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+
 /* Intelligence Motion Classes */
 .network-line {
   fill: none;
@@ -262,11 +267,22 @@
 }
 
 .outcome-content {
-  @apply opacity-0 transition-opacity duration-500 delay-700;
+  @apply opacity-0 transition-opacity duration-500;
+  transition-delay: 700ms;
 }
 
 .active .outcome-content {
   @apply opacity-100;
+}
+
+.verified-check-svg {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+}
+
+.active .verified-check-svg {
+  animation: draw-check 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 1s;
 }
 
 .evidence-scan-line {

@@ -18,25 +18,71 @@ import {
   Lock, 
   Activity,
   MessageSquare,
-  Building
+  Building,
+  Loader2
 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabase';
 
 export default function ContactPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    location: '',
+    department: '',
+    abstract: ''
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const generatedId = `INQ-${Math.floor(10000 + Math.random() * 90000)}`;
+      
+      const payload = {
+        case_id: generatedId,
+        case_type: formData.department || 'General Inquiry',
+        user_name: formData.name,
+        user_email: formData.email,
+        user_country: formData.location,
+        description: formData.abstract,
+        status: 'Review Pending',
+        risk_level: 'Initial Inquiry',
+        evidence_integrity: 'Pending Review',
+        form_values: { source: 'Contact Portal' }
+      };
+
+      const { error } = await supabase
+        .from('cases')
+        .insert([payload]);
+
+      if (error) throw error;
+
       toast({
         title: "Transmission Secure",
         description: "Your investigative brief has been encrypted and sent to the duty analyst.",
       });
-    }, 1500);
+
+      setFormData({
+        name: '',
+        email: '',
+        location: '',
+        department: '',
+        abstract: ''
+      });
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: "Transmission Failed",
+        description: error.message || "The encryption node encountered an error. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -149,34 +195,74 @@ export default function ContactPage() {
                       <div className="grid md:grid-cols-2 gap-8">
                         <div className="space-y-3">
                           <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Name / Entity</Label>
-                          <Input placeholder="Identifying Name" className="bg-white/5 border-white/10 rounded-none h-12" required />
+                          <Input 
+                            placeholder="Identifying Name" 
+                            className="bg-white/5 border-white/10 rounded-none h-12" 
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            required 
+                          />
                         </div>
                         <div className="space-y-3">
                           <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Encryption-Safe Email</Label>
-                          <Input type="email" placeholder="Preferred Email" className="bg-white/5 border-white/10 rounded-none h-12" required />
+                          <Input 
+                            type="email" 
+                            placeholder="Preferred Email" 
+                            className="bg-white/5 border-white/10 rounded-none h-12" 
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            required 
+                          />
                         </div>
                       </div>
                       
                       <div className="grid md:grid-cols-2 gap-8">
                         <div className="space-y-3">
                           <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Jurisdiction / Location</Label>
-                          <Input placeholder="Primary Location" className="bg-white/5 border-white/10 rounded-none h-12" required />
+                          <Input 
+                            placeholder="Primary Location" 
+                            className="bg-white/5 border-white/10 rounded-none h-12" 
+                            value={formData.location}
+                            onChange={(e) => setFormData({...formData, location: e.target.value})}
+                            required 
+                          />
                         </div>
                         <div className="space-y-3">
                           <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Inquiry Department</Label>
-                          <Input placeholder="e.g. Trading Fraud" className="bg-white/5 border-white/10 rounded-none h-12" required />
+                          <Input 
+                            placeholder="e.g. Trading Fraud" 
+                            className="bg-white/5 border-white/10 rounded-none h-12" 
+                            value={formData.department}
+                            onChange={(e) => setFormData({...formData, department: e.target.value})}
+                            required 
+                          />
                         </div>
                       </div>
 
                       <div className="space-y-3">
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Technical Brief Abstract</Label>
-                        <Textarea placeholder="Provide a clinical summary of the technical parameters of your case..." className="min-h-[160px] bg-white/5 border-white/10 rounded-none" required />
+                        <Textarea 
+                          placeholder="Provide a clinical summary of the technical parameters of your case..." 
+                          className="min-h-[160px] bg-white/5 border-white/10 rounded-none" 
+                          value={formData.abstract}
+                          onChange={(e) => setFormData({...formData, abstract: e.target.value})}
+                          required 
+                        />
                       </div>
 
                       <div className="pt-4">
                         <Button disabled={loading} className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.3em] premium-cta rounded-none">
-                          {loading ? "Transmitting Brief..." : "Transmit Encrypted Brief"}
-                          {!loading && <ArrowRight className="ml-3 w-5 h-5" />}
+                          {loading ? (
+                            <div className="flex items-center gap-2">
+                              <Loader2 className="w-5 h-5 animate-spin" />
+                              Transmitting Brief...
+                            </div>
+                          ) : (
+                            <>
+                              Transmit Encrypted Brief
+                              <ArrowRight className="ml-3 w-5 h-5" />
+                            </>
+                          )}
                         </Button>
                       </div>
                     </form>

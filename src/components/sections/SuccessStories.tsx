@@ -81,14 +81,13 @@ function AnimatedAmount({ value }: { value: string }) {
   }, [value, hasAnimated]);
 
   const startAnimation = () => {
-    // Extract numeric value (e.g., "$240,000" -> 240000)
     const numericTarget = parseInt(value.replace(/[^0-9]/g, ''), 10);
     if (isNaN(numericTarget)) {
       setDisplayValue(value);
       return;
     }
 
-    const duration = 1000; // 1 second
+    const duration = 1000;
     const startTime = performance.now();
     const currencySymbol = value.startsWith('$') ? '$' : '';
 
@@ -96,7 +95,6 @@ function AnimatedAmount({ value }: { value: string }) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Linear-out-slow-in easing for clinical feel
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       const currentCount = Math.floor(easeProgress * numericTarget);
 
@@ -195,6 +193,13 @@ export function SuccessStories() {
                 return (
                   <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
                     <Card className="glass-card h-full transition-all duration-500 group relative overflow-hidden flex flex-col bg-card/60 border-white/5 hover:bg-card/80 hover:border-primary/40">
+                      
+                      {/* Investigation Heat Signature: Subtle Moving Gradients */}
+                      <div className="absolute inset-0 pointer-events-none opacity-[0.02] overflow-hidden -z-10">
+                        <div className="absolute -top-[20%] -left-[10%] w-[120%] h-[120%] bg-primary/20 rounded-full blur-[100px] animate-slow-float" />
+                        <div className="absolute -bottom-[20%] -right-[10%] w-[100%] h-[100%] bg-primary/10 rounded-full blur-[120px] animate-slow-float" style={{ animationDirection: 'reverse', animationDuration: '30s' }} />
+                      </div>
+
                       {/* Clinical Evidence Scan Line */}
                       <div 
                         className="evidence-scan-line" 
@@ -205,7 +210,7 @@ export function SuccessStories() {
                         <path d="M 60 10 L 50 10 L 50 0" className="forensic-trace" />
                       </svg>
                       
-                      <CardContent className="p-10 flex flex-col h-full">
+                      <CardContent className="p-10 flex flex-col h-full relative z-10">
                         <div className="flex justify-between items-start mb-8">
                           <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10 transition-all duration-500 group-hover:rotate-[5deg] group-hover:border-primary/50">
                             <Icon className="w-6 h-6 text-primary" />
@@ -221,14 +226,11 @@ export function SuccessStories() {
                           <AnimatedAmount value={story.amount} />
                         </div>
 
-                        {/* Investigation Path Visualizer */}
                         <div className="relative flex flex-col gap-6 flex-grow pt-4">
-                          {/* Sequential Vertical Trace Line */}
                           <div className="absolute left-[7px] top-0 bottom-10 w-px bg-white/5 pointer-events-none">
                             <div className="absolute top-0 left-0 w-full bg-primary h-0 group-hover:h-full transition-all duration-1000 ease-in-out opacity-0 group-hover:opacity-100" />
                           </div>
 
-                          {/* CASE to CHALLENGE connector */}
                           <div className="absolute left-[7px] top-[-10px] h-4 w-px bg-white/5 overflow-hidden">
                              <div className="w-full h-full bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out delay-100" />
                           </div>
@@ -276,7 +278,6 @@ export function SuccessStories() {
                             <span className="relative">Verified Resolution Stream</span>
                           </div>
                           
-                          {/* Transmission Pulse Effect */}
                           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/5 overflow-hidden">
                              <div className="absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent animate-stream-pulse" />
                              <div className="absolute top-0 h-full w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-stream-pulse" />

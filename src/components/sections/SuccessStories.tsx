@@ -130,7 +130,6 @@ export function SuccessStories() {
                 return (
                   <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
                     <Card className="glass-card h-full hover:border-primary/50 hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden flex flex-col bg-card/60">
-                      {/* Institutional corner accent instead of blurry blob */}
                       <svg className="absolute top-0 right-0 opacity-10 pointer-events-none" width="60" height="60">
                         <path d="M 60 10 L 50 10 L 50 0" className="forensic-trace" />
                       </svg>
@@ -180,9 +179,17 @@ export function SuccessStories() {
                            </div>
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.3em] text-muted-foreground">
-                          <Fingerprint className="w-3 h-3" />
-                          Verified Resolution Stream
+                        <div className="mt-8 pt-6 border-t border-white/5 relative overflow-hidden">
+                          <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.3em] text-muted-foreground">
+                            <Fingerprint className="w-3 h-3 shrink-0" />
+                            <span className="relative">Verified Resolution Stream</span>
+                          </div>
+                          
+                          {/* Transmission Pulse Effect */}
+                          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/5 overflow-hidden">
+                             <div className="absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent animate-stream-pulse" />
+                             <div className="absolute top-0 h-full w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-stream-pulse" />
+                          </div>
                         </div>
                       </CardContent>
                     </Card>

@@ -122,6 +122,14 @@
   75% { transform: translate(15px, 5px); }
 }
 
+@keyframes stream-pulse {
+  0% { left: -30%; opacity: 0; }
+  10% { opacity: 1; }
+  40% { opacity: 1; }
+  60% { left: 130%; opacity: 0; }
+  100% { left: 130%; opacity: 0; }
+}
+
 /* Intelligence Motion Classes */
 .network-line {
   fill: none;
@@ -152,6 +160,10 @@
 
 .animate-slow-float {
   animation: slow-float 45s ease-in-out infinite;
+}
+
+.animate-stream-pulse {
+  animation: stream-pulse 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .forensic-trace {

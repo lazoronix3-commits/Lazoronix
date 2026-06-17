@@ -210,11 +210,11 @@ export function SuccessStories() {
               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">No public resolutions currently initialized</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 group/list">
               {stories.map((story, idx) => {
                 const Icon = iconMap[story.icon_name] || TrendingUp;
                 return (
-                  <SectionReveal key={story.id} delay={idx * 100} className="active h-full">
+                  <SectionReveal key={story.id} delay={idx * 100} className="active h-full transition-opacity duration-500 group-hover/list:opacity-80 hover:!opacity-100">
                     <Card className="glass-card h-full transition-all duration-500 group relative overflow-hidden flex flex-col bg-card/60 border-white/5 hover:bg-card/80 hover:border-primary/40">
                       
                       {/* Investigation Heat Signature */}

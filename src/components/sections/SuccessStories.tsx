@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { 
   CheckCircle2, 
   TrendingUp, 
@@ -52,6 +52,70 @@ const expertise = [
   { title: "Evidence Preservation", icon: Lock },
   { title: "Digital Forensics", icon: Fingerprint }
 ];
+
+/**
+ * AnimatedAmount - Clinical count-up for financial values.
+ * Runs once for 1000ms.
+ */
+function AnimatedAmount({ value }: { value: string }) {
+  const [displayValue, setDisplayValue] = useState('$0');
+  const countRef = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          startAnimation();
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [value, hasAnimated]);
+
+  const startAnimation = () => {
+    // Extract numeric value (e.g., "$240,000" -> 240000)
+    const numericTarget = parseInt(value.replace(/[^0-9]/g, ''), 10);
+    if (isNaN(numericTarget)) {
+      setDisplayValue(value);
+      return;
+    }
+
+    const duration = 1000; // 1 second
+    const startTime = performance.now();
+    const currencySymbol = value.startsWith('$') ? '$' : '';
+
+    const updateCount = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Linear-out-slow-in easing for clinical feel
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentCount = Math.floor(easeProgress * numericTarget);
+
+      setDisplayValue(`${currencySymbol}${currentCount.toLocaleString()}`);
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      }
+    };
+
+    requestAnimationFrame(updateCount);
+  };
+
+  return (
+    <div ref={countRef} className="text-3xl font-headline font-bold text-primary tracking-tighter">
+      {displayValue}
+    </div>
+  );
+}
 
 export function SuccessStories() {
   const [stories, setStories] = useState<Story[]>([]);
@@ -154,7 +218,7 @@ export function SuccessStories() {
                         <div className="mb-4 relative z-10">
                           <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1 transition-all duration-500 group-hover:text-primary group-hover:gold-glow">Case #{story.case_id}</p>
                           <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight text-white leading-tight">{story.case_type} Division</h4>
-                          <p className="text-3xl font-headline font-bold text-primary tracking-tighter">{story.amount}</p>
+                          <AnimatedAmount value={story.amount} />
                         </div>
 
                         {/* Investigation Path Visualizer */}

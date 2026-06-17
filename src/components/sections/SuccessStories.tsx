@@ -21,6 +21,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
 import { SectionReveal } from '@/components/ui/section-reveal';
+import { cn } from '@/lib/utils';
 
 const iconMap: Record<string, any> = {
   TrendingUp,
@@ -234,8 +235,10 @@ export function SuccessStories() {
                       
                       <CardContent className="p-10 flex flex-col h-full relative z-10">
                         <div className="flex justify-between items-start mb-8">
-                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10 transition-all duration-500 group-hover:rotate-[5deg] group-hover:border-primary/50">
-                            <Icon className="w-6 h-6 text-primary" />
+                          <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-black/40 relative z-10 transition-all duration-700 group-hover:border-primary/50 overflow-hidden">
+                            {/* Tactical Rotating Ring */}
+                            <div className="absolute inset-[-4px] border border-dashed border-primary/0 group-hover:border-primary/30 group-hover:rotate-180 transition-all duration-1000 ease-in-out" />
+                            <Icon className="w-6 h-6 text-primary relative z-10" />
                           </div>
                           <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 font-black uppercase tracking-widest text-[9px] animate-status-settle relative z-10">
                             {story.status}

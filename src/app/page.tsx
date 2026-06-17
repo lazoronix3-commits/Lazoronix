@@ -273,8 +273,10 @@ export default function Home() {
                   </div>
                   
                   <div className="flex items-center gap-6 mb-8">
-                    <div className="w-16 h-16 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <service.icon className="w-8 h-8 text-primary" />
+                    <div className="w-16 h-16 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-700 relative overflow-hidden">
+                      {/* Tactical Rotating Ring */}
+                      <div className="absolute inset-[-4px] border border-dashed border-primary/0 group-hover:border-primary/30 group-hover:rotate-180 transition-all duration-1000 ease-in-out" />
+                      <service.icon className="w-8 h-8 text-primary relative z-10" />
                     </div>
                     <div>
                       <h4 className="text-2xl font-headline font-bold uppercase tracking-tight">{service.title}</h4>

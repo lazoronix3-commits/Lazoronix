@@ -140,8 +140,37 @@ export function SuccessStories() {
   };
 
   return (
-    <section id="success-stories" className="py-24 bg-background overflow-hidden border-t border-white/5">
-      <div className="container mx-auto px-6">
+    <section id="success-stories" className="py-24 bg-background overflow-hidden border-t border-white/5 relative">
+      {/* Intelligence Network Background */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="network-pattern" width="240" height="240" patternUnits="userSpaceOnUse">
+              {/* Nodes representing the connected intelligence grid */}
+              <circle cx="20" cy="20" r="1.5" className="network-node" />
+              <circle cx="220" cy="20" r="1.5" className="network-node" />
+              <circle cx="220" cy="220" r="1.5" className="network-node" />
+              <circle cx="20" cy="220" r="1.5" className="network-node" />
+              <circle cx="120" cy="120" r="1.5" className="network-node" />
+              
+              {/* Network connection lines */}
+              <path d="M 20 20 L 220 20 M 220 20 L 220 220 M 220 220 L 20 220 M 20 220 L 20 20" className="network-line" />
+              <path d="M 20 20 L 120 120 L 220 220" className="network-line" />
+              <path d="M 220 20 L 120 120 L 20 220" className="network-line" />
+              
+              {/* Vertical technical paths */}
+              <path d="M 120 0 L 120 240" className="network-line" strokeDasharray="5 15" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#network-pattern)" />
+          
+          {/* Drifting intelligence traces */}
+          <path d="M -100 300 Q 500 150 1100 300" className="pulse-line" />
+          <path d="M 1200 200 Q 700 450 -100 200" className="pulse-line" style={{ animationDelay: '-15s' }} />
+        </svg>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 mb-20">
           <div className="max-w-xl">
             <SectionReveal>

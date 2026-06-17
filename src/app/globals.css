@@ -163,7 +163,7 @@
   stroke: hsl(var(--primary));
   stroke-width: 0.5;
   stroke-dasharray: 1 8;
-  opacity: 0.08;
+  opacity: 0.03;
   animation: network-flow 80s linear infinite;
 }
 
@@ -172,7 +172,7 @@
   stroke: hsl(var(--primary));
   stroke-width: 1;
   stroke-dasharray: 100 900;
-  opacity: 0;
+  opacity: 0.02;
   animation: gold-pulse 60s linear infinite;
 }
 

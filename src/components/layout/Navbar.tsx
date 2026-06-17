@@ -31,9 +31,9 @@ const divisions = [
 ];
 
 const navLinks = [
-  { href: "/#preservation", label: "Preservation Protocols" },
+  { href: "/#preservation", label: "Protocols" },
   { href: "/#intelligence", label: "Intelligence Reports" },
-  { href: "/#process", label: "Methodology" },
+  { href: "/#process", label: "Process" },
   { href: "/contact", label: "Contact" },
 ];
 

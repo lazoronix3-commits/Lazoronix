@@ -84,8 +84,8 @@ export function Footer() {
           <div>
             <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Integrity</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="/#preservation" className="hover:text-primary transition-colors">Preservation Protocols</Link></li>
-              <li><Link href="/#process" className="hover:text-primary transition-colors">Methodology</Link></li>
+              <li><Link href="/#preservation" className="hover:text-primary transition-colors">Protocols</Link></li>
+              <li><Link href="/#process" className="hover:text-primary transition-colors">Process</Link></li>
               <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Evidence Portal</Link></li>
               <li><Link href="/contact" className="hover:text-primary transition-colors">Specialist Briefing</Link></li>
             </ul>

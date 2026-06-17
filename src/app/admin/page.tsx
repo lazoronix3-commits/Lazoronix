@@ -35,7 +35,8 @@ import {
   Wallet,
   Briefcase,
   Download,
-  Database
+  Database,
+  Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -102,6 +103,38 @@ type SuccessStory = {
   narrative: string;
   icon_name: string;
 };
+
+/**
+ * InstitutionalDecryptor - Clinical state wrapper for sensitive case file expansion.
+ */
+function InstitutionalDecryptor({ children, caseId, label = "Case File" }: { children: React.ReactNode, caseId?: string, label?: string }) {
+  const [state, setState] = useState<'decrypting' | 'open'>('decrypting');
+
+  useEffect(() => {
+    const timer = setTimeout(() => setState('open'), 450);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (state === 'decrypting') {
+    return (
+      <div className="h-[400px] flex flex-col items-center justify-center space-y-6">
+        <div className="flex items-center gap-3">
+           <div className="w-2 h-2 bg-primary animate-breathing" />
+           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">{label} {caseId && `: ${caseId}`}</span>
+        </div>
+        <div className="text-2xl font-headline font-bold uppercase tracking-tighter animate-pulse text-white">
+           Decrypting Access Keys...
+        </div>
+        <div className="w-64 h-[1px] bg-white/5 relative overflow-hidden">
+           <div className="absolute top-0 h-full w-24 bg-primary animate-stream-pulse" />
+        </div>
+        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground">Authorized Access Only</p>
+      </div>
+    );
+  }
+
+  return <div className="animate-in fade-in duration-500">{children}</div>;
+}
 
 export default function AdminDashboard() {
   const [cases, setCases] = useState<CaseRecord[]>([]);
@@ -715,122 +748,124 @@ export default function AdminDashboard() {
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
-                              <DialogHeader className="p-6 md:p-8 border-b border-white/5 bg-card/50">
-                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-4">
-                                  <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-primary/10 rounded">
-                                      <FileText className="w-6 h-6 text-primary" />
+                              <InstitutionalDecryptor caseId={c.case_id} label="Investigation Brief">
+                                <DialogHeader className="p-6 md:p-8 border-b border-white/5 bg-card/50">
+                                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-4">
+                                    <div className="flex items-center gap-4">
+                                      <div className="p-3 bg-primary/10 rounded">
+                                        <FileText className="w-6 h-6 text-primary" />
+                                      </div>
+                                      <div>
+                                        <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</DialogTitle>
+                                        <DialogDescription className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</DialogDescription>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</DialogTitle>
-                                      <DialogDescription className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</DialogDescription>
+                                    <Badge className="bg-primary text-black uppercase tracking-widest text-[10px] py-1.5 px-4">{c.status}</Badge>
+                                  </div>
+                                </DialogHeader>
+                                <div className="p-6 md:p-8 space-y-8 md:space-y-12">
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                                    <div className="space-y-4">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><User className="w-3.5 h-3.5" /> Participant Details</h4>
+                                      <div className="p-6 bg-white/5 border border-white/5 space-y-3">
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Full Name</p><p className="text-sm font-bold">{c.user_name}</p></div>
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Email</p><p className="text-sm font-bold">{c.user_email}</p></div>
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Phone</p><p className="text-sm font-bold">{c.user_phone}</p></div>
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Location</p><p className="text-sm font-bold">{c.user_country}</p></div>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Activity className="w-3.5 h-3.5" /> Intake Metrics</h4>
+                                      <div className="p-6 bg-white/5 border border-white/5 space-y-3">
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Risk Factor</p><p className="text-sm font-bold uppercase text-primary">{c.risk_level}</p></div>
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Evidence Status</p><p className="text-sm font-bold uppercase">{c.evidence_integrity}</p></div>
+                                        <div><p className="text-[9px] text-muted-foreground uppercase">Preferred Method</p><p className="text-sm font-bold uppercase">{c.preferred_method} ({c.best_contact_time})</p></div>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Target className="w-3.5 h-3.5" /> Platform Data</h4>
+                                      <div className="p-6 bg-white/5 border border-white/5 space-y-3">
+                                        {Object.entries(c.form_values || {}).map(([key, val]: any) => (
+                                          <div key={key}>
+                                            <p className="text-[9px] text-muted-foreground uppercase">{key.replace(/([A-Z])/g, ' $1')}</p>
+                                            <p className="text-sm font-bold">{val}</p>
+                                          </div>
+                                        ))}
+                                      </div>
                                     </div>
                                   </div>
-                                  <Badge className="bg-primary text-black uppercase tracking-widest text-[10px] py-1.5 px-4">{c.status}</Badge>
-                                </div>
-                              </DialogHeader>
-                              <div className="p-6 md:p-8 space-y-8 md:space-y-12">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                                  <div className="space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><User className="w-3.5 h-3.5" /> Participant Details</h4>
-                                    <div className="p-6 bg-white/5 border border-white/5 space-y-3">
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Full Name</p><p className="text-sm font-bold">{c.user_name}</p></div>
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Email</p><p className="text-sm font-bold">{c.user_email}</p></div>
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Phone</p><p className="text-sm font-bold">{c.user_phone}</p></div>
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Location</p><p className="text-sm font-bold">{c.user_country}</p></div>
-                                    </div>
-                                  </div>
-                                  <div className="space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Activity className="w-3.5 h-3.5" /> Intake Metrics</h4>
-                                    <div className="p-6 bg-white/5 border border-white/5 space-y-3">
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Risk Factor</p><p className="text-sm font-bold uppercase text-primary">{c.risk_level}</p></div>
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Evidence Status</p><p className="text-sm font-bold uppercase">{c.evidence_integrity}</p></div>
-                                      <div><p className="text-[9px] text-muted-foreground uppercase">Preferred Method</p><p className="text-sm font-bold uppercase">{c.preferred_method} ({c.best_contact_time})</p></div>
-                                    </div>
-                                  </div>
-                                  <div className="space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Target className="w-3.5 h-3.5" /> Platform Data</h4>
-                                    <div className="p-6 bg-white/5 border border-white/5 space-y-3">
-                                      {Object.entries(c.form_values || {}).map(([key, val]: any) => (
-                                        <div key={key}>
-                                          <p className="text-[9px] text-muted-foreground uppercase">{key.replace(/([A-Z])/g, ' $1')}</p>
-                                          <p className="text-sm font-bold">{val}</p>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                  <div className="space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Technical Narrative</h4>
-                                    <div className="p-6 bg-card border border-white/10 italic text-sm text-foreground/80 leading-relaxed border-l-2 border-l-primary">
-                                      "{c.description}"
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-4">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Search className="w-3.5 h-3.5" /> Technical Narrative</h4>
+                                      <div className="p-6 bg-card border border-white/10 italic text-sm text-foreground/80 leading-relaxed border-l-2 border-l-primary">
+                                        "{c.description}"
+                                      </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> Encrypted Evidence</h4>
+                                      <div className="grid gap-2">
+                                        {c.evidence_files && c.evidence_files.length > 0 ? (
+                                          c.evidence_files.map((file, i) => (
+                                            <a 
+                                              key={i} 
+                                              href={file.url} 
+                                              target="_blank" 
+                                              rel="noopener noreferrer"
+                                              className="flex items-center justify-between p-3 bg-white/5 border border-white/5 hover:border-primary/50 transition-colors group"
+                                            >
+                                              <div className="flex items-center gap-3 min-w-0">
+                                                <FileText className="w-4 h-4 text-primary shrink-0" />
+                                                <span className="text-[11px] font-bold uppercase tracking-tight truncate">{file.name}</span>
+                                              </div>
+                                              <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary shrink-0" />
+                                            </a>
+                                          ))
+                                        ) : (
+                                          <div className="p-4 border border-dashed border-white/5 text-center">
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-50">No Evidence Files Uploaded</p>
+                                          </div>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className="space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> Encrypted Evidence</h4>
-                                    <div className="grid gap-2">
-                                      {c.evidence_files && c.evidence_files.length > 0 ? (
-                                        c.evidence_files.map((file, i) => (
-                                          <a 
-                                            key={i} 
-                                            href={file.url} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="flex items-center justify-between p-3 bg-white/5 border border-white/5 hover:border-primary/50 transition-colors group"
-                                          >
-                                            <div className="flex items-center gap-3 min-w-0">
-                                              <FileText className="w-4 h-4 text-primary shrink-0" />
-                                              <span className="text-[11px] font-bold uppercase tracking-tight truncate">{file.name}</span>
-                                            </div>
-                                            <Download className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary shrink-0" />
-                                          </a>
-                                        ))
-                                      ) : (
-                                        <div className="p-4 border border-dashed border-white/5 text-center">
-                                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-50">No Evidence Files Uploaded</p>
-                                        </div>
-                                      )}
+
+                                  {c.result_data?.preliminaryCaseFindings && (
+                                    <div className="space-y-6">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> AI Forensic Findings</h4>
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                        {Object.entries(c.result_data.preliminaryCaseFindings).map(([key, val]: any) => (
+                                          <div key={key} className="p-4 bg-white/5 border border-white/5">
+                                            <p className="text-[8px] text-muted-foreground uppercase mb-1">{key.replace(/([A-Z])/g, ' $1')}</p>
+                                            <p className="text-[11px] font-bold uppercase">{val}</p>
+                                          </div>
+                                        ))}
+                                      </div>
                                     </div>
-                                  </div>
+                                  )}
+
+                                  {c.result_data?.investigativeFocusAreas && (
+                                    <div className="space-y-6">
+                                      <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Network className="w-3.5 h-3.5" /> Suggested Roadmap</h4>
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {c.result_data.investigativeFocusAreas.map((area: any, i: number) => (
+                                          <div key={i} className="p-6 bg-white/5 border border-white/5 space-y-3">
+                                            <h5 className="text-[11px] font-black uppercase tracking-widest text-primary">{area.categoryName}</h5>
+                                            <p className="text-[10px] text-muted-foreground leading-relaxed uppercase">{area.description}</p>
+                                            <ul className="space-y-1 pt-2 border-t border-white/5">
+                                              {area.specificItems.map((item: string, j: number) => (
+                                                <li key={j} className="text-[9px] font-bold text-foreground/60 flex items-center gap-2">
+                                                  <ChevronRight className="w-3 h-3 text-primary shrink-0" /> {item}
+                                                </li>
+                                              ))}
+                                            </ul>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
-
-                                {c.result_data?.preliminaryCaseFindings && (
-                                  <div className="space-y-6">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5" /> AI Forensic Findings</h4>
-                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                      {Object.entries(c.result_data.preliminaryCaseFindings).map(([key, val]: any) => (
-                                        <div key={key} className="p-4 bg-white/5 border border-white/5">
-                                          <p className="text-[8px] text-muted-foreground uppercase mb-1">{key.replace(/([A-Z])/g, ' $1')}</p>
-                                          <p className="text-[11px] font-bold uppercase">{val}</p>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-
-                                {c.result_data?.investigativeFocusAreas && (
-                                  <div className="space-y-6">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2"><Network className="w-3.5 h-3.5" /> Suggested Roadmap</h4>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                      {c.result_data.investigativeFocusAreas.map((area: any, i: number) => (
-                                        <div key={i} className="p-6 bg-white/5 border border-white/5 space-y-3">
-                                          <h5 className="text-[11px] font-black uppercase tracking-widest text-primary">{area.categoryName}</h5>
-                                          <p className="text-[10px] text-muted-foreground leading-relaxed uppercase">{area.description}</p>
-                                          <ul className="space-y-1 pt-2 border-t border-white/5">
-                                            {area.specificItems.map((item: string, j: number) => (
-                                              <li key={j} className="text-[9px] font-bold text-foreground/60 flex items-center gap-2">
-                                                <ChevronRight className="w-3 h-3 text-primary shrink-0" /> {item}
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
+                              </InstitutionalDecryptor>
                             </DialogContent>
                           </Dialog>
                           <DropdownMenu>

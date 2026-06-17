@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
@@ -166,6 +166,38 @@ const SERVICE_DETAILS = [
   },
 ];
 
+/**
+ * InstitutionalDecryptor - Clinical state wrapper for technical briefing expansion.
+ */
+function InstitutionalDecryptor({ children, label = "Technical Brief" }: { children: React.ReactNode, label?: string }) {
+  const [state, setState] = useState<'decrypting' | 'open'>('decrypting');
+
+  useEffect(() => {
+    const timer = setTimeout(() => setState('open'), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (state === 'decrypting') {
+    return (
+      <div className="h-[400px] flex flex-col items-center justify-center space-y-6">
+        <div className="flex items-center gap-3">
+           <div className="w-2 h-2 bg-primary animate-breathing" />
+           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">{label}</span>
+        </div>
+        <div className="text-2xl font-headline font-bold uppercase tracking-tighter animate-pulse text-white">
+           Decrypting Assets...
+        </div>
+        <div className="w-64 h-[1px] bg-white/5 relative overflow-hidden">
+           <div className="absolute top-0 h-full w-24 bg-primary animate-stream-pulse" />
+        </div>
+        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground">Initializing Forensic Stream</p>
+      </div>
+    );
+  }
+
+  return <div className="animate-in fade-in duration-500">{children}</div>;
+}
+
 export default function Home() {
   const [selectedService, setSelectedService] = useState<typeof SERVICE_DETAILS[0] | null>(null);
 
@@ -269,80 +301,82 @@ export default function Home() {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
-                      <div className="p-8 md:p-12 space-y-10">
-                        <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
-                          <div className="w-20 h-20 rounded-none bg-primary/10 flex items-center justify-center shrink-0">
-                            <service.icon className="w-10 h-10 text-primary" />
-                          </div>
-                          <div className="space-y-4">
-                            <DialogTitle className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</DialogTitle>
-                            <DialogDescription className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-100">
-                              {service.subtitle}
-                            </DialogDescription>
-                          </div>
-                        </DialogHeader>
-
-                        <div className="grid lg:grid-cols-5 gap-12">
-                          <div className="lg:col-span-3 space-y-8">
-                            <div className="space-y-4">
-                              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
-                                <Search className="w-4 h-4 text-primary" /> Forensic Analysis Briefing
-                              </h4>
-                              <p className="text-lg text-foreground/90 leading-relaxed font-medium italic border-l-2 border-primary pl-6">
-                                "{service.detailedDesc}"
-                              </p>
+                      <InstitutionalDecryptor label="Forensic Dossier">
+                        <div className="p-8 md:p-12 space-y-10">
+                          <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
+                            <div className="w-20 h-20 rounded-none bg-primary/10 flex items-center justify-center shrink-0">
+                              <service.icon className="w-10 h-10 text-primary" />
                             </div>
-
                             <div className="space-y-4">
-                              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
-                                <Network className="w-4 h-4 text-primary" /> Investigative Methodology
-                              </h4>
+                              <DialogTitle className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</DialogTitle>
+                              <DialogDescription className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-100">
+                                {service.subtitle}
+                              </DialogDescription>
+                            </div>
+                          </DialogHeader>
+
+                          <div className="grid lg:grid-cols-5 gap-12">
+                            <div className="lg:col-span-3 space-y-8">
                               <div className="space-y-4">
-                                {service.forensicSteps.map((step, sIdx) => (
-                                  <div key={sIdx} className="p-5 bg-white/5 border border-white/5 flex items-start gap-4 hover:border-primary/30 transition-colors">
-                                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-[10px] font-black text-primary">0{sIdx + 1}</div>
-                                    <p className="text-sm font-bold text-foreground/80 leading-relaxed uppercase tracking-wide">{step}</p>
-                                  </div>
-                                ))}
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
+                                  <Search className="w-4 h-4 text-primary" /> Forensic Analysis Briefing
+                                </h4>
+                                <p className="text-lg text-foreground/90 leading-relaxed font-medium italic border-l-2 border-primary pl-6">
+                                  "{service.detailedDesc}"
+                                </p>
+                              </div>
+
+                              <div className="space-y-4">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
+                                  <Network className="w-4 h-4 text-primary" /> Investigative Methodology
+                                </h4>
+                                <div className="space-y-4">
+                                  {service.forensicSteps.map((step, sIdx) => (
+                                    <div key={sIdx} className="p-5 bg-white/5 border border-white/5 flex items-start gap-4 hover:border-primary/30 transition-colors">
+                                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-[10px] font-black text-primary">0{sIdx + 1}</div>
+                                      <p className="text-sm font-bold text-foreground/80 leading-relaxed uppercase tracking-wide">{step}</p>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="lg:col-span-2 space-y-8">
-                             <div className="p-8 bg-primary/5 border border-primary/20 space-y-6">
-                               <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-2">
-                                 <Fingerprint className="w-4 h-4" /> Evidence Requirements
-                               </h4>
+                            <div className="lg:col-span-2 space-y-8">
+                               <div className="p-8 bg-primary/5 border border-primary/20 space-y-6">
+                                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-2">
+                                   <Fingerprint className="w-4 h-4" /> Evidence Requirements
+                                 </h4>
+                                 <div className="space-y-4">
+                                   {service.markers.map((marker, mIdx) => (
+                                     <div key={mIdx} className="flex items-center gap-3 text-xs font-bold text-foreground/60 uppercase tracking-widest">
+                                       <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                                       {marker}
+                                     </div>
+                                   ))}
+                                 </div>
+                                 <div className="pt-6 border-t border-white/10">
+                                   <p className="text-[9px] text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
+                                     Technical resolution is determined by the preservation of high-integrity digital evidence.
+                                   </p>
+                                 </div>
+                               </div>
+
                                <div className="space-y-4">
-                                 {service.markers.map((marker, mIdx) => (
-                                   <div key={mIdx} className="flex items-center gap-3 text-xs font-bold text-foreground/60 uppercase tracking-widest">
-                                     <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                                     {marker}
-                                   </div>
-                                 ))}
+                                  <Link href="#forensic-intake" className="block w-full">
+                                    <DialogClose asChild>
+                                      <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta rounded-none">
+                                        Commence Intake
+                                      </Button>
+                                    </DialogClose>
+                                  </Link>
+                                  <p className="text-[9px] text-center font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-2">
+                                    <Lock className="w-3 h-3" /> Secure Lifecycle Active
+                                  </p>
                                </div>
-                               <div className="pt-6 border-t border-white/10">
-                                 <p className="text-[9px] text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
-                                   Technical resolution is determined by the preservation of high-integrity digital evidence.
-                                 </p>
-                               </div>
-                             </div>
-
-                             <div className="space-y-4">
-                                <Link href="#forensic-intake" className="block w-full">
-                                  <DialogClose asChild>
-                                    <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta rounded-none">
-                                      Commence Intake
-                                    </Button>
-                                  </DialogClose>
-                                </Link>
-                                <p className="text-[9px] text-center font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-2">
-                                  <Lock className="w-3 h-3" /> Secure Lifecycle Active
-                                </p>
-                             </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </InstitutionalDecryptor>
                     </DialogContent>
                   </Dialog>
                 </div>

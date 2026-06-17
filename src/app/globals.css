@@ -130,6 +130,26 @@
   100% { left: 130%; opacity: 0; }
 }
 
+@keyframes status-settle {
+  0% { 
+    border-color: rgba(212, 175, 55, 0.1); 
+    color: rgba(212, 175, 55, 0.4);
+    background-color: transparent;
+  }
+  50% { 
+    border-color: rgba(212, 175, 55, 1); 
+    color: rgba(212, 175, 55, 1);
+    background-color: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  }
+  100% { 
+    border-color: rgba(212, 175, 55, 0.3); 
+    color: rgba(212, 175, 55, 1);
+    background-color: rgba(212, 175, 55, 0.05);
+    box-shadow: 0 0 0 rgba(212, 175, 55, 0);
+  }
+}
+
 /* Intelligence Motion Classes */
 .network-line {
   fill: none;
@@ -176,6 +196,11 @@
 
 .active .forensic-trace {
   animation: trace-draw 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.active .animate-status-settle {
+  animation: status-settle 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 400ms;
 }
 
 /* Premium CTA Sweep */

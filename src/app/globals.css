@@ -238,3 +238,26 @@
 .reveal-glow.active .timeline-node {
   @apply bg-primary border-primary shadow-[0_0_15px_rgba(212,175,55,0.4)];
 }
+
+/* Technical Outcome Growth */
+.outcome-box {
+  @apply relative border-l-0;
+}
+
+.outcome-box::after {
+  content: '';
+  @apply absolute left-0 top-0 w-[2px] bg-emerald-500 h-0;
+  transition: all 800ms ease-in-out;
+}
+
+.active .outcome-box::after {
+  @apply h-full;
+}
+
+.outcome-content {
+  @apply opacity-0 transition-opacity duration-500 delay-700;
+}
+
+.active .outcome-content {
+  @apply opacity-100;
+}

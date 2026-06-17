@@ -169,13 +169,15 @@ export function SuccessStories() {
                              </p>
                            </div>
 
-                           <div className="space-y-3 p-5 bg-white/[0.03] border border-white/5">
-                             <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
-                               <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome
-                             </p>
-                             <p className="text-[11px] text-white font-black uppercase tracking-widest leading-relaxed">
-                               {story.outcome}
-                             </p>
+                           <div className="space-y-3 p-5 bg-white/[0.03] border border-white/5 outcome-box">
+                             <div className="outcome-content">
+                               <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
+                                 <CheckCircle2 className="w-3.5 h-3.5" /> Technical Outcome
+                               </p>
+                               <p className="text-[11px] text-white font-black uppercase tracking-widest leading-relaxed">
+                                 {story.outcome}
+                               </p>
+                             </div>
                            </div>
                         </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Shield } from 'lucide-react';
+import { Shield, Twitter, Linkedin, Github, Send, Youtube, Radio } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -50,45 +50,61 @@ export function Footer() {
               </div>
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>
-            <p className="text-muted-foreground text-[10px] leading-relaxed mb-6 uppercase tracking-wider opacity-70 font-bold">
+            <p className="text-muted-foreground text-[10px] leading-relaxed mb-8 uppercase tracking-wider opacity-70 font-bold">
               Institutional Digital Asset Intelligence & Investigation Firm. Specialized forensic rigor for complex financial fraud and asset resolution.
             </p>
+            
+            <div className="flex items-center gap-4">
+              <Link href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                <Linkedin className="w-4 h-4" />
+              </Link>
+              <Link href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                <Twitter className="w-4 h-4" />
+              </Link>
+              <Link href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                <Send className="w-4 h-4" />
+              </Link>
+              <Link href="#" className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
+                <Radio className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
           
           <div>
             <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Asset Tracing Division</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Access Recovery Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Asset Tracing Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Access Recovery Division</Link></li>
             </ul>
           </div>
           
           <div>
             <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Integrity</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="#preservation" className="hover:text-primary transition-colors">Preservation Protocols</Link></li>
-              <li><Link href="#process" className="hover:text-primary transition-colors">Methodology</Link></li>
-              <li><Link href="#forensic-intake" className="hover:text-primary transition-colors">Evidence Portal</Link></li>
+              <li><Link href="/#preservation" className="hover:text-primary transition-colors">Preservation Protocols</Link></li>
+              <li><Link href="/#process" className="hover:text-primary transition-colors">Methodology</Link></li>
+              <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Evidence Portal</Link></li>
+              <li><Link href="/contact" className="hover:text-primary transition-colors">Specialist Briefing</Link></li>
             </ul>
           </div>
 
           <div>
             <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Intelligence</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
-              <li><Link href="#success-stories" className="hover:text-primary transition-colors">Forensic Records</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Technical Briefs</Link></li>
+              <li><Link href="/#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
+              <li><Link href="/#success-stories" className="hover:text-primary transition-colors">Forensic Records</Link></li>
+              <li><Link href="/#intelligence" className="hover:text-primary transition-colors">Technical Briefs</Link></li>
             </ul>
           </div>
           
           <div>
-            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Compliance</h5>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Communication</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Protocols</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Institutional Terms</Link></li>
+              <li><span className="text-white block">investigator@lazoronix.com</span></li>
+              <li><Link href="/contact" className="hover:text-primary transition-colors">Global Hubs</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Legal Disclaimer</Link></li>
             </ul>
           </div>

@@ -28,7 +28,7 @@ const steps = [
   {
     number: "04",
     title: "Intelligence Development",
-    description: "Synthesis of technical data into a formal investigative brief, identifying final asset destination points.",
+    description: "Synthesis of technical data into a formal recovery brief, identifying final asset destination points.",
     icon: Database,
     details: ["Beneficiary identification", "Exchange node mapping", "Intelligence reporting"]
   },
@@ -55,9 +55,9 @@ export function ProcessSection() {
         <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
           <SectionReveal>
             <h2 className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-4">Methodology</h2>
-            <h3 className="text-3xl md:text-6xl font-headline font-bold mb-6 md:mb-8 uppercase tracking-tighter leading-tight">Investigation Lifecycle</h3>
+            <h3 className="text-3xl md:text-6xl font-headline font-bold mb-6 md:mb-8 uppercase tracking-tighter leading-tight">Recovery Lifecycle</h3>
             <p className="text-muted-foreground text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-              Our clinical 6-phase investigative lifecycle is designed to identify definitive technical resolution points for complex fraud.
+              Our clinical 6-phase recovery lifecycle is designed to identify definitive technical resolution points for complex fraud.
             </p>
           </SectionReveal>
         </div>
@@ -128,10 +128,10 @@ export function ProcessSection() {
             <div className="inline-block p-6 md:p-12 glass-card border-white/5 shadow-2xl relative overflow-hidden group hover:border-primary/50 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 w-full sm:w-auto">
               <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <div className="relative z-10">
-                <h4 className="text-xl md:text-2xl font-headline font-bold mb-4 md:mb-6 uppercase tracking-tight">Commence Lifecycle Phase 01</h4>
+                <h4 className="text-xl md:text-2xl font-headline font-bold mb-4 md:mb-6 uppercase tracking-tight">Commence Recovery Phase 01</h4>
                 <Link href="#forensic-intake" className="block sm:inline-block">
                   <Button size="lg" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
-                    Initialize Intake
+                    Start Recovery
                     <ArrowRight className="ml-2 w-5 md:w-6 h-5 md:h-6 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>

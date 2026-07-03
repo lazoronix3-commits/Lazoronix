@@ -69,7 +69,7 @@ export function EvidencePreservation() {
                 <span className="text-primary italic font-medium gold-glow">Preservation Center.</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-10 leading-relaxed font-medium">
-                The technical viability of an investigation is directly proportional to the integrity of the evidence preserved during the initial 72 hours of discovery.
+                The technical viability of a recovery case is directly proportional to the integrity of the evidence preserved during the initial 72 hours of discovery.
               </p>
               
               <div className="p-8 bg-white/[0.02] border border-white/5 rounded-none space-y-6">
@@ -81,7 +81,7 @@ export function EvidencePreservation() {
                 </p>
                 <Link href="#forensic-intake" className="block">
                   <Button className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest text-[10px] premium-cta">
-                    Initialize Intake
+                    Start Recovery Case
                   </Button>
                 </Link>
               </div>

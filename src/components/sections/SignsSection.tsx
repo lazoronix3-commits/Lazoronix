@@ -29,7 +29,7 @@ export function SignsSection() {
             <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Signs of Active Fraud</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
               Online fraud often follows predictable patterns. If you recognize any of these red flags, 
-              immediate forensic review is required to preserve the digital evidence trail.
+              immediate recovery action is required to preserve the digital evidence trail.
             </p>
           </SectionReveal>
           
@@ -59,11 +59,11 @@ export function SignsSection() {
             <div className="inline-block p-1 bg-white/5 rounded-2xl">
               <div className="p-8 md:p-12 glass-card rounded-xl border-white/5 relative overflow-hidden group">
                 <div className="relative z-10">
-                  <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Requires Immediate Investigation?</h4>
+                  <h4 className="text-2xl font-headline font-bold mb-6 uppercase tracking-tight">Need to Start Recovery Immediately?</h4>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                     <Link href="#forensic-intake">
                       <Button size="lg" className="h-16 px-12 text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group shadow-2xl shadow-primary/20">
-                        Request Forensic Assessment
+                        Start Recovery Case
                         <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </Link>
@@ -76,7 +76,7 @@ export function SignsSection() {
                     <span className="w-px h-3 bg-white/10" />
                     <span className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
-                      No Assessment Fees
+                      No Upfront Fees
                     </span>
                   </div>
                 </div>

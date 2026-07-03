@@ -211,7 +211,7 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-headline font-bold mb-8 leading-tight">
-              Investigation First. Resolution Second.
+              Investigation First. Recovery Second.
             </h2>
             <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
               <p className="text-foreground font-medium italic">
@@ -236,7 +236,7 @@ export default function Home() {
       {/* Trust Bar */}
       <div className="py-12 bg-white/5 border-y border-white/5">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Investigative Divisions for Digital Assets</p>
+          <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Recovery Divisions for Digital Assets</p>
           <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 opacity-40 grayscale contrast-125">
              <span className="text-2xl font-bold tracking-[0.3em] font-headline">FORENSICS</span>
              <span className="text-2xl font-bold tracking-[0.3em] font-headline">INTELLIGENCE</span>
@@ -257,7 +257,7 @@ export default function Home() {
       <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
           <SectionReveal className="text-center mb-20">
-            <h2 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4">Investigative Divisions</h2>
+            <h2 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4">Recovery Divisions</h2>
             <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Departmental Expertise</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
               Lazoronix operates through specialized divisions, each utilizing distinct forensic protocols for institutional and digital asset fraud scenarios.
@@ -304,7 +304,7 @@ export default function Home() {
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
                       <DialogTitle className="sr-only">{service.title}</DialogTitle>
-                      <DialogDescription className="sr-only">Forensic briefing and investigative methodology for {service.title}.</DialogDescription>
+                      <DialogDescription className="sr-only">Forensic briefing and recovery methodology for {service.title}.</DialogDescription>
                       <InstitutionalDecryptor label="Forensic Dossier">
                         <div className="p-8 md:p-12 space-y-10">
                           <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
@@ -332,7 +332,7 @@ export default function Home() {
 
                               <div className="space-y-4">
                                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
-                                  <Network className="w-4 h-4 text-primary" /> Investigative Methodology
+                                  <Network className="w-4 h-4 text-primary" /> Recovery Methodology
                                 </h4>
                                 <div className="space-y-4">
                                   {service.forensicSteps.map((step, sIdx) => (
@@ -369,7 +369,7 @@ export default function Home() {
                                   <Link href="#forensic-intake" className="block w-full">
                                     <DialogClose asChild>
                                       <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta rounded-none">
-                                        Commence Intake
+                                        Start Recovery
                                       </Button>
                                     </DialogClose>
                                   </Link>
@@ -402,9 +402,9 @@ export default function Home() {
           <SectionReveal className="max-w-5xl mx-auto glass-card rounded-none overflow-hidden">
             <div className="grid md:grid-cols-5 items-stretch">
               <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
-                <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Investigative Feasibility</h2>
+                <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Recovery Feasibility</h2>
                 <p className="text-xl text-foreground/80 mb-8 leading-relaxed font-medium">
-                  Every scenario is unique. Prior to formal engagement, our specialists review transaction records, platform infrastructure, and technical meta-data to determine if a viable resolution pathway exists.
+                  Every scenario is unique. Prior to formal engagement, our specialists review transaction records, platform infrastructure, and technical meta-data to determine if a viable recovery pathway exists.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                   {[
@@ -413,7 +413,7 @@ export default function Home() {
                     { icon: MessageSquare, text: "Communication Logs" },
                     { icon: Globe, text: "Platform Infrastructure" },
                     { icon: CreditCard, text: "Evidence Integrity" },
-                    { icon: TrendingUp, text: "Resolution Feasibility" }
+                    { icon: TrendingUp, text: "Recovery Feasibility" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -426,7 +426,7 @@ export default function Home() {
                 <div className="space-y-8">
                   <Link href="#forensic-intake">
                     <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
-                      Commence Confidential Assessment
+                      Start Confidential Recovery Case
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -438,7 +438,7 @@ export default function Home() {
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
                       <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">100% Clinical</h4>
-                      <p className="opacity-80 text-sm font-medium">All assessments are conducted using objective forensic methodologies.</p>
+                      <p className="opacity-80 text-sm font-medium">All cases are evaluated using objective forensic methodologies.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -476,7 +476,7 @@ export default function Home() {
             <SectionReveal>
               <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Institutional Commitment</h2>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12 font-medium">
-                We bridge the gap between complex digital asset fraud and professional investigative rigor.<br/>
+                We bridge the gap between complex digital asset fraud and professional recovery rigor.<br/>
                 <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">Every case is evaluated using rigorous forensic analysis.</span>
               </p>
             </SectionReveal>
@@ -490,14 +490,14 @@ export default function Home() {
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
           <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-none hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Initialize Your Investigation Lifecycle</h2>
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Start Your Recovery Process</h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
               Whether you've been affected by institutional trading fraud, social engineering, or digital asset access challenges, our specialists are ready to review your evidence.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
                <Link href="#forensic-intake">
                  <Button size="lg" className="h-16 px-10 bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
-                   Request Forensic Assessment
+                   Start Recovery Case
                    <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                  </Button>
                </Link>

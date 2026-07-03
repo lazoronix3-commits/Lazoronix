@@ -138,14 +138,14 @@ export function IntelligenceReports() {
               <div className="absolute inset-0 rounded-full border border-primary animate-breathing opacity-30" />
             </div>
             <div>
-              <h5 className="text-xl font-headline font-bold uppercase tracking-tight text-white">Institutional Intelligence Subscription</h5>
-              <p className="text-sm text-muted-foreground uppercase tracking-widest font-medium">Receive real-time forensic alerts and emerging fraud vectors.</p>
+              <h5 className="text-xl font-headline font-bold uppercase tracking-tight text-white">Institutional Recovery Subscription</h5>
+              <p className="text-sm text-muted-foreground uppercase tracking-widest font-medium">Receive real-time recovery alerts and emerging fraud vectors.</p>
             </div>
           </div>
           <div className="flex items-center gap-4 relative z-10 w-full md:w-auto">
             <Link href="#forensic-intake" className="w-full md:w-auto">
               <Button size="lg" className="h-14 px-10 bg-primary text-black font-black uppercase tracking-widest rounded-none group premium-cta">
-                Commence Assessment
+                Start Recovery
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

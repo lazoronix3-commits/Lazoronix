@@ -83,7 +83,7 @@ export function AIGuidedTool() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
-  const [scanStatus, setScanStatus] = useState('Initializing Terminal...')
+  const [scanStatus, setScanStatus] = useState('Processing your case...')
   const [isInputFocused, setIsInputFocused] = useState(false)
   
   const [evidenceFiles, setEvidenceFiles] = useState<{name: string, path: string, url: string}[]>([])
@@ -130,7 +130,7 @@ export function AIGuidedTool() {
     setCaseId(generatedId)
 
     try {
-      setScanStatus("Analyzing blockchain path...")
+      setScanStatus("Analyzing recovery path...")
       
       const promptText = `
 CATEGORY: ${selectedType}
@@ -140,7 +140,6 @@ ACCESS: ${hasAccess ? 'YES' : 'NO'}
 DETAILS: ${description}
       `.trim()
 
-      // Simultaneous AI and DB operations
       const [aiOutput] = await Promise.all([
         aiGuidedRecoveryPreparation({ initialProblemDescription: promptText }),
         supabase.from('cases').insert([{
@@ -177,11 +176,11 @@ DETAILS: ${description}
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black mb-6 tracking-[0.3em] uppercase">
                 <Shield className="w-3.5 h-3.5" />
-                Rapid Intake Portal
+                Recovery Intake Portal
               </div>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Initialize Assessment</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Start Recovery Process</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Complete the clinical intake form to begin your investigative lifecycle. Transmission is protected via institutional-grade AES-256 encryption.
+                Complete this form to start your recovery process immediately. Transmission is protected via institutional-grade AES-256 encryption.
               </p>
             </div>
 
@@ -196,7 +195,7 @@ DETAILS: ${description}
                   <div className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Investigative Division*</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Recovery Division*</Label>
                         <Select onValueChange={setSelectedType} value={selectedType}>
                           <SelectTrigger className="bg-background/50 border-white/10 rounded-none h-12">
                             <SelectValue placeholder="Select Division" />
@@ -256,7 +255,7 @@ DETAILS: ${description}
                     <div className="space-y-2">
                       <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Full Name*</Label>
                       <Input 
-                        placeholder="Investigative Lead" 
+                        placeholder="Your Name" 
                         className="bg-black/20 border-white/10 rounded-none h-12"
                         value={bookingValues.name}
                         onChange={e => setBookingValues({...bookingValues, name: e.target.value})}
@@ -267,7 +266,7 @@ DETAILS: ${description}
                       <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email Address*</Label>
                       <Input 
                         type="email" 
-                        placeholder="secure@lazoronix.com" 
+                        placeholder="your@email.com" 
                         className="bg-black/20 border-white/10 rounded-none h-12"
                         value={bookingValues.email}
                         onChange={e => setBookingValues({...bookingValues, email: e.target.value})}
@@ -331,7 +330,7 @@ DETAILS: ${description}
                         <span className="text-sm">{scanStatus}</span>
                       </div>
                     ) : (
-                      <>Initialize Secure Transmission <ArrowRight className="ml-2 w-6 h-6" /></>
+                      <>Submit Case for Recovery <ArrowRight className="ml-2 w-6 h-6" /></>
                     )}
                   </Button>
                   
@@ -376,7 +375,7 @@ DETAILS: ${description}
                    </div>
 
                    <div className="space-y-6">
-                      <h3 className="text-xs font-black uppercase tracking-[0.3em] flex items-center gap-3 text-primary"><Target className="w-4 h-4" /> Forensic Roadmap</h3>
+                      <h3 className="text-xs font-black uppercase tracking-[0.3em] flex items-center gap-3 text-primary"><Target className="w-4 h-4" /> Recovery Roadmap</h3>
                       <div className="grid md:grid-cols-2 gap-6">
                          {result.investigativeFocusAreas.map((area: any, idx: number) => (
                             <div key={idx} className="p-6 bg-white/5 border border-white/5 space-y-4">

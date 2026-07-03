@@ -26,21 +26,19 @@ export default function RootLayout({
         {children}
         <Toaster />
         
-        {/* Start of Tawk.to Script */}
-        <Script id="tawk-to-script" strategy="afterInteractive">
+        {/* Tawk.to Stable Initialization */}
+        <Script id="tawk-init" strategy="afterInteractive">
           {`
-            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-            (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/6a3186cd16fcef1d436f9c5b/1jr8nd581';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-            })();
+            window.Tawk_API = window.Tawk_API || {};
+            window.Tawk_LoadStart = new Date();
           `}
         </Script>
-        {/* End of Tawk.to Script */}
+        <Script 
+          id="tawk-embed"
+          src="https://embed.tawk.to/6a3186cd16fcef1d436f9c5b/1jr8nd581" 
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );

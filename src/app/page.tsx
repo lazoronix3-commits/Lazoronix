@@ -303,6 +303,8 @@ export default function Home() {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
+                      <DialogTitle className="sr-only">{service.title}</DialogTitle>
+                      <DialogDescription className="sr-only">Forensic briefing and investigative methodology for {service.title}.</DialogDescription>
                       <InstitutionalDecryptor label="Forensic Dossier">
                         <div className="p-8 md:p-12 space-y-10">
                           <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
@@ -310,10 +312,10 @@ export default function Home() {
                               <service.icon className="w-10 h-10 text-primary" />
                             </div>
                             <div className="space-y-4">
-                              <DialogTitle className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</DialogTitle>
-                              <DialogDescription className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-100">
+                              <div className="text-3xl md:text-5xl font-headline font-bold uppercase tracking-tighter">{service.title}</div>
+                              <div className="text-primary text-[10px] font-black uppercase tracking-[0.4em] opacity-100">
                                 {service.subtitle}
-                              </DialogDescription>
+                              </div>
                             </div>
                           </DialogHeader>
 
@@ -494,7 +496,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
                <Link href="#forensic-intake">
-                 <Button size="lg" className="h-16 px-10 text-lg bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
+                 <Button size="lg" className="h-16 px-10 bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
                    Request Forensic Assessment
                    <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                  </Button>

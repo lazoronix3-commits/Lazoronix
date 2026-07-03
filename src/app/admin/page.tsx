@@ -748,6 +748,8 @@ export default function AdminDashboard() {
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
+                              <DialogTitle className="sr-only">Investigation Brief #{c.case_id}</DialogTitle>
+                              <DialogDescription className="sr-only">Detailed forensic intake data for participant {c.user_name}.</DialogDescription>
                               <InstitutionalDecryptor caseId={c.case_id} label="Investigation Brief">
                                 <DialogHeader className="p-6 md:p-8 border-b border-white/5 bg-card/50">
                                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-4">
@@ -756,8 +758,8 @@ export default function AdminDashboard() {
                                         <FileText className="w-6 h-6 text-primary" />
                                       </div>
                                       <div>
-                                        <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</DialogTitle>
-                                        <DialogDescription className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</DialogDescription>
+                                        <div className="text-2xl font-headline font-bold uppercase tracking-tight">Investigation Brief</div>
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-primary">Case #{c.case_id}</div>
                                       </div>
                                     </div>
                                     <Badge className="bg-primary text-black uppercase tracking-widest text-[10px] py-1.5 px-4">{c.status}</Badge>

@@ -178,7 +178,7 @@ DETAILS: ${description}
                 <Shield className="w-3.5 h-3.5" />
                 Recovery Intake Portal
               </div>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Start Recovery Process</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Get Free Consultation</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Complete this form to start your recovery process immediately. Transmission is protected via institutional-grade AES-256 encryption.
               </p>

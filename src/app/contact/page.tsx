@@ -26,12 +26,12 @@ import {
 } from "@/components/ui/select";
 
 const DIVISIONS = [
-  "Financial Trading Fraud",
-  "Institutional Investment Fraud",
-  "Social Engineering Fraud",
-  "Digital Asset Access & Recovery",
-  "Employment & Recruitment Fraud",
-  "Blockchain Intelligence & Tracing"
+  "Trading Fraud Recovery",
+  "Investment Scam Recovery",
+  "Romance Scam Recovery",
+  "Employment Scam Recovery",
+  "Lost Funds Recovery",
+  "Blockchain Asset Recovery"
 ];
 
 export default function ContactPage() {
@@ -83,8 +83,8 @@ export default function ContactPage() {
       if (error) throw error;
 
       toast({
-        title: "Transmission Secure",
-        description: "Your inquiry has been encrypted and sent to the duty analyst.",
+        title: "Request Sent",
+        description: "Your request has been securely sent to our team.",
       });
 
       setFormData({
@@ -99,7 +99,7 @@ export default function ContactPage() {
       toast({
         variant: 'destructive',
         title: "Transmission Failed",
-        description: error.message || "The encryption node encountered an error. Please try again.",
+        description: error.message || "An error occurred. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -115,11 +115,11 @@ export default function ContactPage() {
           <SectionReveal className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black mb-8 tracking-[0.3em] uppercase">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Secure Communication Node
+              Secure Communication
             </div>
             <h1 className="text-4xl md:text-7xl font-headline font-bold mb-6 tracking-tighter uppercase leading-tight">
-              Establish <br />
-              <span className="gradient-text italic font-medium gold-glow">Confidential Connection.</span>
+              Start Your <br />
+              <span className="gradient-text italic font-medium gold-glow">Recovery Case.</span>
             </h1>
           </SectionReveal>
         </div>
@@ -131,7 +131,7 @@ export default function ContactPage() {
             
             <div className="lg:col-span-2 space-y-8">
               <SectionReveal>
-                <h2 className="text-3xl font-headline font-bold mb-8 uppercase tracking-tighter">Investigative Hubs</h2>
+                <h2 className="text-3xl font-headline font-bold mb-8 uppercase tracking-tighter">Our Hubs</h2>
                 <div className="space-y-6">
                   <Card className="glass-card border-white/5 p-8 hover:border-primary/30 transition-all group">
                     <div className="flex items-start gap-6">
@@ -139,7 +139,7 @@ export default function ContactPage() {
                         <Mail className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Primary Forensic Intake</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Direct Email</p>
                         <p className="text-xl font-headline font-bold text-white group-hover:text-primary transition-colors">investigator@lazoronix.com</p>
                       </div>
                     </div>
@@ -147,9 +147,9 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 gap-4">
                     {[
-                      { city: "Zurich", region: "DACH / EU Hub", icon: Building },
-                      { city: "London", region: "UK / International", icon: Building },
-                      { city: "Singapore", region: "APAC Intelligence", icon: Building }
+                      { city: "Zurich", region: "Europe Hub", icon: Building },
+                      { city: "London", region: "UK Hub", icon: Building },
+                      { city: "Singapore", region: "Asia Hub", icon: Building }
                     ].map((hub, idx) => (
                       <Card key={idx} className="glass-card border-white/5 p-6 hover:border-primary/20 transition-all">
                         <div className="flex items-center gap-4">
@@ -183,7 +183,7 @@ export default function ContactPage() {
                     <div className="space-y-2">
                       <Input 
                         type="email" 
-                        placeholder="Your Email Address" 
+                        placeholder="Your Email Address*" 
                         className="bg-white/5 border-white/10 rounded-none h-14 text-base placeholder:text-muted-foreground/50" 
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -207,7 +207,7 @@ export default function ContactPage() {
                         onValueChange={(val) => setFormData({...formData, service: val})}
                       >
                         <SelectTrigger className="bg-white/5 border-white/10 rounded-none h-14 text-base text-muted-foreground/50">
-                          <SelectValue placeholder="Select Services You're interested in:" />
+                          <SelectValue placeholder="Select Service*" />
                         </SelectTrigger>
                         <SelectContent className="bg-card border-white/10">
                           {DIVISIONS.map((service) => (
@@ -230,30 +230,31 @@ export default function ContactPage() {
 
                     <div className="space-y-2">
                       <Textarea 
-                        placeholder="Your Message" 
+                        placeholder="Your Message*" 
                         className="min-h-[140px] bg-white/5 border-white/10 rounded-none text-base placeholder:text-muted-foreground/50" 
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
+                        required
                       />
                     </div>
 
                     <div className="pt-4">
                       <Button 
                         disabled={loading} 
-                        className="bg-[#0056b3] hover:bg-[#004494] text-white font-bold h-12 px-10 rounded-sm transition-all"
+                        className="bg-[#0056b3] hover:bg-[#004494] text-white font-bold h-12 px-10 rounded-sm transition-all w-full md:w-auto"
                       >
                         {loading ? (
                           <div className="flex items-center gap-2">
                             <Loader2 className="w-4 h-4 animate-spin" />
                             Sending...
                           </div>
-                        ) : 'Submit'}
+                        ) : 'Submit Case'}
                       </Button>
                     </div>
 
                     <div className="pt-8 mt-8 border-t border-white/5 flex items-center justify-center gap-3 opacity-40">
                       <Lock className="w-3.5 h-3.5" />
-                      <p className="text-[9px] font-black uppercase tracking-[0.3em]">AES-256 Terminal Encryption Active</p>
+                      <p className="text-[9px] font-black uppercase tracking-[0.3em]">Encrypted Session Active</p>
                     </div>
                   </form>
                 </Card>

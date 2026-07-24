@@ -51,7 +51,7 @@ export function Footer() {
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>
             <p className="text-muted-foreground text-[10px] leading-relaxed mb-8 uppercase tracking-wider opacity-70 font-bold">
-              Institutional Digital Asset Intelligence & Investigation Firm. Specialized forensic rigor for complex financial fraud and asset resolution.
+              Digital Asset Investigation & Recovery Firm. Specialized support for complex financial fraud and asset resolution.
             </p>
             
             <div className="flex items-center gap-4">
@@ -71,13 +71,13 @@ export function Footer() {
           </div>
           
           <div>
-            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Divisions</h5>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Services</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><Link href="/#services" className="hover:text-primary transition-colors">Trading Fraud Division</Link></li>
-              <li><Link href="/#services" className="hover:text-primary transition-colors">Investment Fraud Division</Link></li>
-              <li><Link href="/#services" className="hover:text-primary transition-colors">Social Engineering Division</Link></li>
-              <li><Link href="/#services" className="hover:text-primary transition-colors">Asset Tracing Division</Link></li>
-              <li><Link href="/#services" className="hover:text-primary transition-colors">Access Recovery Division</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Trading Fraud Recovery</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Investment Scam Recovery</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Romance Scam Recovery</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Blockchain Asset Recovery</Link></li>
+              <li><Link href="/#services" className="hover:text-primary transition-colors">Lost Funds Recovery</Link></li>
             </ul>
           </div>
           
@@ -86,25 +86,25 @@ export function Footer() {
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><Link href="/#preservation" className="hover:text-primary transition-colors">Protocols</Link></li>
               <li><Link href="/#process" className="hover:text-primary transition-colors">Process</Link></li>
-              <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Evidence Portal</Link></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Specialist Briefing</Link></li>
+              <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Recovery Portal</Link></li>
+              <li><Link href="/contact" className="hover:text-primary transition-colors">Consult Specialist</Link></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Intelligence</h5>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Support</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><Link href="/#faq" className="hover:text-primary transition-colors">Knowledge Base</Link></li>
-              <li><Link href="/#success-stories" className="hover:text-primary transition-colors">Forensic Records</Link></li>
-              <li><Link href="/#intelligence" className="hover:text-primary transition-colors">Technical Briefs</Link></li>
+              <li><Link href="/#success-stories" className="hover:text-primary transition-colors">Case Records</Link></li>
+              <li><Link href="/#intelligence" className="hover:text-primary transition-colors">Briefings</Link></li>
             </ul>
           </div>
           
           <div>
-            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Communication</h5>
+            <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Contact</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><span className="text-white block">investigator@lazoronix.com</span></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Global Hubs</Link></li>
+              <li><Link href="/contact" className="hover:text-primary transition-colors">Our Hubs</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Legal Disclaimer</Link></li>
             </ul>
           </div>
@@ -112,11 +112,11 @@ export function Footer() {
         
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-            © {new Date().getFullYear()} Lazoronix Intelligence. All rights reserved. 
+            © {new Date().getFullYear()} Lazoronix. All rights reserved. 
           </p>
           <div className="flex gap-6">
             <p className="text-[9px] text-muted-foreground max-w-md text-left md:text-right leading-relaxed italic uppercase tracking-[0.1em] opacity-50 font-bold">
-              Technical Note: Digital asset investigation involves inherent jurisdictional complexity. Every lifecycle requires formal forensic review prior to departmental engagement.
+              Note: Digital asset recovery involves complex jurisdictions. Every case requires a review before formal engagement.
             </p>
           </div>
         </div>

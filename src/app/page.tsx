@@ -52,8 +52,8 @@ import {
 const SERVICE_DETAILS = [
   { 
     id: "forex",
-    title: "Financial Trading Fraud Division", 
-    subtitle: "Investigating broker malfeasance and platform manipulation.",
+    title: "Trading Fraud Recovery", 
+    subtitle: "Investigating broker fraud and platform manipulation.",
     icon: TrendingUp, 
     markers: [
       "Withdrawal restrictions",
@@ -61,114 +61,111 @@ const SERVICE_DETAILS = [
       "Broker disappearance",
       "Account balance manipulation"
     ],
-    desc: "Forensic identification of fraudulent brokerage entities and tracing of funds sent to offshore jurisdictions.",
-    detailedDesc: "Financial trading fraud typically involves unregulated brokerage entities that use manipulated trading platforms to display artificial profits. Once a withdrawal is requested, the broker often demands 'taxes' or 'fees' to release funds—a definitive marker of fraud.",
+    desc: "Identification of fraudulent brokers and tracing of funds sent to offshore accounts.",
+    detailedDesc: "Trading fraud involves unregulated brokers using fake platforms to show artificial profits. When you try to withdraw, they often demand 'taxes' or 'fees'—this is a clear sign of fraud.",
     forensicSteps: [
-      "Entity Jurisdiction Analysis: Mapping the broker's actual physical and legal location.",
-      "Fund Flow Audit: Tracing wire and card payments to identify the receiving institution.",
-      "Platform Evidence Extraction: Recovering trade logs to prove manual balance manipulation."
+      "Broker Location Mapping: Identifying where the broker is actually operating.",
+      "Fund Flow Audit: Tracing payments to find the receiving bank.",
+      "Evidence Extraction: Recovering logs to prove balance manipulation."
     ]
   },
   { 
     id: "investment",
-    title: "Institutional Investment Fraud Division", 
-    subtitle: "Technical analysis of institutional and DeFi schemes.",
+    title: "Investment Scam Recovery", 
+    subtitle: "Analysis of institutional and crypto investment scams.",
     icon: BarChart, 
     markers: [
       "Crypto Ponzi schemes",
-      "Fake ICO/Token sales",
-      "High-yield investment fraud",
-      "Unauthorized fund transfers"
+      "Fake token sales",
+      "High-yield fraud",
+      "Unauthorized transfers"
     ],
-    desc: "Technical analysis of investment platforms to identify the ultimate beneficiary and secure digital evidence.",
-    detailedDesc: "Modern institutional investment fraud often utilizes decentralized finance (DeFi) or fake 'High-Yield Investment Programs' (HYIPs). Perpetrators leverage the anonymity of the blockchain to obfuscate the final destination of the assets through various mixing protocols.",
+    desc: "Technical analysis of platforms to find where your assets were moved.",
+    detailedDesc: "Modern investment scams use fake 'High-Yield' programs or DeFi protocols. Scammers use the blockchain to hide funds, but our tools can track these assets through mixers and multiple wallets.",
     forensicSteps: [
-      "Blockchain Hop Analysis: Identifying the sequence of wallet transfers across multiple layers.",
-      "Smart Contract Deconstruction: Auditing the code used to lock or drain participant liquidity.",
-      "Recipient Attribution: Mapping wallet addresses to known exchange-hosted accounts for intercession."
+      "Wallet History Analysis: Identifying the sequence of wallet transfers.",
+      "Contract Auditing: Checking the code used to lock or drain funds.",
+      "Recipient Tracking: Mapping addresses to exchange accounts for recovery."
     ]
   },
   { 
     id: "romance",
-    title: "Social Engineering Fraud Division", 
-    subtitle: "Specialized investigation for emotional grooming schemes.",
+    title: "Romance Scam Recovery", 
+    subtitle: "Support for victims of emotional grooming and fraud.",
     icon: Heart, 
     markers: [
       "Crypto transfers",
       "Wire transfer deception",
-      "Gift card fraud patterns",
-      "Identity deception cases"
+      "Gift card fraud",
+      "Identity deception"
     ],
-    desc: "Sensitive investigative support for individuals targeted through online relationship deception and fund requests.",
-    detailedDesc: "Often referred to as 'Pig Butchering', social engineering fraud involves long-term emotional grooming. Victims are eventually persuaded to 'invest' in a fake platform controlled by the scammer. The technical recovery focus is on the platform's infrastructure and specific crypto wallets.",
+    desc: "Investigative support for victims targeted through online relationships and deception.",
+    detailedDesc: "Often called 'Pig Butchering', these scams involve long-term emotional manipulation. Victims are persuaded to 'invest' in fake sites. We focus on the platform infrastructure and tracking the specific crypto wallets used.",
     forensicSteps: [
-      "Communication Meta-Data Audit: Analyzing email and chat headers to identify server origins.",
-      "Identity Verification (OSINT): Using open-source intelligence to unmask the true identity behind the persona.",
-      "Asset Seizure Roadmaps: Preparing technical evidence for law enforcement jurisdictional coordination."
+      "Communication Audit: Analyzing email and chat data to find origins.",
+      "Identity Verification: Using intelligence tools to unmask the persona.",
+      "Evidence Packaging: Preparing reports for law enforcement coordination."
     ]
   },
   { 
     id: "wallet",
-    title: "Digital Asset Access & Recovery Division", 
-    subtitle: "Forensic bypass and seed phrase reconstruction.",
+    title: "Lost Funds Recovery", 
+    subtitle: "Recovery of inaccessible wallets and lost keys.",
     icon: Wallet, 
     markers: [
-      "Hardware wallet corruption",
-      "Lost seed phrase extraction",
-      "Inaccessible exchange accounts",
-      "Corrupted encrypted volumes"
+      "Hardware wallet issues",
+      "Lost seed phrases",
+      "Locked exchange accounts",
+      "Corrupted storage drives"
     ],
-    desc: "Advanced forensic workstations and proprietary tools used to regain access to hardware and software wallets.",
-    detailedDesc: "Digital asset access isn't always fraudulent; it can be technical. We specialize in recovering access to 'frozen' assets or wallets where partial credentials are known. This involves high-compute forensic workstations and specialized cryptographic recovery tools.",
+    desc: "Advanced tools used to regain access to hardware and software crypto wallets.",
+    detailedDesc: "Sometimes funds aren't stolen, just inaccessible. We specialize in recovering access to 'frozen' assets or wallets where you have lost your password or seed phrase.",
     forensicSteps: [
-      "Hardware Forensic Analysis: Physical auditing of Ledger, Trezor, or corrupted storage drives.",
-      "Seed Phrase Reconstruction: Using partial data to statistically rebuild lost mnemonic phrases.",
-      "Credential Recovery: Bypassing legacy encryption on local wallet files where the owner has lost passwords."
+      "Hardware Audit: Physical recovery for Ledger, Trezor, or drives.",
+      "Phrase Reconstruction: Rebuilding lost seed phrases from partial data.",
+      "Credential Recovery: Bypassing encryption on local wallet files."
     ]
   },
   { 
     id: "job",
-    title: "Employment & Recruitment Fraud Division", 
-    subtitle: "Investigating fake onboarding and recruitment scams.",
+    title: "Employment Scam Recovery", 
+    subtitle: "Investigating fake job offers and recruitment scams.",
     icon: Briefcase, 
     markers: [
       "Upfront training fees",
-      "Remote work equipment scams",
-      "Fake onboarding platforms",
+      "Remote equipment scams",
+      "Fake onboarding sites",
       "Identity theft attempts"
     ],
-    desc: "Support for victims of employment scams, focusing on credential protection and fee tracing.",
-    detailedDesc: "Employment fraud targets professionals by offering lucrative remote roles. Victims are asked to pay for 'equipment' or 'training'. Beyond fund loss, these scams often involve identity theft via the collection of personal identifiers and bank details.",
+    desc: "Support for victims of job scams, focusing on fee tracing and ID protection.",
+    detailedDesc: "Job scams target professionals with fake remote roles. Victims are asked to pay for 'equipment'. These scams also aim to steal your identity using your personal bank details.",
     forensicSteps: [
-      "Infrastructure Mapping: Identifying the hosting providers and domains used by fake recruitment portals.",
-      "Financial Path Tracing: Identifying the 'money mules' or intermediate accounts used to filter stolen funds.",
-      "Credential Protection Audit: Assessing what personal data was exposed and providing protection protocols."
+      "Portal Mapping: Identifying the servers used by fake job sites.",
+      "Financial Tracing: Tracking the accounts used to filter stolen fees.",
+      "Identity Protection: Assessing what data was stolen and securing it."
     ]
   },
   { 
     id: "tracing",
-    title: "Blockchain Intelligence & Tracing Division", 
-    subtitle: "Institutional-grade multi-chain asset tracing.",
+    title: "Blockchain Asset Recovery", 
+    subtitle: "Professional multi-chain crypto asset tracing.",
     icon: ShieldCheck, 
     markers: [
-      "Blockchain path history",
-      "Liquidity pool mapping",
-      "Exchange partner intercession",
+      "Transaction path history",
+      "Liquidity mapping",
+      "Exchange intercession",
       "Jurisdictional analysis"
     ],
-    desc: "Comprehensive blockchain intelligence for complex high-value digital asset losses and fund obfuscation.",
-    detailedDesc: "Institutional blockchain intelligence is required for high-value losses. This involves deep-dive blockchain analytics that track assets through mixers and cross-chain bridges to find a definitive technical resolution point.",
+    desc: "Crypto intelligence for high-value asset losses and complex fund tracing.",
+    detailedDesc: "For high-value losses, we use deep-dive analytics to track assets through mixers and across different blockchains (like BTC to ETH) to find the final exit point.",
     forensicSteps: [
-      "Multi-Chain Analysis: Tracking assets as they move from BTC to ETH to stablecoins via bridges.",
-      "Exchange Compliance Coordination: Issuing forensic reports to exchange security teams to freeze assets.",
-      "Expert Witness Testimony: Providing certified technical reports for use in civil and criminal litigation."
+      "Cross-Chain Tracing: Tracking assets as they move between different cryptos.",
+      "Exchange Coordination: Working with exchange security teams to freeze funds.",
+      "Certified Reporting: Providing technical reports for legal use."
     ]
   },
 ];
 
-/**
- * InstitutionalDecryptor - Clinical state wrapper for technical briefing expansion.
- */
 function InstitutionalDecryptor({ children, label = "Technical Brief" }: { children: React.ReactNode, label?: string }) {
   const [state, setState] = useState<'decrypting' | 'open'>('decrypting');
 
@@ -206,7 +203,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       
-      {/* About Us Section / Human Reassurance */}
+      {/* About Us Section */}
       <section id="about" className="py-20 bg-background relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="max-w-4xl mx-auto text-center">
@@ -215,10 +212,10 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
               <p className="text-foreground font-medium italic">
-                We investigate financial fraud, trace digital assets, and identify recovery pathways using institutional methodologies.
+                We investigate financial fraud, trace digital assets, and identify recovery pathways using professional methodologies.
               </p>
               <p>
-                Our role is to help you understand the technical parameters of your case, preserve critical evidence, and determine whether viable recovery pathways exist through rigorous forensic investigation.
+                Our role is to help you understand the technical facts of your case, preserve critical evidence, and determine whether recovery is possible through rigorous investigation.
               </p>
               <div className="pt-8 flex flex-col items-center gap-4">
                 <div className="w-12 h-px bg-primary/30" />
@@ -236,7 +233,7 @@ export default function Home() {
       {/* Trust Bar */}
       <div className="py-12 bg-white/5 border-y border-white/5">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Recovery Divisions for Digital Assets</p>
+          <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Recovery Divisions</p>
           <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 opacity-40 grayscale contrast-125">
              <span className="text-2xl font-bold tracking-[0.3em] font-headline">FORENSICS</span>
              <span className="text-2xl font-bold tracking-[0.3em] font-headline">INTELLIGENCE</span>
@@ -257,10 +254,10 @@ export default function Home() {
       <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
           <SectionReveal className="text-center mb-20">
-            <h2 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4">Recovery Divisions</h2>
-            <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Departmental Expertise</h3>
+            <h2 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4">Recovery Solutions</h2>
+            <h3 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Specialized Services</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
-              Lazoronix operates through specialized divisions, each utilizing distinct forensic protocols for institutional and digital asset fraud scenarios.
+              Lazoronix operates through specialized divisions to provide targeted recovery support for all fraud scenarios.
             </p>
           </SectionReveal>
           
@@ -274,7 +271,6 @@ export default function Home() {
                   
                   <div className="flex items-center gap-6 mb-8">
                     <div className="w-16 h-16 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-700 relative overflow-hidden">
-                      {/* Tactical Rotating Ring */}
                       <div className="absolute inset-[-4px] border border-dashed border-primary/0 group-hover:border-primary/30 group-hover:rotate-180 transition-all duration-1000 ease-in-out" />
                       <service.icon className="w-8 h-8 text-primary relative z-10" />
                     </div>
@@ -305,7 +301,7 @@ export default function Home() {
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-card border-white/10 p-0">
                       <DialogTitle className="sr-only">{service.title}</DialogTitle>
                       <DialogDescription className="sr-only">Forensic briefing and recovery methodology for {service.title}.</DialogDescription>
-                      <InstitutionalDecryptor label="Forensic Dossier">
+                      <InstitutionalDecryptor label="Case Dossier">
                         <div className="p-8 md:p-12 space-y-10">
                           <DialogHeader className="flex flex-col md:flex-row gap-8 items-start text-left">
                             <div className="w-20 h-20 rounded-none bg-primary/10 flex items-center justify-center shrink-0">
@@ -323,7 +319,7 @@ export default function Home() {
                             <div className="lg:col-span-3 space-y-8">
                               <div className="space-y-4">
                                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center gap-2">
-                                  <Search className="w-4 h-4 text-primary" /> Forensic Analysis Briefing
+                                  <Search className="w-4 h-4 text-primary" /> Forensic Analysis
                                 </h4>
                                 <p className="text-lg text-foreground/90 leading-relaxed font-medium italic border-l-2 border-primary pl-6">
                                   "{service.detailedDesc}"
@@ -357,11 +353,6 @@ export default function Home() {
                                        {marker}
                                      </div>
                                    ))}
-                                 </div>
-                                 <div className="pt-6 border-t border-white/10">
-                                   <p className="text-[9px] text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
-                                     Technical resolution is determined by the preservation of high-integrity digital evidence.
-                                   </p>
                                  </div>
                                </div>
 
@@ -404,7 +395,7 @@ export default function Home() {
               <div className="md:col-span-3 p-8 md:p-16 border-r border-white/5">
                 <h2 className="text-4xl font-headline font-bold mb-6 uppercase tracking-tighter">Recovery Feasibility</h2>
                 <p className="text-xl text-foreground/80 mb-8 leading-relaxed font-medium">
-                  Every scenario is unique. Prior to formal engagement, our specialists review transaction records, platform infrastructure, and technical meta-data to determine if a viable recovery pathway exists.
+                  Every case is unique. Before we start, our specialists review transaction records and platform data to see if recovery is possible.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
                   {[
@@ -426,7 +417,7 @@ export default function Home() {
                 <div className="space-y-8">
                   <Link href="#forensic-intake">
                     <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
-                      Start Confidential Recovery Case
+                      Start Recovery Case
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -437,22 +428,22 @@ export default function Home() {
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">100% Clinical</h4>
-                      <p className="opacity-80 text-sm font-medium">All cases are evaluated using objective forensic methodologies.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Professional</h4>
+                      <p className="opacity-80 text-sm font-medium">All cases evaluated using objective methodologies.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
-                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Technical Data Only</h4>
-                      <p className="opacity-80 text-sm font-medium">We lead with evidence-based intelligence, avoiding speculative recovery claims.</p>
+                      <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Data Led</h4>
+                      <p className="opacity-80 text-sm font-medium">We lead with facts and evidence-based intelligence.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <CheckCircle2 className="w-6 h-6 shrink-0 mt-1" />
                     <div>
                       <h4 className="text-xl font-headline font-bold mb-2 uppercase tracking-tight">Restricted Access</h4>
-                      <p className="opacity-80 text-sm font-medium">Case details are stored in encrypted vaults with senior-tier analyst access only.</p>
+                      <p className="opacity-80 text-sm font-medium">Case details are stored in encrypted vaults.</p>
                     </div>
                   </div>
                 </div>
@@ -470,14 +461,13 @@ export default function Home() {
 
       <ProcessSection />
       
-      {/* Our Commitment Section */}
       <section className="py-24 bg-primary text-primary-foreground overflow-hidden relative">
          <div className="container mx-auto px-6 relative z-10 text-center">
             <SectionReveal>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Institutional Commitment</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8 uppercase tracking-tighter">Our Commitment</h2>
               <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-12 font-medium">
-                We bridge the gap between complex digital asset fraud and professional recovery rigor.<br/>
-                <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">Every case is evaluated using rigorous forensic analysis.</span>
+                We bridge the gap between complex digital fraud and professional recovery rigor.<br/>
+                <span className="font-bold underline decoration-accent decoration-4 underline-offset-8">Every case is evaluated with technical precision.</span>
               </p>
             </SectionReveal>
          </div>
@@ -490,9 +480,9 @@ export default function Home() {
       <section className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
           <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-none hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Start Your Recovery Process</h2>
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Start Recovery Today</h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-              Whether you've been affected by institutional trading fraud, social engineering, or digital asset access challenges, our specialists are ready to review your evidence.
+              If you've been affected by trading fraud, scams, or lost access to your assets, our specialists are ready to help.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
                <Link href="#forensic-intake">

@@ -21,13 +21,12 @@ import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
 const divisions = [
-  "Financial Trading Fraud Division",
-  "Institutional Investment Fraud Division",
-  "Social Engineering Fraud Division",
-  "Employment & Recruitment Fraud Division",
-  "Institutional Loan Fraud Division",
-  "Digital Asset Access & Recovery Division",
-  "Blockchain Intelligence & Tracing Division",
+  "Trading Fraud Recovery",
+  "Investment Scam Recovery",
+  "Romance Scam Recovery",
+  "Employment Scam Recovery",
+  "Lost Funds Recovery",
+  "Blockchain Asset Recovery",
 ];
 
 const navLinks = [

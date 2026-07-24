@@ -1,15 +1,54 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, ArrowRight } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
+import { supabase } from '@/lib/supabase';
 
 export function Hero() {
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchHeroBg();
+  }, []);
+
+  const fetchHeroBg = async () => {
+    try {
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('hero-bg.png');
+      
+      if (data?.publicUrl) {
+        // Cache busting with timestamp
+        setBgUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      setBgUrl(null);
+    }
+  };
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden hero-gradient border-b border-white/5">
-      {/* Living Intelligence Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden hero-gradient border-b border-white/5 min-h-[60vh] flex items-center">
+      {/* Dynamic Background Image */}
+      {bgUrl && (
+        <div className="absolute inset-0 z-0 opacity-40 grayscale pointer-events-none">
+          <Image 
+            src={bgUrl} 
+            alt="Hero Background" 
+            fill 
+            className="object-cover"
+            priority
+            onError={() => setBgUrl(null)}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/20 to-background" />
+        </div>
+      )}
+
+      {/* Living Intelligence Background Overlay */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-10">
         {/* Layer 1: Atmospheric Floating Metrics */}
         <div className="absolute top-[10%] left-[5%] opacity-[0.03] text-[7px] md:text-[9px] font-black uppercase tracking-[0.5em] text-primary animate-slow-float">
           Forensic Analysis
@@ -48,7 +87,7 @@ export function Hero() {
         </svg>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-20">
         <div className="max-w-5xl mx-auto text-center">
           <SectionReveal delay={100} duration={600} threshold={0}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/5 border border-primary/20 text-primary text-[8px] md:text-[10px] font-black mb-6 md:mb-8 tracking-[0.3em] uppercase">

@@ -140,10 +140,18 @@ export default function AdminDashboard() {
   const [cases, setCases] = useState<CaseRecord[]>([]);
   const [stories, setStories] = useState<SuccessStory[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Logo State
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  // Hero Background State
+  const [heroBgFile, setHeroBgFile] = useState<File | null>(null);
+  const [heroBgPreview, setHeroBgPreview] = useState<string | null>(null);
+  const [uploadingHeroBg, setUploadingHeroBg] = useState(false);
+  const [heroBgUrl, setHeroBgUrl] = useState<string | null>(null);
   
   // Success Story Form State
   const [isStoryDialogOpen, setIsStoryDialogOpen] = useState(false);
@@ -173,6 +181,7 @@ export default function AdminDashboard() {
     fetchCases();
     fetchStories();
     fetchLogo();
+    fetchHeroBg();
   }, []);
 
   const checkAuth = async () => {
@@ -193,6 +202,20 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       setLogoUrl(null);
+    }
+  };
+
+  const fetchHeroBg = async () => {
+    try {
+      const { data } = supabase.storage
+        .from('assets')
+        .getPublicUrl('hero-bg.png');
+      
+      if (data?.publicUrl) {
+        setHeroBgUrl(`${data.publicUrl}?t=${Date.now()}`);
+      }
+    } catch (error) {
+      setHeroBgUrl(null);
     }
   };
 
@@ -314,6 +337,46 @@ export default function AdminDashboard() {
       });
     } finally {
       setUploadingLogo(false);
+    }
+  };
+
+  const handleHeroBgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setHeroBgFile(file);
+      setHeroBgPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadHeroBg = async () => {
+    if (!heroBgFile) return;
+    setUploadingHeroBg(true);
+
+    try {
+      const { error } = await supabase.storage
+        .from('assets')
+        .upload('hero-bg.png', heroBgFile, {
+          upsert: true,
+          contentType: heroBgFile.type
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Hero Synchronized",
+        description: "The hero background has been successfully updated.",
+      });
+      setHeroBgFile(null);
+      setHeroBgPreview(null);
+      fetchHeroBg();
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Upload Error",
+        description: error.message,
+      });
+    } finally {
+      setUploadingHeroBg(false);
     }
   };
 
@@ -470,7 +533,7 @@ export default function AdminDashboard() {
                         <Label className="text-[8px] uppercase tracking-widest">Summary Narrative</Label>
                         <Textarea placeholder="Clinical summary..." className="bg-black/50 border-white/10 min-h-[80px]" value={storyForm.narrative} onChange={e => setStoryForm({...storyForm, narrative: e.target.value})} />
                       </div>
-                      <Button onClick={saveStory} className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12">Register Resolution</Button>
+                      <button onClick={saveStory} className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 hover:bg-primary/90 transition-colors">Register Resolution</button>
                     </div>
                     
                     <div className="space-y-4">
@@ -501,48 +564,86 @@ export default function AdminDashboard() {
                   <Settings className="w-3.5 h-3.5 mr-2" /> Branding
                 </Button>
               </DialogTrigger>
-              <DialogContent className="glass-card border-white/10 max-w-md">
+              <DialogContent className="glass-card border-white/10 max-w-md max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="text-xl font-headline font-bold uppercase tracking-tight">Branding Management</DialogTitle>
-                  <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Update website logo icon</DialogDescription>
+                  <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Update website logo and hero background</DialogDescription>
                 </DialogHeader>
-                <div className="py-6 space-y-6">
-                  <div className="flex flex-col items-center justify-center p-8 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer overflow-hidden">
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      className="absolute inset-0 opacity-0 cursor-pointer z-20"
-                      onChange={handleLogoChange}
-                    />
-                    {logoPreview ? (
-                      <img src={logoPreview} alt="Preview" className="h-20 w-auto object-contain mb-4" />
-                    ) : (
-                      <ImageIcon className="w-12 h-12 text-muted-foreground opacity-30 mb-4" />
-                    )}
-                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground text-center px-4">
-                      {logoFile ? logoFile.name : 'Select Logo (PNG/SVG Preferred)'}
-                    </p>
+                <div className="py-6 space-y-8">
+                  {/* Logo Upload Section */}
+                  <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                      <ImageIcon className="w-3.5 h-3.5" /> Platform Logo
+                    </Label>
+                    <div className="flex flex-col items-center justify-center p-6 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer overflow-hidden">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                        onChange={handleLogoChange}
+                      />
+                      {logoPreview ? (
+                        <img src={logoPreview} alt="Preview" className="h-16 w-auto object-contain mb-4" />
+                      ) : (
+                        <Upload className="w-8 h-8 text-muted-foreground opacity-30 mb-4" />
+                      )}
+                      <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground text-center px-4">
+                        {logoFile ? logoFile.name : 'Select Logo (PNG/SVG Preferred)'}
+                      </p>
+                    </div>
+                    <Button 
+                      onClick={uploadLogo} 
+                      disabled={!logoFile || uploadingLogo}
+                      size="sm"
+                      className="w-full h-10 bg-primary text-black font-black uppercase tracking-widest premium-cta"
+                    >
+                      {uploadingLogo ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
+                      Sync Logo
+                    </Button>
+                  </div>
+
+                  {/* Hero Background Upload Section */}
+                  <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                      <ImageIcon className="w-3.5 h-3.5" /> Hero Background
+                    </Label>
+                    <div className="flex flex-col items-center justify-center p-6 border border-dashed border-white/10 bg-white/5 relative group cursor-pointer overflow-hidden">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                        onChange={handleHeroBgChange}
+                      />
+                      {heroBgPreview ? (
+                        <img src={heroBgPreview} alt="Preview" className="h-16 w-auto object-contain mb-4" />
+                      ) : (
+                        <Upload className="w-8 h-8 text-muted-foreground opacity-30 mb-4" />
+                      )}
+                      <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground text-center px-4">
+                        {heroBgFile ? heroBgFile.name : 'Select Hero Background (High-Res)'}
+                      </p>
+                    </div>
+                    <Button 
+                      onClick={uploadHeroBg} 
+                      disabled={!heroBgFile || uploadingHeroBg}
+                      size="sm"
+                      className="w-full h-10 bg-primary text-black font-black uppercase tracking-widest premium-cta"
+                    >
+                      {uploadingHeroBg ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
+                      Sync Hero Background
+                    </Button>
                   </div>
                   
                   <div className="p-4 bg-primary/5 border border-primary/20 space-y-3">
                     <p className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-2">
                       <Info className="w-3.5 h-3.5" /> Project Configuration
                     </p>
-                    <p className="text-[9px] text-muted-foreground uppercase tracking-widest leading-relaxed">
+                    <p className="text-[8px] text-muted-foreground uppercase tracking-widest leading-relaxed">
                       1. Go to Supabase &gt; Storage<br />
                       2. Create a bucket named <span className="text-primary font-bold">assets</span><br />
                       3. Set the bucket to <span className="text-primary font-bold">Public</span>
                     </p>
                   </div>
-
-                  <Button 
-                    onClick={uploadLogo} 
-                    disabled={!logoFile || uploadingLogo}
-                    className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest premium-cta"
-                  >
-                    {uploadingLogo ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
-                    Deploy Branding
-                  </Button>
                 </div>
               </DialogContent>
             </Dialog>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react'
-import { aiGuidedRecoveryPreparation, type AIGuidedRecoveryPreparationOutput } from '@/ai/flows/ai-guided-recovery-preparation'
+import { aiGuidedRecoveryPreparation } from '@/ai/flows/ai-guided-recovery-preparation'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
@@ -12,40 +12,16 @@ import { supabase } from '@/lib/supabase'
 import { 
   Loader2, 
   CheckCircle2, 
-  Search,
   ArrowRight,
-  FileText,
-  ShieldCheck,
-  Activity,
-  Fingerprint,
-  Target,
-  Network,
-  ChevronRight,
-  User,
   Lock,
-  Shield,
-  Globe
+  Shield
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-
-// To avoid unused import error if we remove it from UI but keep it in timeline
-const DatabaseIcon = ({ className }: { className?: string }) => <div className={className} />
-
-const TIMELINE_STEPS = [
-  { id: 'intake', label: 'Intake & Preservation', status: 'completed', icon: FileText },
-  { id: 'verification', label: 'Evidence Verification', status: 'current', icon: ShieldCheck },
-  { id: 'forensic', label: 'Forensic Analysis', status: 'pending', icon: Search },
-  { id: 'intelligence', label: 'Intelligence Development', status: 'pending', icon: DatabaseIcon },
-  { id: 'strategy', label: 'Recovery Strategy', status: 'pending', icon: Network },
-  { id: 'resolution', label: 'Resolution Support', status: 'pending', icon: CheckCircle2 },
-]
 
 export function AIGuidedTool() {
   const [step, setStep] = useState<'form' | 'result'>('form')
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<AIGuidedRecoveryPreparationOutput | null>(null)
   const [caseId, setCaseId] = useState('')
   const [scanStatus, setScanStatus] = useState('Processing your case...')
 
@@ -69,7 +45,7 @@ export function AIGuidedTool() {
     setCaseId(generatedId)
 
     try {
-      setScanStatus("Analyzing recovery path...")
+      setScanStatus("Securing transmission...")
       
       const promptText = `
 NAME: ${bookingValues.name}
@@ -79,22 +55,23 @@ COUNTRY: ${bookingValues.country}
 NARRATIVE: ${description}
       `.trim()
 
-      const [aiOutput] = await Promise.all([
-        aiGuidedRecoveryPreparation({ initialProblemDescription: promptText }),
-        supabase.from('cases').insert([{
-          case_id: generatedId,
-          case_type: 'General Inquiry',
-          user_name: bookingValues.name,
-          user_email: bookingValues.email,
-          user_phone: bookingValues.phone,
-          user_country: bookingValues.country,
-          description: description,
-          status: 'Review Pending',
-          risk_level: 'High'
-        }])
-      ])
+      // We call the AI in the background so the admin has the results, 
+      // but we don't make the user wait for a dashboard.
+      const aiOutput = await aiGuidedRecoveryPreparation({ initialProblemDescription: promptText });
 
-      setResult(aiOutput)
+      await supabase.from('cases').insert([{
+        case_id: generatedId,
+        case_type: 'Direct Inquiry',
+        user_name: bookingValues.name,
+        user_email: bookingValues.email,
+        user_phone: bookingValues.phone,
+        user_country: bookingValues.country,
+        description: description,
+        status: 'Review Pending',
+        risk_level: 'High',
+        result_data: aiOutput
+      }]);
+
       setStep('result')
     } catch (error: any) {
       toast({ variant: 'destructive', title: "Transmission Error", description: error.message })
@@ -206,82 +183,23 @@ NARRATIVE: ${description}
           </div>
         )}
 
-        {step === 'result' && result && (
-          <div className="animate-in fade-in zoom-in-95 duration-700">
-             <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div className="flex items-center gap-6">
-                   <div className="w-20 h-20 rounded-full border-2 border-primary/40 flex items-center justify-center relative shadow-2xl shadow-primary/20">
-                      <ShieldCheck className="w-10 h-10 text-primary" />
-                      <div className="absolute inset-0 rounded-full bg-primary/10 animate-breathing" />
-                   </div>
-                   <div>
-                      <h2 className="text-4xl font-headline font-bold uppercase tracking-tighter">Case Initialized</h2>
-                      <p className="text-primary text-[10px] font-black uppercase tracking-[0.4em]">Reference ID: {caseId}</p>
-                   </div>
-                </div>
-                <Button variant="outline" className="h-14 px-10 border-white/10 text-[10px] font-black uppercase tracking-widest" onClick={() => setStep('form')}>Start New Case</Button>
-             </div>
-
-             <div className="grid lg:grid-cols-3 gap-8">
-                <Card className="lg:col-span-2 glass-card p-10 space-y-12">
-                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                      {Object.entries(result.preliminaryCaseFindings).map(([key, val]: any) => (
-                        <div key={key} className="p-4 bg-white/5 border border-white/5">
-                           <p className="text-[8px] text-muted-foreground uppercase tracking-widest mb-1">{key.replace(/([A-Z])/g, ' $1')}</p>
-                           <p className="text-xs font-bold uppercase text-white">{val}</p>
-                        </div>
-                      ))}
-                   </div>
-
-                   <div className="space-y-6">
-                      <h3 className="text-xs font-black uppercase tracking-[0.3em] flex items-center gap-3 text-primary"><Target className="w-4 h-4" /> Suggested Recovery Pathway</h3>
-                      <div className="grid md:grid-cols-2 gap-6">
-                         {result.investigativeFocusAreas.map((area: any, idx: number) => (
-                            <div key={idx} className="p-6 bg-white/5 border border-white/5 space-y-4">
-                               <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">{area.categoryName}</h4>
-                               <p className="text-[10px] text-muted-foreground leading-relaxed uppercase tracking-widest">{area.description}</p>
-                               <ul className="space-y-2 pt-4 border-t border-white/5">
-                                  {area.specificItems.map((item: string, j: number) => (
-                                     <li key={j} className="text-[9px] font-bold text-foreground/60 flex items-center gap-2 uppercase">
-                                        <ChevronRight className="w-3 h-3 text-primary" /> {item}
-                                     </li>
-                                  ))}
-                               </ul>
-                            </div>
-                         ))}
-                      </div>
-                   </div>
-                </Card>
-
-                <div className="space-y-8">
-                   <Card className="glass-card p-8 border-primary/20 bg-primary/5">
-                      <Avatar className="w-20 h-20 border-2 border-primary mx-auto mb-6">
-                         <AvatarImage src={`https://picsum.photos/seed/${caseId}/200/200`} />
-                         <AvatarFallback>LA</AvatarFallback>
-                      </Avatar>
-                      <div className="text-center space-y-2">
-                         <p className="text-xs font-black uppercase tracking-widest text-white">Analyst Assigned</p>
-                         <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Awaiting Initial Review</p>
-                      </div>
-                      <div className="mt-8 pt-8 border-t border-white/10 space-y-4">
-                         {TIMELINE_STEPS.map((s, idx) => (
-                            <div key={s.id} className="flex items-center gap-4 opacity-40">
-                               <div className={cn("w-6 h-6 rounded-full border border-white/20 flex items-center justify-center", idx === 0 && "border-primary opacity-100")}>
-                                  <s.icon className={cn("w-3 h-3", idx === 0 && "text-primary")} />
-                               </div>
-                               <span className={cn("text-[9px] font-black uppercase tracking-widest", idx === 0 && "text-white opacity-100")}>{s.label}</span>
-                            </div>
-                         ))}
-                      </div>
-                   </Card>
-                   
-                   <div className="p-8 bg-destructive/5 border border-destructive/20 text-center space-y-4">
-                      <Lock className="w-8 h-8 text-destructive mx-auto opacity-50" />
-                      <p className="text-[10px] font-black text-destructive uppercase tracking-[0.2em]">Data Securely Vaulted</p>
-                      <p className="text-[9px] text-muted-foreground uppercase leading-relaxed">Your submission has been moved to a restricted node. A specialist will contact you via the provided email.</p>
-                   </div>
-                </div>
-             </div>
+        {step === 'result' && (
+          <div className="animate-in fade-in zoom-in-95 duration-700 text-center py-20">
+            <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-primary/20">
+              <CheckCircle2 className="w-12 h-12 text-primary" />
+            </div>
+            <h2 className="text-4xl font-headline font-bold uppercase tracking-tighter mb-4">Case Initialized</h2>
+            <p className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-8">Reference ID: {caseId}</p>
+            <div className="max-w-md mx-auto p-8 bg-white/5 border border-white/10 space-y-4">
+              <p className="text-sm text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
+                Your request has been securely vaulted. A specialized analyst has been assigned to your case and will contact you via email shortly.
+              </p>
+              <div className="pt-4 flex items-center justify-center gap-3 opacity-40">
+                <Lock className="w-4 h-4" />
+                <span className="text-[10px] font-black uppercase tracking-widest">AES-256 Protocol Active</span>
+              </div>
+            </div>
+            <Button variant="outline" className="mt-12 h-12 px-8 border-white/10 text-[10px] font-black uppercase tracking-widest" onClick={() => setStep('form')}>Return to Portal</Button>
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {MouseSpotlight} from '@/components/ui/mouse-spotlight';
+import {WhatsAppButton} from '@/components/ui/whatsapp-button';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="font-body antialiased bg-background text-foreground selection:bg-primary/30 relative">
         <MouseSpotlight />
         {children}
+        <WhatsAppButton phoneNumber="+19498349406" />
         <Toaster />
         
         {/* Tawk.to Stable Initialization */}

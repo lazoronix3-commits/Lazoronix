@@ -46,7 +46,7 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
         <MouseSpotlight />
         {children}
-        <WhatsAppButton phoneNumber="+19498349406" />
+        <WhatsAppButton phoneNumber="+15635145697" />
         <Toaster />
         
         {/* Tawk.to Stable Initialization */}

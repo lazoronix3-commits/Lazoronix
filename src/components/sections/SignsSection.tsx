@@ -70,12 +70,12 @@ export function SignsSection() {
                   </div>
                   <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
                     <span className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
                       Confidential Review
                     </span>
                     <span className="w-px h-3 bg-white/10" />
                     <span className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
                       No Upfront Fees
                     </span>
                   </div>

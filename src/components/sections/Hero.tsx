@@ -92,15 +92,15 @@ export function Hero() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 opacity-60">
-               <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-primary" /> Confidential case enquiries
-               </p>
-               <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-primary" /> Secure submission
-               </p>
-               <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-primary" /> Human specialist review
-               </p>
+               <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+                 <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Confidential case enquiries
+               </div>
+               <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+                 <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Secure submission
+               </div>
+               <div className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+                 <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Human specialist review
+               </div>
             </div>
           </SectionReveal>
         </div>

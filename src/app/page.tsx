@@ -486,7 +486,7 @@ export default function Home() {
                <Link href="#forensic-intake">
                  <Button size="lg" className="h-16 px-10 bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
                    Contact a Recovery Specialist
-                   <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                   <ArrowRight className="ml-2 w-5 h-6 group-hover:translate-x-1 transition-transform" />
                  </Button>
                </Link>
             </div>
@@ -495,6 +495,20 @@ export default function Home() {
       </section>
 
       <Footer />
+      
+      <div className="fixed bottom-24 left-6 z-50">
+        <div className="mt-8 flex items-center justify-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+            Confidential Review
+          </span>
+          <span className="w-px h-3 bg-white/10" />
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-breathing" />
+            No Upfront Fees
+          </span>
+        </div>
+      </div>
     </main>
   );
 }

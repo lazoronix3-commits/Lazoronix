@@ -14,7 +14,8 @@ import {
   CheckCircle2, 
   ArrowRight,
   Lock,
-  Shield
+  Shield,
+  Mail
 } from 'lucide-react'
 
 export function AIGuidedTool() {
@@ -51,20 +52,18 @@ COUNTRY: ${bookingValues.country}
 NARRATIVE: ${description}
       `.trim()
 
-      // Insert into database first for maximum speed
       await supabase.from('cases').insert([{
         case_id: generatedId,
-        case_type: 'Direct Inquiry',
+        case_type: 'Forensic Intake',
         user_name: bookingValues.name,
         user_email: bookingValues.email,
         user_phone: bookingValues.phone,
         user_country: bookingValues.country,
         description: description,
         status: 'Review Pending',
-        risk_level: 'High'
+        risk_level: 'Initial Intake'
       }]);
 
-      // Trigger AI in background so user doesn't wait
       aiGuidedRecoveryPreparation({ initialProblemDescription: promptText }).then(aiOutput => {
          supabase.from('cases').update({ result_data: aiOutput }).eq('case_id', generatedId);
       }).catch(err => console.error("Background AI processing error:", err));
@@ -85,11 +84,11 @@ NARRATIVE: ${description}
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-[10px] font-black mb-6 tracking-[0.3em] uppercase">
                 <Shield className="w-3.5 h-3.5" />
-                Recovery Portal
+                Case Portal
               </div>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Get Free Consultation</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Contact a Recovery Specialist</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Fill this brief form to speak with our recovery team. Your details are protected by encryption.
+                Submit your case narrative for structured review. Our senior analysts provide human-led investigation on all verified intakes.
               </p>
             </div>
 
@@ -148,7 +147,7 @@ NARRATIVE: ${description}
                   />
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-4 space-y-4">
                   <Button 
                     onClick={handleFinalSubmit} 
                     disabled={loading}
@@ -160,19 +159,26 @@ NARRATIVE: ${description}
                         <span className="text-sm">Submitting...</span>
                       </div>
                     ) : (
-                      <>Submit Case for Recovery <ArrowRight className="ml-2 w-6 h-6" /></>
+                      <>Initialize Case Submission <ArrowRight className="ml-2 w-6 h-6" /></>
                     )}
                   </Button>
+                  
+                  <div className="text-center">
+                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-4">Or Contact Directly</p>
+                    <a href="mailto:investigator@lazoronix.com" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary hover:underline">
+                      <Mail className="w-3.5 h-3.5" /> Email Our Investigation Team
+                    </a>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between px-4 py-3 bg-white/5 border border-white/10 mt-6">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Specialist Available Now</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Senior Analyst Online</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Lock className="w-3.5 h-3.5 text-muted-foreground opacity-30" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Secure Connection</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Secure Submission</span>
                   </div>
                 </div>
               </div>
@@ -185,11 +191,11 @@ NARRATIVE: ${description}
             <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-primary/20">
               <CheckCircle2 className="w-12 h-12 text-primary" />
             </div>
-            <h2 className="text-4xl font-headline font-bold uppercase tracking-tighter mb-4">Case Received</h2>
+            <h2 className="text-4xl font-headline font-bold uppercase tracking-tighter mb-4">Intake Received</h2>
             <p className="text-primary text-[10px] font-black uppercase tracking-[0.4em] mb-8">Reference ID: {caseId}</p>
             <div className="max-w-md mx-auto p-8 bg-white/5 border border-white/10 space-y-4">
               <p className="text-sm text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
-                Your request has been securely logged. A recovery specialist is reviewing your details and will contact you shortly.
+                Your structured intake has been securely logged. A human recovery specialist is reviewing your case narrative and will reach out via email shortly.
               </p>
               <div className="pt-4 flex items-center justify-center gap-3 opacity-40">
                 <Lock className="w-4 h-4" />

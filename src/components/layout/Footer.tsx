@@ -1,6 +1,6 @@
 'use client';
 
-import { Shield, Twitter, Linkedin, Github, Send, Youtube, Radio } from 'lucide-react';
+import { Shield, Twitter, Linkedin, Send, Radio, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -86,8 +86,8 @@ export function Footer() {
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
               <li><Link href="/#preservation" className="hover:text-primary transition-colors">Protocols</Link></li>
               <li><Link href="/#process" className="hover:text-primary transition-colors">Process</Link></li>
-              <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Recovery Portal</Link></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Consult Specialist</Link></li>
+              <li><Link href="/#forensic-intake" className="hover:text-primary transition-colors">Contact Specialist</Link></li>
+              <li><a href="mailto:investigator@lazoronix.com" className="hover:text-primary transition-colors">Email Our Team</a></li>
             </ul>
           </div>
 
@@ -103,7 +103,7 @@ export function Footer() {
           <div>
             <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.3em]">Contact</h5>
             <ul className="space-y-4 text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-              <li><span className="text-white block">investigator@lazoronix.com</span></li>
+              <li><a href="mailto:investigator@lazoronix.com" className="text-white block hover:text-primary transition-colors">investigator@lazoronix.com</a></li>
               <li><Link href="/contact" className="hover:text-primary transition-colors">Our Hubs</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Legal Disclaimer</Link></li>
             </ul>

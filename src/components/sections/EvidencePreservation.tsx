@@ -3,17 +3,11 @@
 import { SectionReveal } from '@/components/ui/section-reveal';
 import { 
   ShieldAlert, 
-  FileText, 
   XCircle, 
   CheckCircle2, 
   Save, 
-  Hash, 
-  Mail, 
-  MessageSquare, 
-  Camera,
   AlertTriangle,
-  Lock,
-  ArrowRight
+  Lock
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -69,7 +63,7 @@ export function EvidencePreservation() {
                 <span className="text-primary italic font-medium gold-glow">Preservation Center.</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-10 leading-relaxed font-medium">
-                The technical viability of a recovery case is directly proportional to the integrity of the evidence preserved during the initial 72 hours of discovery.
+                The technical viability of a recovery case is directly proportional to the integrity of the evidence preserved during the initial discovery phase.
               </p>
               
               <div className="p-8 bg-white/[0.02] border border-white/5 rounded-none space-y-6">
@@ -81,7 +75,7 @@ export function EvidencePreservation() {
                 </p>
                 <Link href="#forensic-intake" className="block">
                   <Button className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest text-[10px] premium-cta">
-                    Start Recovery Case
+                    Contact a Recovery Specialist
                   </Button>
                 </Link>
               </div>
@@ -131,29 +125,6 @@ export function EvidencePreservation() {
                 </Card>
               </SectionReveal>
             ))}
-          </div>
-        </div>
-
-        <div className="mt-24 pt-16 border-t border-white/5">
-          <div className="grid md:grid-cols-3 gap-12 items-center">
-            <SectionReveal className="md:col-span-2">
-              <h4 className="text-2xl font-headline font-bold mb-4 uppercase tracking-tight">Institutional Chain of Custody</h4>
-              <p className="text-muted-foreground text-sm uppercase tracking-widest leading-relaxed font-medium">
-                Every file ingested through the Lazoronix Evidence Portal is timestamped and cryptographically hashed. This creates an immutable record that identifies any subsequent alteration, satisfying high-tier legal and jurisdictional evidence standards.
-              </p>
-            </SectionReveal>
-            <SectionReveal className="flex justify-end">
-              <div className="flex flex-wrap gap-4 justify-center">
-                 <div className="p-4 bg-white/5 border border-white/5 text-center min-w-[120px]">
-                   <p className="text-[10px] font-black text-primary uppercase mb-1">AES-256</p>
-                   <p className="text-[8px] text-muted-foreground uppercase font-bold">Encryption</p>
-                 </div>
-                 <div className="p-4 bg-white/5 border border-white/5 text-center min-w-[120px]">
-                   <p className="text-[10px] font-black text-primary uppercase mb-1">SHA-256</p>
-                   <p className="text-[8px] text-muted-foreground uppercase font-bold">Hashing</p>
-                 </div>
-              </div>
-            </SectionReveal>
           </div>
         </div>
       </div>

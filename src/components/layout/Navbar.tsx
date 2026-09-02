@@ -112,7 +112,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 md:gap-4">
           <Button asChild className="hidden sm:flex bg-primary hover:bg-primary/90 text-black font-black uppercase tracking-widest h-10 md:h-11 px-4 md:px-6 rounded-none text-[10px] md:text-sm">
             <Link href="/#forensic-intake">
-              Start Recovery
+              Contact Specialist
             </Link>
           </Button>
 
@@ -163,7 +163,7 @@ export function Navbar() {
                 <div className="pt-8">
                   <Button asChild onClick={() => setIsMobileMenuOpen(false)} className="w-full h-14 bg-primary text-black font-black uppercase tracking-widest rounded-none">
                     <Link href="/#forensic-intake">
-                      Start Recovery
+                      Contact Specialist
                     </Link>
                   </Button>
                 </div>

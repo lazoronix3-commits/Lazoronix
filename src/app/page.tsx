@@ -196,8 +196,6 @@ function InstitutionalDecryptor({ children, label = "Dossier" }: { children: Rea
 }
 
 export default function Home() {
-  const [selectedService, setSelectedService] = useState<typeof SERVICE_DETAILS[0] | null>(null);
-
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -360,7 +358,7 @@ export default function Home() {
                                   <Link href="#forensic-intake" className="block w-full">
                                     <DialogClose asChild>
                                       <Button className="w-full h-16 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform premium-cta rounded-none">
-                                        Start Recovery
+                                        Contact Specialist
                                       </Button>
                                     </DialogClose>
                                   </Link>
@@ -417,7 +415,7 @@ export default function Home() {
                 <div className="space-y-8">
                   <Link href="#forensic-intake">
                     <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
-                      Start Recovery
+                      Contact a Recovery Specialist
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -487,7 +485,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
                <Link href="#forensic-intake">
                  <Button size="lg" className="h-16 px-10 bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
-                   Start Recovery
+                   Contact a Recovery Specialist
                    <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                  </Button>
                </Link>

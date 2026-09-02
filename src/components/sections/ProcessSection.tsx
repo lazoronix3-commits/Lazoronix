@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle2, Shield, Search, FileText, Activity, UserCheck, Database, Network } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Shield, Search, FileText, UserCheck, Database, Network } from 'lucide-react';
 import { SectionReveal } from '@/components/ui/section-reveal';
 
 const steps = [
@@ -63,18 +63,6 @@ export function ProcessSection() {
         </div>
         
         <div className="max-w-5xl mx-auto space-y-0 relative">
-          {/* Main Gold Connection Path */}
-          <svg className="absolute left-6 md:left-8 top-10 h-full w-full pointer-events-none hidden md:block" style={{ width: 'calc(100% - 2rem)' }}>
-            {steps.map((_, idx) => idx < steps.length - 1 && (
-              <path 
-                key={idx}
-                d={`M 0 ${idx * 160 + 10} L 0 ${(idx + 1) * 160 + 10}`} 
-                className="forensic-trace" 
-                style={{ animationDelay: `${idx * 0.4}s`, opacity: 0.3 }}
-              />
-            ))}
-          </svg>
-
           {steps.map((step, idx) => (
             <SectionReveal 
               key={idx} 
@@ -82,7 +70,6 @@ export function ProcessSection() {
               threshold={0.3}
               className="group relative pb-12 md:pb-16 last:pb-0 active"
             >
-              {/* Vertical Connector Line for Desktop */}
               {idx !== steps.length - 1 && (
                 <div className="absolute left-6 md:left-8 top-16 md:top-20 bottom-0 w-px bg-white/5 hidden md:block overflow-hidden">
                   <div className="timeline-line-fill absolute top-0 left-0 w-full bg-primary" />
@@ -106,10 +93,6 @@ export function ProcessSection() {
 
                 <div className="md:col-span-3">
                   <div className="p-4 md:p-6 bg-white/[0.03] border border-white/5 space-y-2 md:space-y-3 hover:border-primary/20 transition-colors relative">
-                    <svg className="absolute top-0 right-0 opacity-10" width="30" height="30">
-                      <path d="M 30 8 L 8 8 L 8 30" className="forensic-trace" />
-                    </svg>
-                    
                     {step.details.map((detail, dIdx) => (
                       <div key={dIdx} className="flex items-center gap-2 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-foreground/50">
                         <CheckCircle2 className="w-3 md:w-3.5 h-3 md:h-3.5 text-primary" />
@@ -131,7 +114,7 @@ export function ProcessSection() {
                 <h4 className="text-xl md:text-2xl font-headline font-bold mb-4 md:mb-6 uppercase tracking-tight">Commence Recovery Phase 01</h4>
                 <Link href="#forensic-intake" className="block sm:inline-block">
                   <Button size="lg" className="w-full sm:w-auto h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg bg-primary text-black hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
-                    Start Recovery
+                    Contact a Recovery Specialist
                     <ArrowRight className="ml-2 w-5 md:w-6 h-5 md:h-6 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>

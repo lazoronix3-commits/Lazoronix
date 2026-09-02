@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import './globals.css';
 import {Toaster} from '@/components/ui/toaster';
 import {MouseSpotlight} from '@/components/ui/mouse-spotlight';
-import {WhatsAppButton} from '@/components/ui/whatsapp-button';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
@@ -46,7 +45,6 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
         <MouseSpotlight />
         {children}
-        <WhatsAppButton phoneNumber="+14192950126" />
         <Toaster />
         
         {/* Tawk.to Stable Initialization */}

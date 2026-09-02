@@ -86,7 +86,7 @@ export function Hero() {
               </Link>
               <a href="mailto:investigator@lazoronix.com" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full font-bold uppercase tracking-widest rounded-none">
-                  <Mail className="mr-2 w-4 h-4" /> Email a Recovery Specialist
+                  <Mail className="mr-2 w-4 h-4" /> Email Our Investigation Team
                 </Button>
               </a>
             </div>

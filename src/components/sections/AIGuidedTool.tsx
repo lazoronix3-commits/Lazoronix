@@ -15,8 +15,10 @@ import {
   ArrowRight,
   Lock,
   Shield,
-  Mail
+  Mail,
+  ChevronRight
 } from 'lucide-react'
+import { SectionReveal } from '@/components/ui/section-reveal'
 
 export function AIGuidedTool() {
   const [step, setStep] = useState<'form' | 'result'>('form')
@@ -86,7 +88,7 @@ NARRATIVE: ${description}
                 <Shield className="w-3.5 h-3.5" />
                 Case Portal
               </div>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Contact a Recovery Specialist</h2>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-6 uppercase tracking-tighter">Get Free Consultation</h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Submit your case narrative for structured review. Our senior analysts provide human-led investigation on all verified intakes.
               </p>
@@ -159,16 +161,9 @@ NARRATIVE: ${description}
                         <span className="text-sm">Submitting...</span>
                       </div>
                     ) : (
-                      <>Initialize Case Submission <ArrowRight className="ml-2 w-6 h-6" /></>
+                      <>Submit Case for Recovery <ArrowRight className="ml-2 w-6 h-6" /></>
                     )}
                   </Button>
-                  
-                  <div className="text-center">
-                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-4">Or Contact Directly</p>
-                    <a href="mailto:investigator@lazoronix.com" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary hover:underline">
-                      <Mail className="w-3.5 h-3.5" /> Email Our Investigation Team
-                    </a>
-                  </div>
                 </div>
 
                 <div className="flex items-center justify-between px-4 py-3 bg-white/5 border border-white/10 mt-6">
@@ -183,6 +178,21 @@ NARRATIVE: ${description}
                 </div>
               </div>
             </Card>
+
+            <SectionReveal delay={300} className="mt-16 text-center">
+              <div className="max-w-2xl mx-auto p-8 border border-white/5 bg-white/5 space-y-6">
+                <h3 className="text-xl font-headline font-bold uppercase tracking-tight">Prefer to contact us directly?</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed uppercase tracking-widest font-medium">
+                  If you already have documentation or would rather explain your situation privately, you can contact our investigation team directly by email.
+                </p>
+                <a 
+                  href="mailto:investigator@lazoronix.com" 
+                  className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary hover:gold-glow transition-all"
+                >
+                  Email Our Investigation Team <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </SectionReveal>
           </div>
         )}
 

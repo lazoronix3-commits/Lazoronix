@@ -7,7 +7,9 @@ import {
   CheckCircle2, 
   Save, 
   AlertTriangle,
-  Lock
+  Lock,
+  Mail,
+  ArrowRight
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -73,11 +75,19 @@ export function EvidencePreservation() {
                 <p className="text-[11px] text-muted-foreground uppercase leading-relaxed font-bold tracking-widest">
                   Our intake tool utilizes automated forensic hashing to ensure your evidence maintains a verifiable chain of custody from the moment of submission.
                 </p>
-                <Link href="#forensic-intake" className="block">
-                  <Button className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest text-[10px] premium-cta">
-                    Contact a Recovery Specialist
-                  </Button>
-                </Link>
+                <div className="space-y-4">
+                  <Link href="#forensic-intake" className="block">
+                    <Button className="w-full h-12 bg-primary text-black font-black uppercase tracking-widest text-[10px] premium-cta">
+                      Contact a Recovery Specialist
+                    </Button>
+                  </Link>
+                  <div className="pt-4 border-t border-white/5">
+                    <p className="text-[9px] text-muted-foreground uppercase font-black mb-2 tracking-widest">Prefer Direct Submission?</p>
+                    <a href="mailto:investigator@lazoronix.com" className="flex items-center gap-2 text-[10px] text-primary font-bold uppercase tracking-widest hover:underline">
+                      <Mail className="w-3.5 h-3.5" /> Email Our Team
+                    </a>
+                  </div>
+                </div>
               </div>
             </SectionReveal>
           </div>
@@ -127,6 +137,19 @@ export function EvidencePreservation() {
             ))}
           </div>
         </div>
+
+        <SectionReveal delay={400} className="mt-20 max-w-4xl mx-auto p-12 bg-white/5 border border-white/5 text-center">
+          <h3 className="text-2xl font-headline font-bold uppercase tracking-tight mb-4">Documentation Analysis</h3>
+          <p className="text-muted-foreground text-base leading-relaxed uppercase tracking-widest font-medium mb-8">
+            If you already have a prepared evidence folder or transaction reports, you can bypass the intake portal and reach our investigation team directly.
+          </p>
+          <a 
+            href="mailto:investigator@lazoronix.com" 
+            className="inline-flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.3em] text-primary bg-primary/10 px-8 py-4 border border-primary/20 hover:bg-primary hover:text-black transition-all premium-cta"
+          >
+            Email Our Investigation Team <ArrowRight className="w-4 h-4 ml-2" />
+          </a>
+        </SectionReveal>
       </div>
     </section>
   );

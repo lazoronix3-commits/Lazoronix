@@ -73,22 +73,25 @@ export function Hero() {
               <span className="gradient-text italic font-medium gold-glow">Case Review.</span>
             </h1>
             
-            <p className="text-sm md:text-xl text-muted-foreground mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4 md:px-0">
-              Lazoronix provides institutional-grade forensic investigation and blockchain intelligence for complex digital asset recovery. We investigate financial fraud, trace digital assets, and identify recovery paths.
+            <p className="text-sm md:text-xl text-muted-foreground mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4 md:px-0 text-balance">
+              Lazoronix provides institutional-grade forensic investigation and blockchain tracing for complex asset recovery. We investigate financial fraud, trace digital assets, and identify recovery paths.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-12">
               <Link href="#forensic-intake" className="w-full sm:w-auto">
                 <Button size="lg" className="h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg bg-primary text-black hover:bg-primary/90 font-black w-full shadow-2xl shadow-primary/20 group uppercase tracking-widest rounded-none transition-all duration-300 premium-cta">
                   Begin Case Assessment
                   <ArrowRight className="ml-2 w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <a href="mailto:investigator@lazoronix.com" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full font-bold uppercase tracking-widest rounded-none">
-                  <Mail className="mr-2 w-4 h-4" /> Email Our Investigation Team
-                </Button>
-              </a>
+              <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                <a href="mailto:investigator@lazoronix.com" className="w-full">
+                  <Button size="lg" variant="outline" className="h-14 md:h-16 px-8 md:px-12 text-sm md:text-lg border-white/10 bg-white/5 hover:bg-white/10 w-full font-bold uppercase tracking-widest rounded-none">
+                    <Mail className="mr-2 w-4 h-4" /> Email Our Investigation Team
+                  </Button>
+                </a>
+                <span className="text-[10px] font-black text-primary uppercase tracking-widest">investigator@lazoronix.com</span>
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 opacity-60">

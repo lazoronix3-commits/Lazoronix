@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Navbar } from '@/components/layout/Navbar';
 import { Hero } from '@/components/sections/Hero';
 import { ProblemSection } from '@/components/sections/ProblemSection';
@@ -54,7 +55,7 @@ const SERVICE_DETAILS = [
   { 
     id: "forex",
     title: "Trading Fraud Recovery", 
-    subtitle: "Help with broker fraud and platform issues.",
+    subtitle: "Broker fraud & platform manipulation help.",
     icon: TrendingUp, 
     markers: [
       "Withdrawal restrictions",
@@ -73,7 +74,7 @@ const SERVICE_DETAILS = [
   { 
     id: "investment",
     title: "Investment Scam Recovery", 
-    subtitle: "Help with fake investment platforms and scams.",
+    subtitle: "Help with fake investment platforms & schemes.",
     icon: BarChart, 
     markers: [
       "Ponzi schemes",
@@ -92,7 +93,7 @@ const SERVICE_DETAILS = [
   { 
     id: "romance",
     title: "Romance Scam Recovery", 
-    subtitle: "Help for victims of online relationship scams.",
+    subtitle: "Support for victims of relationship fraud.",
     icon: Heart, 
     markers: [
       "Crypto transfers",
@@ -111,7 +112,7 @@ const SERVICE_DETAILS = [
   { 
     id: "wallet",
     title: "Lost Funds Recovery", 
-    subtitle: "Recovery of lost keys and locked wallets.",
+    subtitle: "Recovery of lost keys & locked digital assets.",
     icon: Wallet, 
     markers: [
       "Hardware wallet issues",
@@ -130,7 +131,7 @@ const SERVICE_DETAILS = [
   { 
     id: "job",
     title: "Employment Scam Recovery", 
-    subtitle: "Help with fake job offers and recruitment fraud.",
+    subtitle: "Help with fake job offers & recruitment fraud.",
     icon: Briefcase, 
     markers: [
       "Upfront training fees",
@@ -149,7 +150,7 @@ const SERVICE_DETAILS = [
   { 
     id: "tracing",
     title: "Blockchain Asset Recovery", 
-    subtitle: "Professional crypto asset tracing and recovery.",
+    subtitle: "Professional crypto asset tracing & resolution.",
     icon: ShieldCheck, 
     markers: [
       "Transaction path history",
@@ -202,7 +203,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       
-      {/* About Us Section */}
       <section id="about" className="py-20 bg-background relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <SectionReveal className="max-w-4xl mx-auto text-center">
@@ -229,7 +229,6 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03)_0%,transparent_70%)] pointer-events-none" />
       </section>
 
-      {/* Trust Bar */}
       <div className="py-12 bg-white/5 border-y border-white/5">
         <div className="container mx-auto px-6 text-center">
           <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] mb-8">Specialized Recovery Services</p>
@@ -249,7 +248,6 @@ export default function Home() {
       
       <EvidencePreservation />
 
-      {/* Services Highlight Section */}
       <section id="services" className="py-24 bg-muted/5">
         <div className="container mx-auto px-6">
           <SectionReveal className="text-center mb-20">
@@ -363,9 +361,12 @@ export default function Home() {
                                       </Button>
                                     </DialogClose>
                                   </Link>
-                                  <p className="text-[9px] text-center font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-2">
-                                    <Lock className="w-3 h-3" /> Secure Connection Active
-                                  </p>
+                                  <div className="text-center space-y-2">
+                                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground flex items-center justify-center gap-2">
+                                      <Lock className="w-3 h-3" /> Secure Connection Active
+                                    </p>
+                                    <a href="mailto:investigator@lazoronix.com" className="block text-[8px] font-bold text-primary hover:underline uppercase tracking-widest">investigator@lazoronix.com</a>
+                                  </div>
                                </div>
                             </div>
                           </div>
@@ -386,7 +387,6 @@ export default function Home() {
 
       <TeamSection />
 
-      {/* Case Recovery Review Section */}
       <section className="py-24 bg-primary/5">
         <div className="container mx-auto px-6">
           <SectionReveal className="max-w-5xl mx-auto glass-card rounded-none overflow-hidden">
@@ -413,13 +413,17 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="space-y-8">
+                <div className="space-y-4">
                   <Link href="#forensic-intake">
                     <Button size="lg" className="h-16 px-10 text-lg font-black uppercase tracking-[0.2em] bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group rounded-none">
                       Contact a Recovery Specialist
                       <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
+                  <div className="flex flex-col gap-1 items-start pl-4">
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground italic">Or email us directly</p>
+                    <a href="mailto:investigator@lazoronix.com" className="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">investigator@lazoronix.com</a>
+                  </div>
                 </div>
               </div>
               <div className="md:col-span-2 p-8 md:p-16 bg-primary text-primary-foreground flex flex-col justify-center">
@@ -475,7 +479,6 @@ export default function Home() {
 
       <FAQSection />
 
-      {/* Final Contact Section */}
       <section className="py-24 border-t border-white/5 bg-background relative overflow-hidden">
         <div className="container mx-auto px-6">
           <SectionReveal className="max-w-6xl mx-auto text-center mb-16">
@@ -486,7 +489,6 @@ export default function Home() {
           </SectionReveal>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Path 01: Form */}
             <SectionReveal delay={100} className="h-full">
               <div className="glass-card p-10 md:p-12 rounded-none hover:border-primary/50 transition-all duration-300 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-8">
@@ -504,7 +506,6 @@ export default function Home() {
               </div>
             </SectionReveal>
 
-            {/* Path 02: Email */}
             <SectionReveal delay={200} className="h-full">
               <div className="glass-card p-10 md:p-12 rounded-none border-primary/20 bg-primary/5 hover:border-primary/50 transition-all duration-300 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-8">
@@ -514,11 +515,14 @@ export default function Home() {
                 <p className="text-muted-foreground mb-10 flex-grow uppercase text-xs tracking-widest font-bold leading-loose">
                   Send a confidential enquiry directly to our investigation team. Ideal for private disclosure or complex multi-jurisdictional briefings.
                 </p>
-                <a href="mailto:investigator@lazoronix.com" className="w-full">
-                  <Button size="lg" variant="outline" className="w-full h-16 border-white/10 bg-white/5 hover:bg-white/10 font-black uppercase tracking-widest rounded-none">
-                    Email a Specialist <Mail className="ml-2 w-5 h-5" />
-                  </Button>
-                </a>
+                <div className="space-y-4 w-full">
+                  <a href="mailto:investigator@lazoronix.com" className="block w-full">
+                    <Button size="lg" variant="outline" className="w-full h-16 border-white/10 bg-white/5 hover:bg-white/10 font-black uppercase tracking-widest rounded-none">
+                      Email a Specialist <Mail className="ml-2 w-5 h-5" />
+                    </Button>
+                  </a>
+                  <p className="text-[10px] text-center font-bold text-primary uppercase tracking-widest">investigator@lazoronix.com</p>
+                </div>
               </div>
             </SectionReveal>
           </div>

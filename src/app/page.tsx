@@ -46,7 +46,8 @@ import {
   Search,
   Activity,
   Network,
-  Fingerprint
+  Fingerprint,
+  Mail
 } from 'lucide-react';
 
 const SERVICE_DETAILS = [
@@ -474,23 +475,66 @@ export default function Home() {
 
       <FAQSection />
 
-      {/* Final CTA */}
-      <section className="py-24 border-t border-white/5">
-        <div className="container mx-auto px-6 text-center">
-          <SectionReveal className="max-w-4xl mx-auto glass-card p-12 md:p-20 rounded-none hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-8 leading-tight uppercase tracking-tighter">Start Recovery Today</h2>
-            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-              If you've been affected by fraud, scams, or lost access to assets, we are ready to help.
+      {/* Final Contact Section */}
+      <section className="py-24 border-t border-white/5 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <SectionReveal className="max-w-6xl mx-auto text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-headline font-bold mb-6 uppercase tracking-tighter">Speak With Our Investigation Team</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
+              Whether you're reporting a suspected scam, dealing with a digital asset access issue, or need help understanding your recovery options, you can contact our team directly.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-               <Link href="#forensic-intake">
-                 <Button size="lg" className="h-16 px-10 bg-primary hover:bg-primary/90 font-black uppercase tracking-widest group rounded-none premium-cta">
-                   Contact a Recovery Specialist
-                   <ArrowRight className="ml-2 w-5 h-6 group-hover:translate-x-1 transition-transform" />
-                 </Button>
-               </Link>
-            </div>
           </SectionReveal>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Path 01: Form */}
+            <SectionReveal delay={100} className="h-full">
+              <div className="glass-card p-10 md:p-12 rounded-none hover:border-primary/50 transition-all duration-300 h-full flex flex-col">
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="text-2xl font-headline font-bold text-primary opacity-50">01</span>
+                  <h3 className="text-2xl font-headline font-bold uppercase tracking-tight">Submit Your Case</h3>
+                </div>
+                <p className="text-muted-foreground mb-10 flex-grow uppercase text-xs tracking-widest font-bold leading-loose">
+                  Provide structured information through our secure case form. This allows our team to initialize Phase 01: Intake & Preservation immediately.
+                </p>
+                <Link href="#forensic-intake" className="w-full">
+                  <Button size="lg" className="w-full h-16 bg-primary text-black font-black uppercase tracking-widest premium-cta rounded-none">
+                    Start Case Assessment <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            </SectionReveal>
+
+            {/* Path 02: Email */}
+            <SectionReveal delay={200} className="h-full">
+              <div className="glass-card p-10 md:p-12 rounded-none border-primary/20 bg-primary/5 hover:border-primary/50 transition-all duration-300 h-full flex flex-col">
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="text-2xl font-headline font-bold text-primary opacity-50">02</span>
+                  <h3 className="text-2xl font-headline font-bold uppercase tracking-tight">Email Our Team</h3>
+                </div>
+                <p className="text-muted-foreground mb-10 flex-grow uppercase text-xs tracking-widest font-bold leading-loose">
+                  Send a confidential enquiry directly to our investigation team. Ideal for private disclosure or complex multi-jurisdictional briefings.
+                </p>
+                <a href="mailto:investigator@lazoronix.com" className="w-full">
+                  <Button size="lg" variant="outline" className="w-full h-16 border-white/10 bg-white/5 hover:bg-white/10 font-black uppercase tracking-widest rounded-none">
+                    Email a Specialist <Mail className="ml-2 w-5 h-5" />
+                  </Button>
+                </a>
+              </div>
+            </SectionReveal>
+          </div>
+
+          <div className="mt-20 flex flex-col items-center gap-6">
+            <div className="w-12 h-px bg-primary/30" />
+            <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <Lock className="w-3.5 h-3.5 text-primary" /> Two ways to begin
+              </span>
+              <span className="w-px h-3 bg-white/10" />
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Secure Data Protocols
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 

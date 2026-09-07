@@ -51,7 +51,7 @@ export function Footer() {
               <span className="text-xl font-headline font-bold">LAZORONIX</span>
             </Link>
             <p className="text-muted-foreground text-[10px] leading-relaxed mb-8 uppercase tracking-wider opacity-70 font-bold">
-              Digital Asset Investigation & Recovery Firm. Specialized support for complex financial fraud and asset resolution.
+              Lazoronix is a Delaware-registered digital asset investigation firm. Specialized support for complex financial fraud and asset resolution.
             </p>
             
             <div className="flex items-center gap-4">
@@ -112,11 +112,11 @@ export function Footer() {
         
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-            © {new Date().getFullYear()} Lazoronix. All rights reserved. 
+            © {new Date().getFullYear()} Lazoronix. Delaware Division of Corporations Registered.
           </p>
           <div className="flex gap-6">
             <p className="text-[9px] text-muted-foreground max-w-md text-left md:text-right leading-relaxed italic uppercase tracking-[0.1em] opacity-50 font-bold">
-              Note: Digital asset recovery involves complex jurisdictions. Every case requires a review before formal engagement.
+              Note: Lazoronix is a legally registered entity in the State of Delaware. Recovery involves complex jurisdictions and evidence review.
             </p>
           </div>
         </div>

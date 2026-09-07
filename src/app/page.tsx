@@ -211,16 +211,16 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-xl text-muted-foreground leading-relaxed">
               <p className="text-foreground font-medium italic">
-                We investigate fraud, trace digital assets, and identify recovery paths using professional tools.
+                Lazoronix is a legally registered forensic entity in the State of Delaware, specializing in digital asset tracing and fraud investigation.
               </p>
               <p>
-                Our role is to help you understand the facts of your case, preserve evidence, and determine if recovery is possible through investigation.
+                Our role is to help you understand the facts of your case, preserve evidence, and determine if recovery is possible through institutional investigative rigor. We operate under the authority of verified digital forensic protocols.
               </p>
               <div className="pt-8 flex flex-col items-center gap-4">
                 <div className="w-12 h-px bg-primary/30" />
                 <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary flex items-center gap-3">
                   <Shield className="w-4 h-4" />
-                  Recovery Integrity Protected
+                  Delaware Division of Corporations Registered
                 </p>
               </div>
             </div>
